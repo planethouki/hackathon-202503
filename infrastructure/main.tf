@@ -113,7 +113,7 @@ resource "aws_ecs_task_definition" "backend" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
-  container_definitions    = jsonencode([
+  container_definitions = jsonencode([
     {
       name      = "backend"
       image     = var.backend_image
@@ -138,8 +138,8 @@ resource "aws_ecs_service" "backend" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = aws_subnet.public[*].id
-    security_groups = [aws_security_group.ecs_sg.id]
+    subnets          = aws_subnet.public[*].id
+    security_groups  = [aws_security_group.ecs_sg.id]
     assign_public_ip = true
   }
 }
