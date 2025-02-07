@@ -18,11 +18,8 @@ const HeaderUserIconNav: React.FC = () => {
 				id="user-dropdown"
 				align="end"
 			>
-				<NavDropdown.Item as={Link} to="/profile">
-					プロフィール
-				</NavDropdown.Item>
-				<NavDropdown.Item as={Link} to="/settings">
-					設定
+				<NavDropdown.Item as={Link} to="/mypage">
+					マイページ
 				</NavDropdown.Item>
 				<NavDropdown.Divider />
 				<NavDropdown.Item as={Link} to="/logout">
