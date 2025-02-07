@@ -1,21 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { auth } from "./firebase";
-import { GoogleAuthProvider, signInWithPopup, browserPopupRedirectResolver } from "firebase/auth";
+import {
+	GoogleAuthProvider,
+	signInWithPopup,
+	browserPopupRedirectResolver,
+} from "firebase/auth";
+import { useAuth } from "./AuthProvider";
 
 const Login: React.FC = () => {
-  const handleLogin = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider, browserPopupRedirectResolver);
-    } catch (error) {
-      console.error('ログインエラー:', error);
-    }
-  };
+	const { user, loading } = useAuth();
+	const navigate = useNavigate();
+	const [error, setError] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (!loading && user) {
+			navigate("/");
+		}
+	}, [user, loading, navigate]);
+
+	const handleLogin = async () => {
+		try {
+			const provider = new GoogleAuthProvider();
+			await signInWithPopup(auth, provider, browserPopupRedirectResolver);
+			setError(null);
+		} catch (e: unknown) {
+			console.error("ログインエラー:", e);
+			setError(e instanceof Error ? e.message : "ログインに失敗しました。");
+		}
+	};
 
 	return (
 		<div>
 			<h1>ログイン</h1>
-			<button onClick={handleLogin}>Googleでログイン</button>
+			{loading ? (
+				<p>読み込み中...</p>
+			) : (
+				<>
+					<button onClick={handleLogin}>Googleでログイン</button>
+					{error && <p style={{ color: "red" }}>{error}</p>}
+				</>
+			)}
 		</div>
 	);
 };
