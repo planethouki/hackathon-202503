@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { auth } from "./firebase";
+import { auth } from "../firebase.ts";
 import {
 	GoogleAuthProvider,
 	signInWithPopup,
 	browserPopupRedirectResolver,
 } from "firebase/auth";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from "../AuthProvider.tsx";
 
 const Login: React.FC = () => {
 	const { user, loading } = useAuth();
