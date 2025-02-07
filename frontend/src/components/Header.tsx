@@ -22,13 +22,10 @@ const Header: React.FC = () => {
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="me-auto">
 						<Nav.Link as={Link} to="/">
-							ホーム
+							回答する
 						</Nav.Link>
-						<Nav.Link as={Link} to="/about">
-							アバウト
-						</Nav.Link>
-						<Nav.Link as={Link} to="/contact">
-							お問い合わせ
+						<Nav.Link as={Link} to="/">
+							お題を出す
 						</Nav.Link>
 					</Nav>
 
