@@ -1,24 +1,21 @@
 import React from "react";
 import { Outlet } from "react-router";
+import Header from "../components/Header.tsx";
 
 const Layout: React.FC = () => {
-  return (
-    <div>
-      <header>
-        <nav>
-          <h1>共通のナビゲーションバー</h1>
-        </nav>
-      </header>
+	return (
+		<div>
+			<Header />
 
-      <main>
-        <Outlet />
-      </main>
+			<main>
+				<Outlet />
+			</main>
 
-      <footer>
-        <p>共通のフッター</p>
-      </footer>
-    </div>
-  );
+			<footer>
+				<p>共通のフッター</p>
+			</footer>
+		</div>
+	);
 };
 
 export default Layout;
