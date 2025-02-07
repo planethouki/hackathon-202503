@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import Home from "./Home.tsx";
 import Login from "./Login.tsx";
 import { AuthProvider } from "./AuthProvider";
+import "./App.css";
 
 function App() {
 	return (
