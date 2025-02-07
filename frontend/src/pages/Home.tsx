@@ -1,11 +1,11 @@
-import { Button } from 'react-bootstrap';
+import { Button } from "react-bootstrap";
 
 function Home() {
 	return (
 		<>
 			<div>
-        Hello World!
-        <Button>Button</Button>
+				Hello World!
+				<Button>Button</Button>
 			</div>
 		</>
 	);

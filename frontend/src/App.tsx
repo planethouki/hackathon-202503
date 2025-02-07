@@ -10,10 +10,10 @@ function App() {
 		<BrowserRouter>
 			<AuthProvider>
 				<Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-          </Route>
+					<Route path="/" element={<Layout />}>
+						<Route index element={<Home />} />
+						<Route path="login" element={<Login />} />
+					</Route>
 				</Routes>
 			</AuthProvider>
 		</BrowserRouter>
