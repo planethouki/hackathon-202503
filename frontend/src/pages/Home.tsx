@@ -1,13 +1,15 @@
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
 function Home() {
 	return (
-		<>
+		<Container>
+      <h1>
+        Hello World!
+      </h1>
 			<div>
-				Hello World!
 				<Button>Button</Button>
 			</div>
-		</>
+		</Container>
 	);
 }
 
