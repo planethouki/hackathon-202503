@@ -10,6 +10,7 @@
 import {setGlobalOptions} from "firebase-functions/v2";
 import {onRequest} from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
+import fugaApp from "./fuga";
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
@@ -27,3 +28,5 @@ export const hoge = onRequest((request, response) => {
   logger.info("Hoge logs!", {structuredData: true});
   response.send("Hoge from Firebase!");
 });
+
+export const fuga = onRequest(fugaApp);
