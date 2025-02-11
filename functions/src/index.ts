@@ -11,6 +11,7 @@ import {setGlobalOptions} from "firebase-functions/v2";
 import {onRequest} from "firebase-functions/v2/https";
 import {onSchedule} from "firebase-functions/v2/scheduler";
 import * as logger from "firebase-functions/logger";
+import {defineSecret} from "firebase-functions/params";
 import fugaApp from "./fuga";
 
 // Start writing functions
@@ -20,14 +21,16 @@ setGlobalOptions({
   region: "asia-northeast1",
 });
 
+const testEnvVar = defineSecret("TEST_ENVIRONMENT_VARIABLE");
+
 export const helloWorld = onRequest((request, response) => {
   logger.info("Hello logs!", {structuredData: true});
   response.send("Hello from Firebase!");
 });
 
-export const hoge = onRequest((request, response) => {
-  logger.info("Hoge logs!", {structuredData: true});
-  response.send("Hoge from Firebase!");
+export const envTest = onRequest((request, response) => {
+  logger.info("EnvTest logs!", {structuredData: true});
+  response.send(testEnvVar.value() + " from Firebase!");
 });
 
 const schedule = {schedule: "0 * * * *", timeZone: "Asia/Tokyo"};
