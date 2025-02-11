@@ -4,17 +4,17 @@ import Header from "../components/Header.tsx";
 import Footer from "../components/Footer.tsx";
 
 const Layout: React.FC = () => {
-	return (
-		<>
-			<Header />
+  return (
+    <>
+      <Header />
 
-			<main>
-				<Outlet />
-			</main>
+      <main>
+        <Outlet />
+      </main>
 
-			<Footer />
-		</>
-	);
+      <Footer />
+    </>
+  );
 };
 
 export default Layout;
