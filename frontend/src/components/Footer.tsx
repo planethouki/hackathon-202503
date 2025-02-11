@@ -9,14 +9,26 @@ const Footer: React.FC = () => {
           <Col md={4} className="text-center">
             <h5>メンバー</h5>
             <ul className="list-unstyled">
-              <li><a href="#" className="text-white text-decoration-none">村人Ａ</a></li>
-              <li><a href="#" className="text-white text-decoration-none">村人Ｂ</a></li>
+              <li>
+                <a href="#" className="text-white text-decoration-none">
+                  村人Ａ
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-white text-decoration-none">
+                  村人Ｂ
+                </a>
+              </li>
             </ul>
           </Col>
           <Col md={4} className="text-center">
             <h5>リンク</h5>
             <ul className="list-unstyled">
-              <li><a href="#" className="text-white text-decoration-none">未定</a></li>
+              <li>
+                <a href="#" className="text-white text-decoration-none">
+                  未定
+                </a>
+              </li>
             </ul>
           </Col>
           <Col md={4} className="text-center">
