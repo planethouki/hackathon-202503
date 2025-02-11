@@ -3,25 +3,43 @@ import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
 import Logout from "./pages/Logout.tsx";
 import MyPage from "./pages/MyPage.tsx";
+import NetaNew from "./pages/Neta/New.tsx";
+import NetaNewDetail from "./pages/Neta/New/Detail.tsx";
+import NetaNewDetailConfirm from "./pages/Neta/New/DetailConfirm.tsx";
+import NetaNewDetailComplete from "./pages/Neta/New/DetailComplete.tsx";
 import Layout from "./layouts/Layout.tsx";
 import { AuthProvider } from "./AuthProvider";
 import "./App.css";
 
 function App() {
-	return (
-		<BrowserRouter>
-			<AuthProvider>
-				<Routes>
-					<Route path="/" element={<Layout />}>
-						<Route index element={<Home />} />
-						<Route path="login" element={<Login />} />
-						<Route path="logout" element={<Logout />} />
-						<Route path="mypage" element={<MyPage />} />
-					</Route>
-				</Routes>
-			</AuthProvider>
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="logout" element={<Logout />} />
+            <Route path="mypage" element={<MyPage />} />
+            <Route path="neta">
+              <Route path="new">
+                <Route index element={<NetaNew />} />
+                <Route path="detail" element={<NetaNewDetail />} />
+                <Route
+                  path="detail/confirm"
+                  element={<NetaNewDetailConfirm />}
+                />
+                <Route
+                  path="detail/complete"
+                  element={<NetaNewDetailComplete />}
+                />
+              </Route>
+            </Route>
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
 
 export default App;
