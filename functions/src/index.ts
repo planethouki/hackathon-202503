@@ -22,3 +22,8 @@ export const helloWorld = onRequest((request, response) => {
   logger.info("Hello logs!", {structuredData: true});
   response.send("Hello from Firebase!");
 });
+
+export const hoge = onRequest((request, response) => {
+  logger.info("Hoge logs!", {structuredData: true});
+  response.send("Hoge from Firebase!");
+});
