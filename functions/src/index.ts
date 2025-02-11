@@ -9,6 +9,7 @@
 
 import {setGlobalOptions} from "firebase-functions/v2";
 import {onRequest} from "firebase-functions/v2/https";
+import {onSchedule} from "firebase-functions/v2/scheduler";
 import * as logger from "firebase-functions/logger";
 import fugaApp from "./fuga";
 
@@ -27,6 +28,11 @@ export const helloWorld = onRequest((request, response) => {
 export const hoge = onRequest((request, response) => {
   logger.info("Hoge logs!", {structuredData: true});
   response.send("Hoge from Firebase!");
+});
+
+const schedule = {schedule: "0 * * * *", timeZone: "Asia/Tokyo"};
+export const timerTest = onSchedule(schedule, async () => {
+  logger.info("Hourly timer executed.");
 });
 
 export const fuga = onRequest(fugaApp);
