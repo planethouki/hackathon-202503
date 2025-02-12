@@ -28,7 +28,7 @@ const generate = async () => {
   };
 };
 
-export const generateJokeSetup = onRequest(async (request, response) => {
+export const generateContest = onRequest(async (request, response) => {
   const result = await generate();
   response.send(result);
 });
