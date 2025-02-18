@@ -1,6 +1,6 @@
 import {useEffect, useMemo} from "react";
 import {Container, Image, Form, Button} from "react-bootstrap";
-import {useParams, useNavigate} from "react-router";
+import {useParams, useNavigate, Link} from "react-router";
 
 function PunchlinePostConfirm() {
   const navigate = useNavigate();
@@ -12,10 +12,6 @@ function PunchlinePostConfirm() {
       navigate("/punchline/post");
     }
   }, [id]);
-
-  const handleClick = async () => {
-    navigate(`/punchline/post/${idNumber}/complete`);
-  }
 
   return (
     <>
@@ -66,7 +62,9 @@ function PunchlinePostConfirm() {
               checked
               readOnly
             />
-            <Button variant="primary" onClick={handleClick}>送信</Button>
+            <Link to={`/punchline/post/${idNumber}/complete`}>
+              <Button variant="primary">送信</Button>
+            </Link>
           </div>
         </Container>
       </div>

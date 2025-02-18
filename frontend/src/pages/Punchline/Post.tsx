@@ -1,12 +1,7 @@
 import {Card, Col, Container, Row} from "react-bootstrap";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 function PunchlinePost() {
-  const navigate = useNavigate();
-
-  const handleClick = (id: string | number) => {
-    navigate(`/punchline/post/${id}`);
-  }
 
   return (
     <>
@@ -24,13 +19,14 @@ function PunchlinePost() {
             {Array.from({ length: 8 }).map((_, index) => (
               <Col key={index}>
                 <Card>
-                  <Card.Img
-                    variant="top"
-                    src={`https://picsum.photos/seed/${index + 1}/200/200`}
-                    alt={`Card image ${index + 1}`}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleClick(index)}
-                  />
+                  <Link to={`/punchline/post/${index}`}>
+                    <Card.Img
+                      variant="top"
+                      src={`https://picsum.photos/seed/${index + 1}/200/200`}
+                      alt={`Card image ${index + 1}`}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Link>
                   <Card.Body>
                     <Card.Title>お題 {index + 1}</Card.Title>
                     <Card.Text>

@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {Container, Button, Row, Col, Card} from "react-bootstrap";
-import {useParams, useNavigate} from "react-router";
+import {useParams, useNavigate, Link} from "react-router";
 
 function PunchlinePostComplete() {
   const navigate = useNavigate();
@@ -11,18 +11,6 @@ function PunchlinePostComplete() {
       navigate("/punchline/post");
     }
   }, [id]);
-
-  const handleClickTop = () => {
-    navigate(`/`);
-  }
-
-  const handleClickPost = () => {
-    navigate(`/punchline/post`);
-  }
-
-  const handleClickPostDetail = (id: string | number) => {
-    navigate(`/punchline/post/${id}`);
-  }
 
   return (
     <>
@@ -36,8 +24,12 @@ function PunchlinePostComplete() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
-          <Button variant="primary" onClick={handleClickPost} className="me-3">他のお題を選ぶ</Button>
-          <Button variant="outline-primary" onClick={handleClickTop}>トップへ</Button>
+          <Link to={`/punchline/post/${id}`}>
+            <Button variant="primary" className="me-3">他のお題を選ぶ</Button>
+          </Link>
+          <Link to="/">
+            <Button variant="outline-primary">トップへ</Button>
+          </Link>
         </Container>
       </div>
 
@@ -50,13 +42,14 @@ function PunchlinePostComplete() {
             {Array.from({ length: 8 }).map((_, index) => (
               <Col key={index}>
                 <Card>
-                  <Card.Img
-                    variant="top"
-                    src={`https://picsum.photos/seed/${index + 1}/200/200`}
-                    alt={`Card image ${index + 1}`}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleClickPostDetail(index)}
-                  />
+                  <Link to={`/punchline/post/${index}`}>
+                    <Card.Img
+                      variant="top"
+                      src={`https://picsum.photos/seed/${index + 1}/200/200`}
+                      alt={`Card image ${index + 1}`}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Link>
                   <Card.Body>
                     <Card.Title>お題 {index + 1}</Card.Title>
                     <Card.Text>
