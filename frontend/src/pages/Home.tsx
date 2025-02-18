@@ -1,15 +1,9 @@
-import { Card, Container, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router";
+import { Card, Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate, Link } from "react-router";
 
 function Home() {
   const navigate = useNavigate();
-  const handlePunchlineClick = () => {
-    navigate("/");
-  }
   const handleUserClick = () => {
-    navigate("/");
-  }
-  const handleContestClick = () => {
     navigate("/");
   }
 
@@ -23,25 +17,36 @@ function Home() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f0f8ff" }}>
         <Container>
-          <h2>新着回答</h2>
+          <div className="mb-5 d-flex justify-content-between">
+            <h2>新着回答</h2>
+            <div>
+              <Link to="/punchlines/latest">
+                <Button variant="primary" href="/punchlines/latest">もっと見る</Button>
+              </Link>
+            </div>
+          </div>
           <Row xs={1} sm={2} md={4} className="g-4">
             {Array.from({ length: 8 }).map((_, index) => (
               <Col key={index}>
                 <Card>
-                  <Card.Img
-                    variant="top"
-                    src={`https://picsum.photos/seed/${index + 1}/300/400`}
-                    alt={`Card image ${index + 1}`}
-                    style={{ cursor: "pointer" }}
-                    onClick={handlePunchlineClick}
-                  />
                   <Card.Body>
-                    <Card.Title>回答 {index + 1}</Card.Title>
+                    <Card.Title>
+                      <Link to={`/contests/${Math.floor(Math.random() * 100)}`}>
+                        お題 {Math.floor(Math.random() * 100)}
+                      </Link>
+                    </Card.Title>
                     <Card.Text>
-                      これはカードの説明文です。回答その {index + 1} をぜひ確認してください。
+                      ここにはお題のテキストが入ります
                     </Card.Text>
                   </Card.Body>
-                  <Card.Footer>評価 999{index}</Card.Footer>
+                  <Link to={`/punchlines/${index}`}>
+                    <Card.Img
+                      variant="bottom"
+                      src={`https://picsum.photos/seed/${index + 1}/400/400`}
+                      alt={`Card image ${index + 1}`}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Link>
                 </Card>
               </Col>
             ))}
@@ -84,13 +89,14 @@ function Home() {
             {Array.from({ length: 8 }).map((_, index) => (
               <Col key={index}>
                 <Card>
-                  <Card.Img
-                    variant="top"
-                    src={`https://picsum.photos/seed/${index + 1}/300/400`}
-                    alt={`Card image ${index + 1}`}
-                    style={{ cursor: "pointer" }}
-                    onClick={handleContestClick}
-                  />
+                  <Link to={`/contests/${index}`} >
+                    <Card.Img
+                      variant="top"
+                      src={`https://picsum.photos/seed/${index + 1}/400/400`}
+                      alt={`Card image ${index + 1}`}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Link>
                   <Card.Body>
                     <Card.Title>お題 {index + 1}</Card.Title>
                     <Card.Text>

@@ -11,6 +11,9 @@ import PunchlinePost from "./pages/Punchline/Post.tsx";
 import PunchlinePostDetail from "./pages/Punchline/Post/Detail.tsx";
 import PunchlinePostConfirm from "./pages/Punchline/Post/Confirm.tsx";
 import PunchlinePostComplete from "./pages/Punchline/Post/Complete.tsx";
+import ContestsDetail from "./pages/Contests/Detail.tsx";
+import PunchlinesDetail from "./pages/Punchlines/Detail.tsx";
+import PunchlinesLatest from "./pages/Punchlines/Latest.tsx";
 import Layout from "./layouts/Layout.tsx";
 import { AuthProvider } from "./AuthProvider";
 import "./App.css";
@@ -46,6 +49,13 @@ function App() {
                 <Route path=":id/confirm" element={<PunchlinePostConfirm/>}/>
                 <Route path=":id/complete" element={<PunchlinePostComplete/>}/>
               </Route>
+            </Route>
+            <Route path="punchlines">
+              <Route path=":id" element={<PunchlinesDetail />} />
+              <Route path="latest" element={<PunchlinesLatest />} />
+            </Route>
+            <Route path="contests">
+              <Route path=":id" element={<ContestsDetail />} />
             </Route>
           </Route>
         </Routes>
