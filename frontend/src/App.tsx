@@ -7,6 +7,10 @@ import NetaNew from "./pages/Neta/New.tsx";
 import NetaNewDetail from "./pages/Neta/New/Detail.tsx";
 import NetaNewDetailConfirm from "./pages/Neta/New/DetailConfirm.tsx";
 import NetaNewDetailComplete from "./pages/Neta/New/DetailComplete.tsx";
+import PunchlinePost from "./pages/Punchline/Post.tsx";
+import PunchlinePostDetail from "./pages/Punchline/Post/Detail.tsx";
+import PunchlinePostConfirm from "./pages/Punchline/Post/Confirm.tsx";
+import PunchlinePostComplete from "./pages/Punchline/Post/Complete.tsx";
 import Layout from "./layouts/Layout.tsx";
 import { AuthProvider } from "./AuthProvider";
 import "./App.css";
@@ -33,6 +37,14 @@ function App() {
                   path="detail/complete"
                   element={<NetaNewDetailComplete />}
                 />
+              </Route>
+            </Route>
+            <Route path="punchline">
+              <Route path="post">
+                <Route index element={<PunchlinePost />} />
+                <Route path=":id" element={<PunchlinePostDetail/>}/>
+                <Route path=":id/confirm" element={<PunchlinePostConfirm/>}/>
+                <Route path=":id/complete" element={<PunchlinePostComplete/>}/>
               </Route>
             </Route>
           </Route>

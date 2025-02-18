@@ -21,7 +21,7 @@ const Header: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={Link} to="/punchline/post">
               回答する
             </Nav.Link>
             <Nav.Link as={Link} to="/neta/new">
