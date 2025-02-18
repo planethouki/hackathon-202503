@@ -1,11 +1,19 @@
 import {useEffect, useMemo} from "react";
 import {Container, Image, Form, Button} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
+import {initialContests, youTubeUrl} from "../../../mock.ts";
 
 function PunchlinePostConfirm() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
   const idNumber = useMemo(() => Number(id), [id]);
+  const contest = useMemo(() => {
+    const f = initialContests.filter((c) => c.id === idNumber);
+    if (f.length === 0) {
+      return null;
+    }
+    return f[0];
+  }, [idNumber]);
 
   useEffect(() => {
     if (id === undefined) {
@@ -26,15 +34,12 @@ function PunchlinePostConfirm() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           <h2 className="mb-5">
-            お題 {idNumber + 1}
+            お題 {contest?.title}
           </h2>
           <Image
-            src={`https://picsum.photos/seed/${idNumber + 1}/600/600`}
+            src={`https://picsum.photos/seed/${contest?.imageNumber}/600/600`}
             className="mb-5"
           />
-          <div className="mb-5">
-            これはお題の説明文です。お題その {idNumber + 1} をぜひ確認してください。
-          </div>
 
           <h2 className="mb-5">
             回答
@@ -47,7 +52,14 @@ function PunchlinePostConfirm() {
               </div>
             </div>
             <div className="mb-3">
-              <div>YouTube ShortsのURL</div>
+              <div>
+                <iframe src={youTubeUrl}
+                        style={{ aspectRatio: 9/16, width: "100%", maxWidth: 320 }}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen></iframe>
+              </div>
               <div>
                 <a href="https://youtube.com/shorts/M0xy9bGhn4Y?feature=shared" target="_blank" rel="noopener noreferrer">
                   https://youtube.com/shorts/M0xy9bGhn4Y?feature=shared

@@ -1,11 +1,19 @@
 import {useEffect, useMemo, FormEvent} from "react";
 import {Container, Image, Form, Button} from "react-bootstrap";
 import {useParams, useNavigate} from "react-router";
+import {initialContests} from "../../../mock.ts";
 
 function PunchlinePostDetail() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
   const idNumber = useMemo(() => Number(id), [id]);
+  const contest = useMemo(() => {
+    const f = initialContests.filter((c) => c.id === idNumber);
+    if (f.length === 0) {
+      return null;
+    }
+    return f[0];
+  }, [idNumber]);
 
   useEffect(() => {
     if (id === undefined) {
@@ -31,15 +39,12 @@ function PunchlinePostDetail() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           <h2 className="mb-5">
-            お題 {idNumber + 1}
+            お題 {contest?.title}
           </h2>
           <Image
-            src={`https://picsum.photos/seed/${idNumber + 1}/600/600`}
+            src={`https://picsum.photos/seed/${contest?.imageNumber}/600/600`}
             className="mb-5"
           />
-          <div>
-            これはお題の説明文です。お題その {idNumber + 1} をぜひ確認してください。
-          </div>
         </Container>
       </div>
 
