@@ -24,9 +24,6 @@ const Header: React.FC = () => {
             <Nav.Link as={Link} to="/punchline/post">
               回答する
             </Nav.Link>
-            <Nav.Link as={Link} to="/neta/new">
-              お題を出す
-            </Nav.Link>
           </Nav>
 
           {!loading && (
