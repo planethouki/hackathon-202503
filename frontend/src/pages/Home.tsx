@@ -73,7 +73,7 @@ function Home() {
 
       <div className="mb-5 py-5" style={{backgroundColor: "#fffacd"}}>
         <Container>
-          <h2>新着作家</h2>
+          <h2 className="mb-5">新着作家</h2>
           <Row xs={"auto"} className="g-4">
             {initialUsers.sort(() => Math.random() - 0.5).map((u) => (
               <Col key={u.id}>
@@ -101,7 +101,7 @@ function Home() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
-          <h2>新着お題</h2>
+          <h2 className="mb-5">新着お題</h2>
           <Row xs={1} sm={2} md={4} className="g-4">
             {initialContests.sort(() => Math.random() - 0.5).filter((_, i) => i < 8).map((c) => (
               <Col key={c.id}>
