@@ -14,6 +14,7 @@ import PunchlinePostComplete from "./pages/Punchline/Post/Complete.tsx";
 import ContestsDetail from "./pages/Contests/Detail.tsx";
 import PunchlinesDetail from "./pages/Punchlines/Detail.tsx";
 import PunchlinesLatest from "./pages/Punchlines/Latest.tsx";
+import UsersDetail from "./pages/Users/Detail.tsx";
 import Layout from "./layouts/Layout.tsx";
 import { AuthProvider } from "./AuthProvider";
 import "./App.css";
@@ -56,6 +57,9 @@ function App() {
             </Route>
             <Route path="contests">
               <Route path=":id" element={<ContestsDetail />} />
+            </Route>
+            <Route path="users">
+              <Route path=":id/profile" element={<UsersDetail />} />
             </Route>
           </Route>
         </Routes>

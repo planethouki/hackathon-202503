@@ -15,17 +15,18 @@ export interface Contest {
 export interface User {
   id: number;
   name: string;
+  bio: string;
 }
 
 export const initialUsers: User[] = [
-  { id: 1, name: "ジョン" },
-  { id: 2, name: "マリア" },
-  { id: 3, name: "タカシ" },
-  { id: 4, name: "アイ" },
-  { id: 5, name: "クリス" },
-  { id: 6, name: "ミカ" },
-  { id: 7, name: "ユウタ" },
-  { id: 8, name: "エマ" }
+  { id: 1, name: "ジョン", bio: "音楽と旅行が大好きなエンジニア。" },
+  { id: 2, name: "マリア", bio: "本が大好きなイラストレーター。" },
+  { id: 3, name: "タカシ", bio: "プログラミングと写真撮影が趣味です。" },
+  { id: 4, name: "アイ", bio: "カフェ巡りと絵を描くのが好きです。" },
+  { id: 5, name: "クリス", bio: "アウトドア派で山登りが趣味です。" },
+  { id: 6, name: "ミカ", bio: "映画鑑賞と料理を楽しんでいます。" },
+  { id: 7, name: "ユウタ", bio: "スポーツ好きの大学生。" },
+  { id: 8, name: "エマ", bio: "猫と一緒にのんびり過ごすのが好きです。" }
 ]
 
 export const youTubeUrl = "https://www.youtube.com/embed/M0xy9bGhn4Y";
