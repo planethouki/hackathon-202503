@@ -10,13 +10,23 @@ const Footer: React.FC = () => {
             <h5>メンバー</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="#" className="text-white text-decoration-none">
-                  村人Ａ
+                <a
+                  href="https://x.com/begin_indiegame"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="text-white text-decoration-none"
+                >
+                  初川鳳一
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white text-decoration-none">
-                  村人Ｂ
+                <a
+                  href="https://x.com/planethouki"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="text-white text-decoration-none"
+                >
+                  planet★箒星
                 </a>
               </li>
             </ul>
