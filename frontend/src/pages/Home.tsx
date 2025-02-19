@@ -27,7 +27,7 @@ function Home() {
             </div>
           </div>
           <Row xs={1} sm={2} md={4} className="g-4">
-            {initialPunchlines.filter((p) => p.id <= 8).map((p) => (
+            {initialPunchlines.sort(() => Math.random() - 0.5).filter((_, i) => i < 4).map((p) => (
               <Col key={p.id}>
                 <Card>
                   <Card.Body>
@@ -35,6 +35,7 @@ function Home() {
                       {initialContests.filter((c) => c.id === p.contestId).filter((_, i) => i === 0).map((c) => (
                         <>
                           <div className="mb-3">
+                            <span>お題: </span>
                             <Link to={`/contests/${c.id}`}>
                               {c.title}
                             </Link>
@@ -51,6 +52,7 @@ function Home() {
                       ))}
                     </Card.Title>
                     <Card.Title>
+                      <span>回答: </span>
                       <Link to={`/punchlines/${p.id}`}>
                         {p.title}
                       </Link>
@@ -101,7 +103,7 @@ function Home() {
         <Container>
           <h2>新着お題</h2>
           <Row xs={1} sm={2} md={4} className="g-4">
-            {initialContests.filter((c) => c.id <= 8).map((c) => (
+            {initialContests.sort(() => Math.random() - 0.5).filter((_, i) => i < 8).map((c) => (
               <Col key={c.id}>
                 <Card>
                   <Link to={`/contests/${c.id}`} >
