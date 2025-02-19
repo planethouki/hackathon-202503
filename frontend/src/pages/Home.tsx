@@ -1,4 +1,4 @@
-import { Card, Container, Row, Col, Button, Image } from "react-bootstrap";
+import { Card, Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router";
 import { initialPunchlines, initialContests, initialUsers } from "../mock.ts";
 
@@ -26,26 +26,6 @@ function Home() {
               <Col key={p.id}>
                 <Card>
                   <Card.Body>
-                    <Card.Title className="mb-5">
-                      {initialContests.filter((c) => c.id === p.contestId).filter((_, i) => i === 0).map((c) => (
-                        <>
-                          <div className="mb-3">
-                            <span>お題: </span>
-                            <Link to={`/contests/${c.id}`}>
-                              {c.title}
-                            </Link>
-                          </div>
-                          <div>
-                            <Link to={`/contests/${c.id}`}>
-                              <Image
-                                src={`https://picsum.photos/seed/${c.imageNumber}/400/400`}
-                                className="w-100"
-                              />
-                            </Link>
-                          </div>
-                        </>
-                      ))}
-                    </Card.Title>
                     <Card.Title>
                       <span>回答: </span>
                       <Link to={`/punchlines/${p.id}`}>
@@ -54,11 +34,23 @@ function Home() {
                     </Card.Title>
                   </Card.Body>
                   <iframe src={p.url}
-                    style={{ aspectRatio: 9/16, width: "100%" }}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen></iframe>
+                          style={{ aspectRatio: 9/16, width: "100%" }}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          referrerPolicy="strict-origin-when-cross-origin"
+                          allowFullScreen></iframe>
+                  <Card.Footer>
+                    {initialContests.filter((c) => c.id === p.contestId).filter((_, i) => i === 0).map((c) => (
+                      <>
+                        <div className="mb-3">
+                          <span>お題: </span>
+                          <Link to={`/contests/${c.id}`}>
+                            {c.title}
+                          </Link>
+                        </div>
+                      </>
+                    ))}
+                  </Card.Footer>
                 </Card>
               </Col>
             ))}
