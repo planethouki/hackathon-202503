@@ -1,6 +1,6 @@
 import { Card, Container, Row, Col, Button, Image } from "react-bootstrap";
 import { useNavigate, Link } from "react-router";
-import { initialPunchlines, initialContests } from "../mock.ts";
+import { initialPunchlines, initialContests, initialUsers } from "../mock.ts";
 
 function Home() {
   const navigate = useNavigate();
@@ -73,15 +73,15 @@ function Home() {
 
       <div className="mb-5 py-5" style={{backgroundColor: "#fffacd"}}>
         <Container>
-          <h2>新着芸人</h2>
+          <h2>新着作家</h2>
           <Row xs={"auto"} className="g-4">
-            {Array.from({length: 8}).map((_, index) => (
-              <Col key={index}>
+            {initialUsers.sort(() => Math.random() - 0.5).map((u) => (
+              <Col key={u.id}>
                 <Card style={{ textAlign: "center", cursor: "pointer" }} onClick={handleUserClick}>
                   <Card.Img
                     variant="top"
-                    src={`https://randomuser.me/api/portraits/lego/${index + 1}.jpg`}
-                    alt={`芸人 ${index + 1}`}
+                    src={`https://randomuser.me/api/portraits/lego/${u.id}.jpg`}
+                    alt={`ユーザー ${u.id}`}
                     style={{
                       width: "150px",
                       height: "150px",
@@ -90,7 +90,7 @@ function Home() {
                     }}
                   />
                   <Card.Body>
-                    <Card.Title>芸人 {index + 1}</Card.Title>
+                    <Card.Title>{u.name}</Card.Title>
                   </Card.Body>
                 </Card>
               </Col>

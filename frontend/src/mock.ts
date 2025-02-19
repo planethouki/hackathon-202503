@@ -12,6 +12,22 @@ export interface Contest {
   imageNumber: number;
 }
 
+export interface User {
+  id: number;
+  name: string;
+}
+
+export const initialUsers: User[] = [
+  { id: 1, name: "ジョン" },
+  { id: 2, name: "マリア" },
+  { id: 3, name: "タカシ" },
+  { id: 4, name: "アイ" },
+  { id: 5, name: "クリス" },
+  { id: 6, name: "ミカ" },
+  { id: 7, name: "ユウタ" },
+  { id: 8, name: "エマ" }
+]
+
 export const youTubeUrl = "https://www.youtube.com/embed/M0xy9bGhn4Y";
 
 export const initialPunchlines: Punchline[] = [
