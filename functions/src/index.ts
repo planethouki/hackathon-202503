@@ -13,8 +13,6 @@ import {onSchedule} from "firebase-functions/v2/scheduler";
 import * as logger from "firebase-functions/logger";
 import {defineSecret} from "firebase-functions/params";
 import {initializeApp} from "firebase-admin/app";
-import fugaApp from "./fuga";
-import apiApp from "./api";
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
@@ -24,6 +22,9 @@ setGlobalOptions({
 });
 
 initializeApp();
+
+import fugaApp from "./fuga";
+import apiApp from "./api";
 
 const testEnvVar = defineSecret("TEST_ENVIRONMENT_VARIABLE");
 
