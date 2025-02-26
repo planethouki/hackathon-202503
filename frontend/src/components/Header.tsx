@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          <Image src="/logo.jpg" alt="logo" width={200} />
+          <Image src="/logo.png" alt="logo" width={200} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
