@@ -41,3 +41,4 @@ export const timerTest = onSchedule(schedule, async () => {
 export const fuga = onRequest(fugaApp);
 
 export * from "./generateContest";
+export * from "./createUserDocument";
