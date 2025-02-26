@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import {Navbar, Nav, Container, Button, Image} from "react-bootstrap";
 import { Link, useNavigate } from "react-router";
 import HeaderUserIconNav from "./HeaderUserIconNav.tsx";
 import { useAuth } from "../AuthProvider.tsx";
@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          ロゴ
+          <Image src="/logo.jpg" alt="logo" width={200} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
