@@ -1,9 +1,7 @@
 import * as express from "express";
-import * as admin from "firebase-admin";
+import {getFirestore} from "firebase-admin/firestore";
 
-admin.initializeApp();
-
-const db = admin.firestore();
+const db = getFirestore();
 
 
 const app = express();

@@ -12,6 +12,7 @@ import {onRequest} from "firebase-functions/v2/https";
 import {onSchedule} from "firebase-functions/v2/scheduler";
 import * as logger from "firebase-functions/logger";
 import {defineSecret} from "firebase-functions/params";
+import {initializeApp} from "firebase-admin/app";
 import fugaApp from "./fuga";
 import apiApp from "./api";
 
@@ -21,6 +22,8 @@ import apiApp from "./api";
 setGlobalOptions({
   region: "asia-northeast1",
 });
+
+initializeApp();
 
 const testEnvVar = defineSecret("TEST_ENVIRONMENT_VARIABLE");
 
