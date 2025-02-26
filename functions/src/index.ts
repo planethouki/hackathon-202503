@@ -13,6 +13,7 @@ import {onSchedule} from "firebase-functions/v2/scheduler";
 import * as logger from "firebase-functions/logger";
 import {defineSecret} from "firebase-functions/params";
 import fugaApp from "./fuga";
+import apiApp from "./api";
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
@@ -39,6 +40,7 @@ export const timerTest = onSchedule(schedule, async () => {
 });
 
 export const fuga = onRequest(fugaApp);
+export const api = onRequest(apiApp);
 
 export * from "./generateContest";
 export * from "./createUserDocument";
