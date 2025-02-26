@@ -17,7 +17,7 @@ function Home() {
             <h2>新着回答</h2>
             <div>
               <Link to="/punchlines/latest">
-                <Button variant="primary" href="/punchlines/latest">もっと見る</Button>
+                <Button as="span" variant="primary" href="/punchlines/latest">もっと見る</Button>
               </Link>
             </div>
           </div>
