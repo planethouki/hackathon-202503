@@ -14,13 +14,29 @@ app.get("/home", async (req, res) => {
   try {
     const contests = await db
       .collection("contests")
-      .orderBy("createdAt", "asc")
+      .orderBy("createdAt", "desc")
       .limit(8)
       .get()
       .then((snapshot) => {
         return snapshot.docs.map((doc) => doc.data());
       });
-    res.status(200).json({success: true, contests});
+    const punchlines = await db
+      .collection("punchlines")
+      .orderBy("createdAt", "desc")
+      .limit(4)
+      .get()
+      .then((snapshot) => {
+        return snapshot.docs.map((doc) => doc.data());
+      });
+    const users = await db
+      .collection("users")
+      .orderBy("createdAt", "desc")
+      .limit(16)
+      .get()
+      .then((snapshot) => {
+        return snapshot.docs.map((doc) => doc.data());
+      });
+    res.status(200).json({success: true, contests, punchlines, users});
   } catch (error) {
     console.error("Error fetching data: ", error);
     res.status(500).json({
