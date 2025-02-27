@@ -1,10 +1,13 @@
 import * as express from "express";
 import {getFirestore} from "firebase-admin/firestore";
+import * as cors from "cors";
 
 const db = getFirestore();
 
 
 const app = express();
+
+app.use(cors());
 
 app.get("/hello", (req, res) => {
   res.send("Hello World!");
