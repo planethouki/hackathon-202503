@@ -46,14 +46,14 @@ function Home() {
                           referrerPolicy="strict-origin-when-cross-origin"
                           allowFullScreen></iframe>
                   <Card.Footer>
-                    {/*{initialContests.filter((c) => c.id === p.contestId).filter((_, i) => i === 0).map((c) => (*/}
-                    {/*  <div className="mb-3" key={c.id}>*/}
-                    {/*    <span>お題: </span>*/}
-                    {/*    <Link to={`/contests/${c.id}`}>*/}
-                    {/*      {c.title}*/}
-                    {/*    </Link>*/}
-                    {/*  </div>*/}
-                    {/*))}*/}
+                    {p.contest &&
+                      <div className="mb-3" key={p.contest.id}>
+                        <span>お題: </span>
+                        <Link to={`/contests/${p.contest.id}`}>
+                          {p.contest.title}
+                        </Link>
+                      </div>
+                    }
                   </Card.Footer>
                 </Card>
               </Col>

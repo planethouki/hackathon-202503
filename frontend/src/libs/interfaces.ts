@@ -5,6 +5,8 @@ export interface Punchline {
   contestId: string;
   userId: string;
   createdAt: string;
+  user: User | null;
+  contest: Contest | null;
 }
 
 export interface Contest {
