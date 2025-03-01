@@ -7,17 +7,17 @@ const app = express();
 
 app.get("/", async (req, res) => {
   try {
-    const contestsQuery = await db
+    const contestsQuery = db
       .collection("contests")
       .orderBy("createdAt", "desc")
       .limit(8)
       .get();
-    const punchlinesQuery = await db
+    const punchlinesQuery = db
       .collection("punchlines")
       .orderBy("createdAt", "desc")
       .limit(4)
       .get();
-    const usersQuery = await db
+    const usersQuery = db
       .collection("users")
       .orderBy("createdAt", "desc")
       .limit(16)
