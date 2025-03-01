@@ -2,11 +2,20 @@ import { Card, Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router";
 import { useHomeApi } from "../hooks/homeApi.ts";
 
+function Loading() {
+  return (
+    <div className="d-flex justify-content-center align-items-center">
+      <i className="bi bi-arrow-repeat spin" style={{ fontSize: '2rem' }}></i>
+    </div>
+  )
+}
+
 function Home() {
   const {
     contests,
     users,
     punchlines,
+    isLoading,
   } = useHomeApi();
 
   return (
@@ -27,6 +36,7 @@ function Home() {
               </Link>
             </div>
           </div>
+          {isLoading && <Loading />}
           <Row xs={1} sm={2} md={4} className="g-4">
             {punchlines?.map((p) => (
               <Col key={p.id}>
@@ -65,6 +75,7 @@ function Home() {
       <div className="mb-5 py-5" style={{backgroundColor: "#fffacd"}}>
         <Container>
           <h2 className="mb-5">新着作家</h2>
+          {isLoading && <Loading />}
           <Row xs={"auto"} className="g-4">
             {users?.map((u) => (
               <Col key={u.id}>
@@ -95,6 +106,7 @@ function Home() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           <h2 className="mb-5">新着お題</h2>
+          {isLoading && <Loading />}
           <Row xs={1} sm={2} md={4} className="g-4">
             {contests?.map((c) => (
               <Col key={c.id}>
