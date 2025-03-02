@@ -15,7 +15,7 @@ app.get("/:id", async (req, res) => {
     .then((snap) => snap.docs
       .map((doc) => doc.data()));
   if (contests.length === 0) {
-    res.status(404).send("No punchlines found!");
+    res.status(404).send("No contest found!");
     return;
   }
   const punchlines = await db
