@@ -1,19 +1,15 @@
-import {useEffect, useMemo} from "react";
+import {useEffect} from "react";
 import {Container, Image, Form, Button} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
-import {initialContests, youTubeUrl} from "../../../mock.ts";
+import {usePunchlinePostContestDetailApi} from "../../../hooks/punchlinePostApi.ts";
+import {LoadingBlock} from "../../../components/Loading.tsx";
+import {youTubeUrl} from "../../../mock.ts";
 
 function PunchlinePostConfirm() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
-  const idNumber = useMemo(() => Number(id), [id]);
-  const contest = useMemo(() => {
-    const f = initialContests.filter((c) => c.id === idNumber);
-    if (f.length === 0) {
-      return null;
-    }
-    return f[0];
-  }, [idNumber]);
+
+  const {isLoading, contest} = usePunchlinePostContestDetailApi(id);
 
   useEffect(() => {
     if (id === undefined) {
@@ -33,11 +29,12 @@ function PunchlinePostConfirm() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
+          {isLoading && <LoadingBlock />}
           <h2 className="mb-5">
             お題 {contest?.title}
           </h2>
           <Image
-            src={`https://picsum.photos/seed/${contest?.imageNumber}/600/600`}
+            src={contest?.imageUrl}
             className="mb-5"
           />
 
@@ -74,7 +71,7 @@ function PunchlinePostConfirm() {
               checked
               readOnly
             />
-            <Link to={`/punchline/post/${idNumber}/complete`}>
+            <Link to={`/punchline/post/${id}/complete`}>
               <Button variant="primary">送信</Button>
             </Link>
           </div>

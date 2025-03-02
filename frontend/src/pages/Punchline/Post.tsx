@@ -1,8 +1,14 @@
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import { Link } from "react-router";
-import {initialContests} from "../../mock.ts";
+import {usePunchlinePostContestsApi} from "../../hooks/punchlinePostApi.ts";
+import {LoadingBlock} from "../../components/Loading.tsx";
 
 function PunchlinePost() {
+  const {isLoading, contests, refresh} = usePunchlinePostContestsApi();
+
+  const onClickRefresh = () => {
+    refresh();
+  }
 
   return (
     <>
@@ -16,28 +22,28 @@ function PunchlinePost() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
+          {isLoading && <LoadingBlock />}
           <Row xs={1} sm={2} md={4} className="g-4 mb-5">
-            {initialContests.filter((c) => c.id <= 8).map((c) => (
+            {contests?.map((c) => (
               <Col key={c.id}>
                 <Card>
                   <Link to={`/punchline/post/${c.id}`} >
                     <Card.Img
                       variant="top"
-                      src={`https://picsum.photos/seed/${c.imageNumber}/400/400`}
-                      alt={`Card image ${c.imageNumber}`}
+                      src={c.imageUrl}
+                      alt={`Card image`}
                       style={{ cursor: "pointer" }}
                     />
                   </Link>
                   <Card.Body>
                     <Card.Title>{c.title}</Card.Title>
                   </Card.Body>
-                  <Card.Footer>回答数 999</Card.Footer>
                 </Card>
               </Col>
             ))}
           </Row>
-          <Button variant="primary">
-            別のお題（未実装）
+          <Button variant="primary" onClick={() => onClickRefresh()}>
+            別のお題
           </Button>
         </Container>
       </div>

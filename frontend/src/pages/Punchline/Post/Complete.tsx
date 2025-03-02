@@ -1,11 +1,14 @@
 import {useEffect} from "react";
 import {Container, Button, Row, Col, Card} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
-import {initialContests} from "../../../mock.ts";
+import {usePunchlinePostContestsApi} from "../../../hooks/punchlinePostApi.ts";
+import {LoadingBlock} from "../../../components/Loading.tsx";
 
 function PunchlinePostComplete() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
+
+  const {isLoading, contests} = usePunchlinePostContestsApi();
 
   useEffect(() => {
     if (id === undefined) {
@@ -40,22 +43,22 @@ function PunchlinePostComplete() {
           <h2 className="mb-5">
             こんなお題もどうですか
           </h2>
+          {isLoading && <LoadingBlock />}
           <Row xs={1} sm={2} md={4} className="g-4 mb-5">
-            {initialContests.filter((c) => c.id <= 8).map((c) => (
+            {contests?.map((c) => (
               <Col key={c.id}>
                 <Card>
                   <Link to={`/punchline/post/${c.id}`} >
                     <Card.Img
                       variant="top"
-                      src={`https://picsum.photos/seed/${c.imageNumber}/400/400`}
-                      alt={`Card image ${c.imageNumber}`}
+                      src={c.imageUrl}
+                      alt={`Card image`}
                       style={{ cursor: "pointer" }}
                     />
                   </Link>
                   <Card.Body>
                     <Card.Title>{c.title}</Card.Title>
                   </Card.Body>
-                  <Card.Footer>回答数 999</Card.Footer>
                 </Card>
               </Col>
             ))}

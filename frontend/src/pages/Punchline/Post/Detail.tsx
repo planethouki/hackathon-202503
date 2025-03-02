@@ -1,19 +1,14 @@
-import {useEffect, useMemo, FormEvent} from "react";
+import {useEffect, FormEvent} from "react";
 import {Container, Image, Form, Button} from "react-bootstrap";
 import {useParams, useNavigate} from "react-router";
-import {initialContests} from "../../../mock.ts";
+import {usePunchlinePostContestDetailApi} from "../../../hooks/punchlinePostApi.ts";
+import {LoadingBlock} from "../../../components/Loading.tsx";
 
 function PunchlinePostDetail() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
-  const idNumber = useMemo(() => Number(id), [id]);
-  const contest = useMemo(() => {
-    const f = initialContests.filter((c) => c.id === idNumber);
-    if (f.length === 0) {
-      return null;
-    }
-    return f[0];
-  }, [idNumber]);
+
+  const {isLoading, contest} = usePunchlinePostContestDetailApi(id);
 
   useEffect(() => {
     if (id === undefined) {
@@ -23,7 +18,7 @@ function PunchlinePostDetail() {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate(`/punchline/post/${idNumber}/confirm`);
+    navigate(`/punchline/post/${id}/confirm`);
   }
 
   return (
@@ -38,11 +33,12 @@ function PunchlinePostDetail() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
+          {isLoading && <LoadingBlock />}
           <h2 className="mb-5">
             お題 {contest?.title}
           </h2>
           <Image
-            src={`https://picsum.photos/seed/${contest?.imageNumber}/600/600`}
+            src={contest?.imageUrl}
             className="mb-5"
           />
         </Container>
@@ -56,17 +52,27 @@ function PunchlinePostDetail() {
           <Form onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label>タイトル</Form.Label>
-              <Form.Control as="textarea" rows={3} placeholder="キャッチーなタイトル" />
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="キャッチーなタイトル"
+                required
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>YouTube ShortsのURL</Form.Label>
-              <Form.Control type="text" placeholder="https://youtube.com/shorts/M0xy9bGhn4Y?feature=shared" />
+              <Form.Control
+                type="text"
+                placeholder="https://youtube.com/shorts/M0xy9bGhn4Y?feature=shared"
+                required
+              />
             </Form.Group>
             <Form.Check
               className="mb-3"
               type="checkbox"
               id="exampleForm.ControlCheckbox1"
               label="私はこの動画に関するすべての権利を保有しています。"
+              required
             />
             <Button variant="primary" type="submit">確認</Button>
           </Form>
