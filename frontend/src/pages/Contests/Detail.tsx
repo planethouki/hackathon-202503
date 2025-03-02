@@ -1,28 +1,24 @@
-import {useEffect, useMemo} from "react";
+import {useEffect} from "react";
 import {Col, Container, Image, Row, Button} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
-import {initialContests, initialPunchlines} from "../../mock.ts";
+import {useContestsDetailApi} from "../../hooks/contestsApi.ts";
+import {LoadingBlock} from "../../components/Loading.tsx";
 
 function ContestsDetail() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
-  const idNumber = useMemo(() => Number(id), [id]);
-  const contest = useMemo(() => {
-    const f = initialContests.filter((c) => c.id === idNumber);
-    if (f.length === 0) {
-      return null;
-    }
-    return f[0];
-  }, [idNumber]);
-  const punchlines = useMemo(() => {
-    return initialPunchlines.filter((p) => p.contestId === idNumber);
-  }, [idNumber]);
+
+  const { isLoading, contest, punchlines } = useContestsDetailApi(id);
 
   useEffect(() => {
     if (id === undefined) {
       navigate("/");
     }
   }, [id]);
+
+  if (!id) {
+    return null;
+  }
 
   return (
     <>
@@ -36,11 +32,12 @@ function ContestsDetail() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
+          {isLoading && <LoadingBlock />}
           <h2 className="mb-5">
             {contest?.title}
           </h2>
           <Image
-            src={`https://picsum.photos/seed/${contest?.imageNumber}/600/600`}
+            src={contest?.imageUrl}
             className="mb-5"
           />
         </Container>
@@ -49,8 +46,9 @@ function ContestsDetail() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f0f8ff" }}>
         <Container>
           <h2 className="mb-5">新着回答</h2>
+          {isLoading && <LoadingBlock />}
           <Row xs={1} sm={2} md={4} className="g-4 mb-5">
-            {punchlines.map((p) => (
+            {punchlines?.map((p) => (
               <Col key={p.id}>
                 <p>
                   <Link to={`/punchlines/${p.id}`}>
