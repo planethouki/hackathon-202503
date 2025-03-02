@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as cors from "cors";
 import home from "./api/home";
+import punchlines from "./api/punchlines";
 
 const app = express();
 
@@ -11,5 +12,6 @@ app.get("/hello", (req, res) => {
 });
 
 app.use("/home", home);
+app.use("/punchlines", punchlines);
 
 export default app;

@@ -1,14 +1,17 @@
 import {useState} from "react";
 import {Container, Button, Row, Col, Card} from "react-bootstrap";
 import {Link} from "react-router";
-import {initialPunchlines, initialContests} from "../../mock.ts";
+import {usePunchlinesLatestApi} from "../../hooks/punchlinesApi.ts";
+import {LoadingBlock} from "../../components/Loading.tsx";
 
 function PunchlinesLatest() {
-  const [count, setCount] = useState(4);
+  const [pageNumber, setPageNumber] = useState(1);
+  const { punchlines, isLoading } = usePunchlinesLatestApi(pageNumber);
 
   const more = () => {
-    setCount((prev) => prev + 4);
+    setPageNumber((prev) => prev + 1);
   }
+
 
   return (
     <>
@@ -17,8 +20,9 @@ function PunchlinesLatest() {
           <div className="mb-5 d-flex justify-content-between">
             <h2>新着回答</h2>
           </div>
+          {isLoading && <LoadingBlock />}
           <Row xs={1} sm={2} md={4} className="g-4 mb-5">
-            {initialPunchlines.filter((p) => p.id <= count).map((p) => (
+            {punchlines?.map((p) => (
               <Col key={p.id}>
                 <Card>
                   <Card.Body>
@@ -36,16 +40,14 @@ function PunchlinesLatest() {
                           referrerPolicy="strict-origin-when-cross-origin"
                           allowFullScreen></iframe>
                   <Card.Footer>
-                    {initialContests.filter((c) => c.id === p.contestId).filter((_, i) => i === 0).map((c) => (
-                      <>
-                        <div className="mb-3">
-                          <span>お題: </span>
-                          <Link to={`/contests/${c.id}`}>
-                            {c.title}
-                          </Link>
-                        </div>
-                      </>
-                    ))}
+                    {p.contest && (
+                      <div className="mb-3">
+                        <span>お題: </span>
+                        <Link to={`/contests/${p.contest.id}`}>
+                          {p.contest.title}
+                        </Link>
+                      </div>
+                    )}
                   </Card.Footer>
                 </Card>
               </Col>
@@ -53,7 +55,7 @@ function PunchlinesLatest() {
           </Row>
           <div>
             <Button variant="primary" onClick={more}>
-              もっと見る
+              もっと見る（未実装）
             </Button>
           </div>
         </Container>

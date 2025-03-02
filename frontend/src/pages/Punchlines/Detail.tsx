@@ -1,35 +1,24 @@
-import {useEffect, useMemo} from "react";
+import {useEffect} from "react";
 import {Container, Button} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
-import {initialPunchlines, initialContests} from "../../mock.ts";
+import {usePunchlinesDetailApi} from "../../hooks/punchlinesApi.ts";
+import {LoadingBlock} from "../../components/Loading.tsx";
 
 function PunchlinesDetail() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
-  const idNumber = useMemo(() => Number(id), [id]);
-  const punchline = useMemo(() => {
-    const f = initialPunchlines.filter((p) => p.id === idNumber);
-    if (f.length === 0) {
-      return null;
-    }
-    return f[0];
-  }, [idNumber]);
-  const contest = useMemo(() => {
-    if (punchline === null) {
-      return null;
-    }
-    const f = initialContests.find((c) => c.id === punchline.id);
-    if (f === undefined) {
-      return null;
-    }
-    return f;
-  }, [punchline]);
+
+  const { isLoading, punchline } = usePunchlinesDetailApi(id);
 
   useEffect(() => {
     if (id === undefined) {
-      navigate("/");
+      navigate("/punchlines/latest");
     }
   }, [id]);
+
+  if (!id) {
+    return null;
+  }
 
   return (
     <>
@@ -43,9 +32,12 @@ function PunchlinesDetail() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
-          <p>
-            お題: <Link to={`/contests/${contest?.id}`}>{contest?.title}</Link>
-          </p>
+          {isLoading && <LoadingBlock />}
+          {punchline?.contest && (
+            <p>
+              お題: <Link to={`/contests/${punchline.contest.id}`}>{punchline.contest.title}</Link>
+            </p>
+          )}
           <h2>
             {punchline?.title}
           </h2>
