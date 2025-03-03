@@ -1,21 +1,32 @@
 import {useEffect} from "react";
 import {Container, Image, Form, Button} from "react-bootstrap";
-import {useParams, useNavigate, Link} from "react-router";
+import {useParams, useNavigate} from "react-router";
 import {usePunchlinePostContestDetailApi} from "../../../hooks/punchlinePostApi.ts";
 import {LoadingBlock} from "../../../components/Loading.tsx";
-import {youTubeUrl} from "../../../mock.ts";
+import {useTitleYouTubeContext} from "../../../contexts/TitleYouTubeContext";
 
 function PunchlinePostConfirm() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
 
+  const { title, youTubeUrl } = useTitleYouTubeContext();
   const {isLoading, contest} = usePunchlinePostContestDetailApi(id);
+
+  useEffect(() => {
+    if (!(title && youTubeUrl)) {
+      navigate("/punchline/post");
+    }
+  }, []);
 
   useEffect(() => {
     if (id === undefined) {
       navigate("/punchline/post");
     }
   }, [id]);
+
+  const onClick = async () => {
+    navigate(`/punchline/post/${id}/complete`);
+  }
 
   return (
     <>
@@ -44,9 +55,7 @@ function PunchlinePostConfirm() {
           <div>
             <div className="mb-3">
               <div>タイトル</div>
-              <div>
-                キャッチーなタイトル
-              </div>
+              <div>{title}</div>
             </div>
             <div className="mb-3">
               <div>
@@ -58,8 +67,8 @@ function PunchlinePostConfirm() {
                         allowFullScreen></iframe>
               </div>
               <div>
-                <a href="https://youtube.com/shorts/M0xy9bGhn4Y?feature=shared" target="_blank" rel="noopener noreferrer">
-                  https://youtube.com/shorts/M0xy9bGhn4Y?feature=shared
+                <a href={youTubeUrl} target="_blank" rel="noopener noreferrer">
+                  {youTubeUrl}
                 </a>
               </div>
             </div>
@@ -71,9 +80,7 @@ function PunchlinePostConfirm() {
               checked
               readOnly
             />
-            <Link to={`/punchline/post/${id}/complete`}>
-              <Button variant="primary">送信</Button>
-            </Link>
+            <Button variant="primary" onClick={onClick}>送信</Button>
           </div>
         </Container>
       </div>

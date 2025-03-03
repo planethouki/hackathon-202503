@@ -3,17 +3,23 @@ import {Container, Image, Form, Button} from "react-bootstrap";
 import {useParams, useNavigate} from "react-router";
 import {usePunchlinePostContestDetailApi} from "../../../hooks/punchlinePostApi.ts";
 import {LoadingBlock} from "../../../components/Loading.tsx";
+import {useTitleYouTubeContext} from "../../../contexts/TitleYouTubeContext";
 
 function PunchlinePostDetail() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
 
   const [validated, setValidated] = useState(false);
-  const [title, setTitle] = useState("");
-  const [youtubeUrl, setYoutubeUrl] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
+  const { title, setTitle, youTubeUrl, setYouTubeUrl } = useTitleYouTubeContext();
+
   const {isLoading, contest} = usePunchlinePostContestDetailApi(id);
+
+  useEffect(() => {
+    setTitle("");
+    setYouTubeUrl("");
+  }, []);
 
   useEffect(() => {
     if (id === undefined) {
@@ -78,8 +84,8 @@ function PunchlinePostDetail() {
                 placeholder="https://youtube.com/shorts/M0xy9bGhn4Y?feature=shared"
                 required
                 pattern="https://.+"
-                value={youtubeUrl}
-                onChange={(e) => setYoutubeUrl(e.target.value)}
+                value={youTubeUrl}
+                onChange={(e) => setYouTubeUrl(e.target.value)}
               />
             </Form.Group>
             <Form.Check

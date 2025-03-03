@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router";
 import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
 import Logout from "./pages/Logout.tsx";
@@ -16,6 +16,7 @@ import PunchlinesDetail from "./pages/Punchlines/Detail.tsx";
 import PunchlinesLatest from "./pages/Punchlines/Latest.tsx";
 import UsersDetail from "./pages/Users/Detail.tsx";
 import Layout from "./layouts/Layout.tsx";
+import { TitleYouTubeProvider } from "./contexts/TitleYouTubeContext";
 import { AuthProvider } from "./AuthProvider";
 import "./App.css";
 
@@ -43,7 +44,7 @@ function App() {
                 />
               </Route>
             </Route>
-            <Route path="punchline">
+            <Route path="punchline" element={<TitleYouTubeProvider><Outlet /></TitleYouTubeProvider>}>
               <Route path="post">
                 <Route index element={<PunchlinePost />} />
                 <Route path=":id" element={<PunchlinePostDetail/>}/>
