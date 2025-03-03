@@ -33,7 +33,10 @@ function PunchlinePostConfirm() {
       setError("お題の情報がロードされていません。");
       return;
     }
-    await send(title, youTubeUrl, contest.id);
+    const { success } = await send(title, youTubeUrl, contest.id);
+    if (!success) {
+      return;
+    }
     navigate(`/punchline/post/${id}/complete`);
   }
 

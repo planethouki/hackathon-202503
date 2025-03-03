@@ -51,7 +51,7 @@ export const usePunchlinePostContestsApi = (): UsePunchlinePostContestsApiReturn
 export const usePunchlinePostContestDetailApi = useContestsDetailApi;
 
 interface UsePunchlinePostCallReturn {
-  send: (title: string, url: string, contestId: string) => Promise<void>;
+  send: (title: string, url: string, contestId: string) => Promise<{ success: boolean }>;
   isLoading: boolean;
   error: string | null;
 }
@@ -66,8 +66,8 @@ export const usePunchlinePostCall = (): UsePunchlinePostCallReturn => {
     try {
       const functions = getFunctions(app, "asia-northeast1");
       const createPunchline = httpsCallable(functions, 'createPunchline');
-      const response = await createPunchline({ title, url, contestId });
-      console.log(response);
+      await createPunchline({ title, url, contestId });
+      return { success: true };
     } catch (err: unknown) {
       console.error(err);
       // errがError型であるか判定
@@ -76,6 +76,7 @@ export const usePunchlinePostCall = (): UsePunchlinePostCallReturn => {
       } else {
         setError("予期しないエラーが発生しました"); // その他の型の場合
       }
+      return { success: false };
     } finally {
       setIsLoading(false);
     }
