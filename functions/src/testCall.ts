@@ -3,7 +3,7 @@ import {getFirestore} from "firebase-admin/firestore";
 
 const db = getFirestore();
 
-export const createPunchline = onCall({
+export const onCallTest = onCall({
   cors: true,
 }, async (request) => {
   await db.collection("debris").add({
