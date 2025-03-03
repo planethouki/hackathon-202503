@@ -49,3 +49,4 @@ export const api = onRequest(apiApp);
 export * from "./generateContest";
 export * from "./createUserDocument";
 export * from "./testCall";
+export * from "./call";
