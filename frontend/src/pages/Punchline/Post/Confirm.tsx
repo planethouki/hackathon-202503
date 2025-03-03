@@ -1,7 +1,7 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {Container, Image, Form, Button} from "react-bootstrap";
 import {useParams, useNavigate} from "react-router";
-import {usePunchlinePostContestDetailApi} from "../../../hooks/punchlinePostApi.ts";
+import {usePunchlinePostContestDetailApi, usePunchlinePostCall} from "../../../hooks/punchlinePostApi.ts";
 import {LoadingBlock} from "../../../components/Loading.tsx";
 import {useTitleYouTubeContext} from "../../../contexts/TitleYouTubeContext";
 
@@ -11,6 +11,9 @@ function PunchlinePostConfirm() {
 
   const { title, youTubeUrl } = useTitleYouTubeContext();
   const {isLoading, contest} = usePunchlinePostContestDetailApi(id);
+  const {isLoading: isSending, send, error: sendError} = usePunchlinePostCall();
+
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!(title && youTubeUrl)) {
@@ -25,6 +28,12 @@ function PunchlinePostConfirm() {
   }, [id]);
 
   const onClick = async () => {
+    setError(null);
+    if (!contest) {
+      setError("お題の情報がロードされていません。");
+      return;
+    }
+    await send(title, youTubeUrl, contest.id);
     navigate(`/punchline/post/${id}/complete`);
   }
 
@@ -40,7 +49,7 @@ function PunchlinePostConfirm() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
-          {isLoading && <LoadingBlock />}
+          {(isLoading || isSending) && <LoadingBlock />}
           <h2 className="mb-5">
             お題 {contest?.title}
           </h2>
@@ -80,7 +89,13 @@ function PunchlinePostConfirm() {
               checked
               readOnly
             />
-            <Button variant="primary" onClick={onClick}>送信</Button>
+            <Button variant="primary" onClick={onClick} disabled={(isLoading || isSending)}>送信</Button>
+            <div>
+              {error}
+            </div>
+            <div>
+              {sendError}
+            </div>
           </div>
         </Container>
       </div>

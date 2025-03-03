@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
+import { getFunctions, httpsCallable } from "firebase/functions";
 import { Contest } from "../libs/interfaces.ts";
 import { useContestsDetailApi } from "./contestsApi.ts";
+import {app} from "../firebase.ts";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -47,3 +49,37 @@ export const usePunchlinePostContestsApi = (): UsePunchlinePostContestsApiReturn
 };
 
 export const usePunchlinePostContestDetailApi = useContestsDetailApi;
+
+interface UsePunchlinePostCallReturn {
+  send: (title: string, url: string, contestId: string) => Promise<void>;
+  isLoading: boolean;
+  error: string | null;
+}
+
+export const usePunchlinePostCall = (): UsePunchlinePostCallReturn => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const postPunchline = useCallback(async (title: string, url: string, contestId: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const functions = getFunctions(app, "asia-northeast1");
+      const createPunchline = httpsCallable(functions, 'createPunchline');
+      const response = await createPunchline({ title, url, contestId });
+      console.log(response);
+    } catch (err: unknown) {
+      console.error(err);
+      // errがError型であるか判定
+      if (err instanceof Error) {
+        setError(err.message); // Error のメッセージを使用
+      } else {
+        setError("予期しないエラーが発生しました"); // その他の型の場合
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  return { send: postPunchline, isLoading, error };
+};
