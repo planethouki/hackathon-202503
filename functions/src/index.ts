@@ -23,7 +23,7 @@ setGlobalOptions({
 
 initializeApp();
 
-import fugaApp from "./fuga";
+import testApp from "./testExpress";
 import apiApp from "./api";
 
 const testEnvVar = defineSecret("TEST_ENVIRONMENT_VARIABLE");
@@ -43,7 +43,7 @@ export const timerTest = onSchedule(schedule, async () => {
   logger.info("Hourly timer executed.");
 });
 
-export const fuga = onRequest(fugaApp);
+export const testExpress = onRequest(testApp);
 export const api = onRequest(apiApp);
 
 export * from "./generateContest";
