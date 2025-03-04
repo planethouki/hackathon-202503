@@ -20,19 +20,24 @@ app.get("/latest", async (req, res) => {
       .limit(4)
       .get();
 
-    const [
-      totalPunchlinesSnap,
-      punchlineSnap,
-    ] = await Promise.all([
+    const {
+      totalPunchlines,
+      punchlines,
+    } = await Promise.all([
       totalPunchlinesDoc,
       punchlinesQuery,
-    ]);
-
-    const totalPunchlines = totalPunchlinesSnap.exists ?
-      totalPunchlinesSnap.data()?.count || 0 :
-      0;
-
-    const punchlines = punchlineSnap.docs.map((doc) => doc.data());
+    ]).then(([totalPunchlinesSnap, punchlineSnap]) => {
+      const totalPunchlines = totalPunchlinesSnap.exists ?
+        totalPunchlinesSnap.data()?.count as number || 0 :
+        0;
+      const punchlines = punchlineSnap
+        .docs
+        .map((doc) => doc.data());
+      return {
+        totalPunchlines,
+        punchlines,
+      };
+    });
 
     const contestsDetailsQuery = db
       .collection("contests")

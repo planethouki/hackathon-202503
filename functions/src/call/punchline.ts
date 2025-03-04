@@ -24,6 +24,16 @@ export const createPunchline = onCall<Punchline>({
     ...punchline,
   });
 
+  const count = await db
+    .collection("punchlines")
+    .get()
+    .then((q) => q.size);
+
+  await db
+    .collection("parameters")
+    .doc("punchlines")
+    .set({count}, {merge: true});
+
   return {
     success: true,
     message: "Punchline added successfully",
