@@ -27,10 +27,34 @@ app.get("/:id", async (req, res) => {
     .then((snap) => snap.docs
       .map((doc) => doc.data()));
 
+  const usersDetailsQuery = db
+    .collection("users")
+    .where("id", "in", punchlines.map((p) => p.userId))
+    .get();
+
+  const [
+    usersDetails,
+  ] = await Promise.all([usersDetailsQuery])
+    .then(([u]) => {
+      return [
+        u.docs.map((doc) => doc.data()),
+      ];
+    });
+
+  const updatedPunchlines = punchlines.map((punchline) => {
+    const matchingUser = usersDetails.find(
+      (contest) => contest.id === punchline.userId
+    );
+    return {
+      ...punchline,
+      user: matchingUser || null,
+    };
+  });
+
   res.status(200).json({
     status: "success",
     contest: contests[0],
-    punchlines,
+    punchlines: updatedPunchlines,
   });
 });
 

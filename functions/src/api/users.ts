@@ -18,6 +18,7 @@ app.get("/:id", async (req, res) => {
     res.status(404).send("No users found!");
     return;
   }
+
   const punchlines = await db
     .collection("punchlines")
     .where("userId", "==", id)
@@ -27,11 +28,34 @@ app.get("/:id", async (req, res) => {
     .then((snap) => snap.docs
       .map((doc) => doc.data()));
 
+  const contestsDetailsQuery = db
+    .collection("contests")
+    .where("id", "in", punchlines.map((p) => p.contestId))
+    .get();
+
+  const [
+    contestsDetails,
+  ] = await Promise.all([contestsDetailsQuery])
+    .then(([c]) => {
+      return [
+        c.docs.map((doc) => doc.data()),
+      ];
+    });
+
+  const updatedPunchlines = punchlines.map((punchline) => {
+    const matchingContest = contestsDetails.find(
+      (contest) => contest.id === punchline.contestId
+    );
+    return {
+      ...punchline,
+      contest: matchingContest || null,
+    };
+  });
 
   res.status(200).json({
     status: "success",
     user: users[0],
-    punchlines,
+    punchlines: updatedPunchlines,
   });
 });
 
