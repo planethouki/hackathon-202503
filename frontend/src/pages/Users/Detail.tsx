@@ -1,8 +1,9 @@
 import {useEffect} from "react";
-import {Card, Col, Container, Image, Row} from "react-bootstrap";
-import {useParams, useNavigate, Link} from "react-router";
+import {Col, Container, Image, Row} from "react-bootstrap";
+import {useParams, useNavigate} from "react-router";
 import {useUsersDetailApi} from "../../hooks/usersApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
+import PunchlineCard from "../../components/PunchlineCard.tsx";
 
 function UsersDetail() {
   const navigate = useNavigate();
@@ -57,22 +58,7 @@ function UsersDetail() {
           <Row xs={1} sm={2} md={4} className="g-4">
             {punchlines?.map((p) => (
               <Col key={p.id}>
-                <Card>
-                  <Card.Body>
-                    <Card.Title>
-                      <span>回答: </span>
-                      <Link to={`/punchlines/${p.id}`}>
-                        {p.title}
-                      </Link>
-                    </Card.Title>
-                  </Card.Body>
-                  <iframe src={p.url}
-                          style={{ aspectRatio: 9/16, width: "100%" }}
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          referrerPolicy="strict-origin-when-cross-origin"
-                          allowFullScreen></iframe>
-                </Card>
+                <PunchlineCard punchline={p} showUser={false} />
               </Col>
             ))}
           </Row>
