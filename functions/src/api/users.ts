@@ -28,18 +28,21 @@ app.get("/:id", async (req, res) => {
     .then((snap) => snap.docs
       .map((doc) => doc.data()));
 
-  const contestsDetailsQuery = db
+  if (punchlines.length === 0) {
+    res.status(200).json({
+      status: "success",
+      user: users[0],
+      punchlines,
+    });
+    return;
+  }
+
+  const contestsDetails = await db
     .collection("contests")
     .where("id", "in", punchlines.map((p) => p.contestId))
-    .get();
-
-  const [
-    contestsDetails,
-  ] = await Promise.all([contestsDetailsQuery])
-    .then(([c]) => {
-      return [
-        c.docs.map((doc) => doc.data()),
-      ];
+    .get()
+    .then((c) => {
+      return c.docs.map((doc) => doc.data());
     });
 
   const updatedPunchlines = punchlines.map((punchline) => {
