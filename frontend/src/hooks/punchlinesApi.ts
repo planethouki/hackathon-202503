@@ -53,12 +53,14 @@ export const usePunchlinesDetailApi = (id: string | null | undefined): UsePunchl
 
 interface UsePunchlinesLatestApiReturn {
   punchlines: Punchline[] | null;
+  totalPunchlines: number | null;
   isLoading: boolean;
   error: string | null;
   refresh: () => Promise<void>;
 }
 
 export const usePunchlinesLatestApi = (pageNumber = 1): UsePunchlinesLatestApiReturn => {
+  const [totalPunchlines, setTotalPunchlines] = useState<number | null>(null);
   const [punchlines, setPunchlines] = useState<Punchline[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -68,7 +70,9 @@ export const usePunchlinesLatestApi = (pageNumber = 1): UsePunchlinesLatestApiRe
     setError(null);
     try {
       const res = await fetch(new URL(`/punchlines/latest?page=${pageNumber}`, apiUrl)).then(res => res.json());
+      const totalPunchlines = res.totalPunchlines || null;
       const punchlines: Punchline[] = res.punchlines || null;
+      setTotalPunchlines(totalPunchlines);
       setPunchlines(punchlines);
     } catch (err: unknown) {
       // errがError型であるか判定
@@ -90,5 +94,5 @@ export const usePunchlinesLatestApi = (pageNumber = 1): UsePunchlinesLatestApiRe
     await fetchPunchlinesLatest();
   };
 
-  return { punchlines, isLoading, error, refresh };
+  return { totalPunchlines, punchlines, isLoading, error, refresh };
 };

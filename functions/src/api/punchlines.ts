@@ -7,17 +7,26 @@ const app = express();
 
 app.get("/latest", async (req, res) => {
   try {
-    const punchlinesQuery = await db
+    const page = parseInt(req.query.page as string, 10) || 1;
+
+    const totalPunchlinesQuery = db.collection("punchlines").get();
+
+    const punchlinesQuery = db
       .collection("punchlines")
       .orderBy("createdAt", "desc")
+      .offset((page - 1) * 4)
       .limit(4)
       .get();
 
     const [
+      totalPunchlinesSnap,
       punchlineSnap,
     ] = await Promise.all([
+      totalPunchlinesQuery,
       punchlinesQuery,
     ]);
+
+    const totalPunchlines = totalPunchlinesSnap.size;
 
     const punchlines = punchlineSnap.docs.map((doc) => doc.data());
 
@@ -58,6 +67,7 @@ app.get("/latest", async (req, res) => {
     res.status(200).json({
       success: true,
       punchlines: updatedPunchlines,
+      totalPunchlines,
     });
   } catch (error) {
     console.error("Error fetching data: ", error);

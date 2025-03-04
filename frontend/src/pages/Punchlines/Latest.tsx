@@ -1,17 +1,52 @@
-import {useState} from "react";
-import {Container, Button, Row, Col, Card} from "react-bootstrap";
+import {useState, useMemo} from "react";
+import {Container, Row, Col, Card, Pagination} from "react-bootstrap";
 import {Link} from "react-router";
 import {usePunchlinesLatestApi} from "../../hooks/punchlinesApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
 
 function PunchlinesLatest() {
   const [pageNumber, setPageNumber] = useState(1);
-  const { punchlines, isLoading } = usePunchlinesLatestApi(pageNumber);
+  const { totalPunchlines, punchlines, isLoading } = usePunchlinesLatestApi(pageNumber);
 
-  const more = () => {
-    setPageNumber((prev) => prev + 1);
+  const maxPage = useMemo(() => {
+    return totalPunchlines ? Math.ceil(totalPunchlines / 4) : 1;
+  }, [totalPunchlines]);
+
+  const handlePageChange = (number: number) => {
+    setPageNumber(number);
+  };
+
+  function PaginationComponent() {
+    return (
+      <Pagination>
+        <Pagination.First
+          onClick={() => handlePageChange(1)}
+          disabled={pageNumber === 1}
+        />
+        <Pagination.Prev
+          onClick={() => handlePageChange(pageNumber - 1)}
+          disabled={pageNumber === 1}
+        />
+        {Array.from({ length: maxPage }, (_, index) => (
+          <Pagination.Item
+            key={index + 1}
+            active={index + 1 === pageNumber}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </Pagination.Item>
+        ))}
+        <Pagination.Next
+          onClick={() => handlePageChange(pageNumber + 1)}
+          disabled={pageNumber === maxPage}
+        />
+        <Pagination.Last
+          onClick={() => handlePageChange(maxPage)}
+          disabled={pageNumber === maxPage}
+        />
+      </Pagination>
+    )
   }
-
 
   return (
     <>
@@ -53,14 +88,9 @@ function PunchlinesLatest() {
               </Col>
             ))}
           </Row>
-          <div>
-            <Button variant="primary" onClick={more}>
-              もっと見る（未実装）
-            </Button>
-          </div>
+          <PaginationComponent />
         </Container>
       </div>
-
     </>
   );
 }
