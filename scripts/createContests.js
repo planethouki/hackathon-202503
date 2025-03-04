@@ -1,15 +1,12 @@
 const admin = require("firebase-admin");
 
-const generateRandomDate = (start, end) => {
-  const randomTimestamp = new Date(
+const generateRandomDate = (startStr, endStr) => {
+  const start = new Date(startStr);
+  const end = new Date(endStr);
+  return new Date(
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
   );
-  return randomTimestamp.toISOString();
 };
-
-const startDate = new Date("2025-01-01T00:00:00Z");
-const endDate = new Date("2025-01-31T23:59:59Z");
-
 
 const initialContests = [
   { id: "a1b2c3d4e5f6g7h8i9j0", title: "よく柿食う客は？", imageUrl: "https://picsum.photos/seed/101/400/400" },
@@ -21,7 +18,12 @@ const initialContests = [
   { id: "i1j2k3l4m5n6o7p8q9r0", title: "ロボットのピクニック", imageUrl: "https://picsum.photos/seed/107/400/400" },
   { id: "s1t2u3v4w5x6y7z8a9b0", title: "世界一バランスの悪い象", imageUrl: "https://picsum.photos/seed/108/400/400" },
 ].map((c) => {
-  return {createdAt: generateRandomDate(startDate, endDate), ...c}
+  return {
+    createdAt: generateRandomDate("2024-12-01T00:00:00Z", "2024-12-31T23:59:59Z"),
+    pollStartDate: generateRandomDate("2025-01-01T00:00:00Z", "2025-03-31T23:59:59Z"),
+    pollEndDate: generateRandomDate("2025-02-01T00:00:00Z", "2025-05-31T23:59:59Z"),
+    ...c
+  }
 });
 
 
