@@ -14,6 +14,8 @@ function PunchlinePostComplete() {
     if (id === undefined) {
       navigate("/punchline/post");
     }
+
+    window.scrollTo(0, 0);
   }, [id]);
 
   return (

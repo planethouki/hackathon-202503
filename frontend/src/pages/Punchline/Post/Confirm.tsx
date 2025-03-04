@@ -27,6 +27,8 @@ function PunchlinePostConfirm() {
     if (!(title && youTubeUrl)) {
       navigate("/punchline/post");
     }
+
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {

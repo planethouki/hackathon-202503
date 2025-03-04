@@ -17,6 +17,8 @@ function PunchlinePostDetail() {
   const {isLoading, contest} = usePunchlinePostContestDetailApi(id);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     setTitle("");
     setYouTubeUrl("");
   }, []);
