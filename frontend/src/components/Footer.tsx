@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
         </Row>
         <Row>
           <Col className="text-center py-3">
-            <small>© 2025 未定. All rights reserved.</small>
+            <small>© 2025 ROFLoL. All rights reserved.</small>
           </Col>
         </Row>
       </Container>
