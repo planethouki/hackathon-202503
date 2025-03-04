@@ -19,7 +19,7 @@ export const createPunchline = onCall<Punchline>({
 
   await db.collection("punchlines").doc(id).set({
     id,
-    createdAt: new Date(),
+    createdAt: new Date().toISOString(),
     userId: uid,
     ...punchline,
   });

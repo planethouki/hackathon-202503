@@ -1,9 +1,14 @@
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {Container, Image, Form, Button} from "react-bootstrap";
 import {useParams, useNavigate} from "react-router";
 import {usePunchlinePostContestDetailApi, usePunchlinePostCall} from "../../../hooks/punchlinePostApi.ts";
 import {LoadingBlock} from "../../../components/Loading.tsx";
 import {useTitleYouTubeContext} from "../../../contexts/TitleYouTubeContext";
+
+const extractYouTubeId = (url: string): string | null => {
+  const match = url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+};
 
 function PunchlinePostConfirm() {
   const navigate = useNavigate();
@@ -12,6 +17,9 @@ function PunchlinePostConfirm() {
   const { title, youTubeUrl } = useTitleYouTubeContext();
   const {isLoading, contest} = usePunchlinePostContestDetailApi(id);
   const {isLoading: isSending, send, error: sendError} = usePunchlinePostCall();
+  const youTubeEmbedUrl = useMemo(() => {
+    return `https://www.youtube.com/embed/${extractYouTubeId(youTubeUrl)}`;
+  }, [youTubeUrl]);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -33,7 +41,7 @@ function PunchlinePostConfirm() {
       setError("お題の情報がロードされていません。");
       return;
     }
-    const { success } = await send(title, youTubeUrl, contest.id);
+    const { success } = await send(title, youTubeEmbedUrl, contest.id);
     if (!success) {
       return;
     }
@@ -71,7 +79,7 @@ function PunchlinePostConfirm() {
             </div>
             <div className="mb-3">
               <div>
-                <iframe src={youTubeUrl}
+                <iframe src={youTubeEmbedUrl}
                         style={{ aspectRatio: 9/16, width: "100%", maxWidth: 320 }}
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
