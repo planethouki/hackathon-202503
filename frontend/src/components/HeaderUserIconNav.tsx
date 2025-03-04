@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, NavDropdown, Image } from "react-bootstrap";
+import { Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router";
 
 const HeaderUserIconNav: React.FC = () => {
@@ -7,13 +7,7 @@ const HeaderUserIconNav: React.FC = () => {
     <Nav>
       <NavDropdown
         title={
-          <Image
-            src="/vite.svg"
-            roundedCircle
-            alt="ユーザーアイコン"
-            width="30"
-            height="30"
-          />
+          <i className="bi bi-emoji-smile" style={{ fontSize: '2rem' }}></i>
         }
         id="user-dropdown"
         align="end"
