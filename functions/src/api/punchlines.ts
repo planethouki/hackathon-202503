@@ -9,8 +9,10 @@ app.get("/latest", async (req, res) => {
   try {
     const page = parseInt(req.query.page as string, 10) || 1;
 
-    const totalPunchlinesQuery = db.collection("punchlines").get();
-
+    const totalPunchlinesDoc = db
+      .collection("parameters")
+      .doc("punchlines")
+      .get();
     const punchlinesQuery = db
       .collection("punchlines")
       .orderBy("createdAt", "desc")
@@ -22,11 +24,13 @@ app.get("/latest", async (req, res) => {
       totalPunchlinesSnap,
       punchlineSnap,
     ] = await Promise.all([
-      totalPunchlinesQuery,
+      totalPunchlinesDoc,
       punchlinesQuery,
     ]);
 
-    const totalPunchlines = totalPunchlinesSnap.size;
+    const totalPunchlines = totalPunchlinesSnap.exists ?
+      totalPunchlinesSnap.data()?.count || 0 :
+      0;
 
     const punchlines = punchlineSnap.docs.map((doc) => doc.data());
 
