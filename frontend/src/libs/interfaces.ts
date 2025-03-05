@@ -14,6 +14,8 @@ export interface Contest {
   title: string;
   imageUrl: string;
   createdAt: string;
+  pollStartDate: string;
+  pollEndDate: string;
   punchlineCount?: number;
 }
 
