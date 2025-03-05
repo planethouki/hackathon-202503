@@ -100,7 +100,9 @@ function Home() {
                   <Card.Body>
                     <Card.Title>{c.title}</Card.Title>
                   </Card.Body>
-                  <Card.Footer>回答数 999</Card.Footer>
+                  {c.punchlineCount !== undefined &&
+                    <Card.Footer>回答数 {c.punchlineCount}</Card.Footer>
+                  }
                 </Card>
               </Col>
             ))}

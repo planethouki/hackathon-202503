@@ -47,15 +47,25 @@ app.get("/", async (req, res) => {
       .collection("users")
       .where("id", "in", punchlines.map((p) => p.userId))
       .get();
+    const punchlinesDetailsQuery = db
+      .collection("punchlines")
+      .where("contestId", "in", contests.map((c) => c.id))
+      .get();
 
     const [
       contestsDetails,
       usersDetails,
-    ] = await Promise.all([contestsDetailsQuery, usersDetailsQuery])
-      .then(([c, u]) => {
+      punchlineDetails,
+    ] = await Promise.all([
+      contestsDetailsQuery,
+      usersDetailsQuery,
+      punchlinesDetailsQuery,
+    ])
+      .then(([c, u, p]) => {
         return [
           c.docs.map((doc) => doc.data()),
           u.docs.map((doc) => doc.data()),
+          p.docs.map((doc) => doc.data()),
         ];
       });
 
@@ -73,9 +83,19 @@ app.get("/", async (req, res) => {
       };
     });
 
+    const updatedContests = contests.map((contest) => {
+      const punchlineCount = punchlineDetails
+        .filter((p) => p.contestId === contest.id)
+        .length;
+      return {
+        ...contest,
+        punchlineCount,
+      };
+    });
+
     res.status(200).json({
       success: true,
-      contests,
+      contests: updatedContests,
       punchlines: updatedPunchlines,
       users,
     });
