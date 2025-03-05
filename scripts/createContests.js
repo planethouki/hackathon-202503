@@ -14,7 +14,7 @@ const initialContests = [
     title: "よく柿食う客は？",
     imageUrl: "https://picsum.photos/seed/101/400/400",
     pollStartDate: "2025-01-14T09:02:16.458Z",
-    pollEndDate: "2025-03-08T01:22:43.035Z",
+    pollEndDate: "2025-04-08T01:22:43.035Z",
     createdAt: "2024-12-08T15:05:48.853Z",
   },
   {
