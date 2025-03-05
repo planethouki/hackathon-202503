@@ -5,7 +5,7 @@ const generateRandomDate = (startStr, endStr) => {
   const end = new Date(endStr);
   return new Date(
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
-  );
+  ).toISOString();
 };
 
 const initialContests = [
