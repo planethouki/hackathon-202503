@@ -5,8 +5,8 @@ export interface Punchline {
   contestId: string;
   userId: string;
   createdAt: string;
-  user: User | null;
-  contest: Contest | null;
+  user?: User;
+  contest?: Contest;
 }
 
 export interface Contest {
@@ -19,9 +19,9 @@ export interface Contest {
 
 export interface User {
   id: string;
-  authenticateId: string | null;
-  displayName: string | null;
-  bio: string | null;
-  photoURL: string | null;
+  authenticateId?: string;
+  displayName?: string;
+  bio?: string;
+  photoURL?: string;
   createdAt: string;
 }
