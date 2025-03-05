@@ -38,6 +38,11 @@ function PunchlinePost() {
                   <Card.Body>
                     <Card.Title>{c.title}</Card.Title>
                   </Card.Body>
+                  {c.punchlineCount !== undefined &&
+                    <Card.Footer>
+                      回答数: {c.punchlineCount}
+                    </Card.Footer>
+                  }
                 </Card>
               </Col>
             ))}

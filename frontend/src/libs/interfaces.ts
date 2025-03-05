@@ -14,6 +14,7 @@ export interface Contest {
   title: string;
   imageUrl: string;
   createdAt: string;
+  punchlineCount?: number;
 }
 
 export interface User {

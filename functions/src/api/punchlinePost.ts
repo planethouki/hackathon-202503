@@ -7,28 +7,44 @@ const app = express();
 
 app.get("/contests", async (req, res) => {
   try {
-    const contestsQuery = await db
+    const contests = await db
       .collection("contests")
       .where("pollStartDate", "<=", new Date().toISOString())
       .where("pollEndDate", ">=", new Date().toISOString())
       .orderBy("createdAt", "desc")
-      .get();
+      .get()
+      .then((snapshot) => {
+        return snapshot
+          .docs
+          .map((doc) => doc.data())
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 8);
+      });
 
-    const [
-      contestsSnap,
-    ] = await Promise.all([
-      contestsQuery,
-    ]);
+    const punchlines = await db
+      .collection("punchlines")
+      .where("contestId", "in", contests.map((c) => c.id))
+      .get()
+      .then((snapshot) =>
+        snapshot
+          .docs
+          .map((doc) => doc.data())
+      );
 
-    const contests = contestsSnap
-      .docs
-      .map((doc) => doc.data())
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 8);
+    const updatedContests = contests
+      .map((c) => {
+        const count = punchlines
+          .filter((p) => p.contestId === c.id)
+          .length;
+        return {
+          punchlineCount: count,
+          ...c,
+        };
+      });
 
     res.status(200).json({
       success: true,
-      contests,
+      contests: updatedContests,
     });
   } catch (error) {
     console.error("Error fetching data: ", error);
