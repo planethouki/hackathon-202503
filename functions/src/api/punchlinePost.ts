@@ -9,6 +9,9 @@ app.get("/contests", async (req, res) => {
   try {
     const contestsQuery = await db
       .collection("contests")
+      .where("pollStartDate", "<=", new Date().toISOString())
+      .where("pollEndDate", ">=", new Date().toISOString())
+      .orderBy("createdAt", "desc")
       .get();
 
     const [
