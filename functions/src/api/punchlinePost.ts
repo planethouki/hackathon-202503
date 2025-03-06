@@ -9,8 +9,8 @@ app.get("/contests", async (req, res) => {
   try {
     const contests = await db
       .collection("contests")
-      .where("pollStartDate", "<=", new Date().toISOString())
-      .where("pollEndDate", ">=", new Date().toISOString())
+      .where("postStartDate", "<=", new Date().toISOString())
+      .where("postEndDate", ">=", new Date().toISOString())
       .orderBy("createdAt", "desc")
       .get()
       .then((snapshot) => {
