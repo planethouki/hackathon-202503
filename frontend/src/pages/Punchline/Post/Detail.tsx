@@ -1,4 +1,4 @@
-import {useEffect, useState, FormEvent} from "react";
+import {useEffect, useState, FormEvent, useMemo} from "react";
 import {Container, Image, Form, Button} from "react-bootstrap";
 import {useParams, useNavigate} from "react-router";
 import {usePunchlinePostContestDetailApi} from "../../../hooks/punchlinePostApi.ts";
@@ -29,6 +29,17 @@ function PunchlinePostDetail() {
     }
   }, [id]);
 
+  const canPost = useMemo(() => {
+    if (!contest) {
+      return false;
+    }
+
+    const start = new Date(contest.postStartDate);
+    const end = new Date(contest.postEndDate);
+    const current = new Date();
+    return start < current && current < end;
+  }, [contest]);
+
   const onChange = (e: FormEvent<HTMLFormElement>)=> {
     const form = e.currentTarget;
     setValidated(form.checkValidity());
@@ -39,29 +50,20 @@ function PunchlinePostDetail() {
     navigate(`/punchline/post/${id}/confirm`);
   }
 
-  return (
-    <>
-      <Container>
-        <div className="mt-5 mb-5">
-          <Container>
-            <h1>お題詳細</h1>
-          </Container>
-        </div>
-      </Container>
-
+  function Expired() {
+    return (
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
-          {isLoading && <LoadingBlock />}
-          <h2 className="mb-5">
-            お題 {contest?.title}
-          </h2>
-          <Image
-            src={contest?.imageUrl}
-            className="mb-5"
-          />
+          <div className="mb-5">
+            回答期限を過ぎています。
+          </div>
         </Container>
       </div>
+    );
+  }
 
+  function PostForm() {
+    return (
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           <h2 className="mb-5">
@@ -103,6 +105,33 @@ function PunchlinePostDetail() {
           </Form>
         </Container>
       </div>
+    );
+  }
+
+  return (
+    <>
+      <Container>
+        <div className="mt-5 mb-5">
+          <Container>
+            <h1>お題詳細</h1>
+          </Container>
+        </div>
+      </Container>
+
+      <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
+        <Container>
+          {isLoading && <LoadingBlock />}
+          <h2 className="mb-5">
+            お題 {contest?.title}
+          </h2>
+          <Image
+            src={contest?.imageUrl}
+            className="mb-5"
+          />
+        </Container>
+      </div>
+
+      {canPost ? <PostForm /> : <Expired />}
     </>
   );
 }

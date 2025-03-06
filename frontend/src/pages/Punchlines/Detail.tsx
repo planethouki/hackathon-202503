@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 import {Container, Button} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {usePunchlinesDetailApi} from "../../hooks/punchlinesApi.ts";
@@ -15,6 +15,18 @@ function PunchlinesDetail() {
       navigate("/punchlines/latest");
     }
   }, [id]);
+
+  const canPost = useMemo(() => {
+    if (!(punchline && punchline.contest)) {
+      return false;
+    }
+
+    const start = new Date(punchline.contest.postStartDate);
+    const end = new Date(punchline.contest.postEndDate);
+    const current = new Date();
+    console.log(start, end, current);
+    return start < current && current < end;
+  }, [punchline]);
 
   if (!id) {
     return null;
@@ -49,9 +61,13 @@ function PunchlinesDetail() {
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen></iframe>
           </div>
-          <Link to={`/punchline/post/${id}`}>
-            <Button variant="primary">自分も回答する</Button>
-          </Link>
+          {canPost ? (
+            <Link to={`/punchline/post/${id}`}>
+              <Button variant="primary">自分も回答する</Button>
+            </Link>
+          ) : (
+            <Button variant="primary" disabled>自分も回答する（期限切れです）</Button>
+          )}
         </Container>
       </div>
     </>
