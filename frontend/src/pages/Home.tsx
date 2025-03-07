@@ -23,7 +23,7 @@ function Home() {
     <>
       <div className="mt-5 mb-5">
         <Container>
-          <h1>トップページ</h1>
+          <h1>トップ</h1>
         </Container>
       </div>
 
