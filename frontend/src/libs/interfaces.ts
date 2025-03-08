@@ -29,7 +29,7 @@ export interface Contest {
   postEndDate: string;
   pollStartDate: string;
   pollEndDate: string;
-  punchlineCount?: number;
+  punchlineCount: number;
 }
 
 export interface User {

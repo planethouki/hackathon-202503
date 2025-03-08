@@ -21,30 +21,9 @@ app.get("/contests", async (req, res) => {
           .slice(0, 8);
       });
 
-    const punchlines = await db
-      .collection("punchlines")
-      .where("contestId", "in", contests.map((c) => c.id))
-      .get()
-      .then((snapshot) =>
-        snapshot
-          .docs
-          .map((doc) => doc.data())
-      );
-
-    const updatedContests = contests
-      .map((c) => {
-        const count = punchlines
-          .filter((p) => p.contestId === c.id)
-          .length;
-        return {
-          punchlineCount: count,
-          ...c,
-        };
-      });
-
     res.status(200).json({
       success: true,
-      contests: updatedContests,
+      contests,
     });
   } catch (error) {
     console.error("Error fetching data: ", error);
