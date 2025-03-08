@@ -11,7 +11,7 @@ function PunchlinesDetail() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
 
-  const { isLoading, punchline } = usePunchlinesDetailApi(id);
+  const { isLoading, punchline, refresh: refreshPunchline } = usePunchlinesDetailApi(id);
   const { isLoading: isSending, send, error: sendError } = usePollPostCall();
   const { poll, alreadyPolled, refresh: refreshPollInfo, error: pollInfoError } = usePollInfoGetCall(id);
 
@@ -69,7 +69,7 @@ function PunchlinesDetail() {
     return poll.emoji === emoji;
   }, [poll]);
 
-  const submitPoll = useCallback(async (emoji: string) => {
+  const submitPoll = async (emoji: string) => {
     if (id === undefined) {
       return;
     }
@@ -81,7 +81,8 @@ function PunchlinesDetail() {
       setShowSentError(true);
     }
     await refreshPollInfo();
-  }, [id, send, refreshPollInfo]);
+    await refreshPunchline();
+  };
 
   if (!id) {
     return null;
