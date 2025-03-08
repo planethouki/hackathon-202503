@@ -11,8 +11,10 @@ export const onPollWritten = onDocumentWritten(
       .get()
       .then((q) => q.data());
 
-    await db
-      .doc(`punchlines/${event.params.punchlineId}`)
-      .set({pollCount: count}, {merge: true});
+    const pRef = db.doc(`punchlines/${event.params.punchlineId}`);
+    const pSnap = await pRef.get();
+    if (pSnap.exists) {
+      await pRef.set({pollCount: count}, {merge: true});
+    }
   }
 );
