@@ -60,7 +60,7 @@ export const usePunchlinePostCall = (): UsePunchlinePostCallReturn => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const postPunchline = useCallback(async (title: string, url: string, contestId: string) => {
+  const postPunchline = async (title: string, url: string, contestId: string) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -80,7 +80,7 @@ export const usePunchlinePostCall = (): UsePunchlinePostCallReturn => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  };
 
   return { send: postPunchline, isLoading, error };
 };
