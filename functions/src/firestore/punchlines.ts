@@ -5,10 +5,11 @@ const db = getFirestore();
 
 export const onPunchlineWritten = onDocumentWritten(
   "punchlines/{docId}", async (event) => {
-    const count = await db
+    const {count} = await db
       .collection("punchlines")
+      .count()
       .get()
-      .then((q) => q.size);
+      .then((q) => q.data());
 
     await db
       .collection("parameters")

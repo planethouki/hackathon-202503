@@ -5,10 +5,11 @@ const db = getFirestore();
 
 export const onPollWritten = onDocumentWritten(
   "punchlines/{punchlineId}/polls/{pollId}", async (event) => {
-    const count = await db
+    const {count} = await db
       .collection(`punchlines/${event.params.punchlineId}/polls`)
+      .count()
       .get()
-      .then((q) => q.size);
+      .then((q) => q.data());
 
     await db
       .doc(`punchlines/${event.params.punchlineId}`)
