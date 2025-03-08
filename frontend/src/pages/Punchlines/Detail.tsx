@@ -42,7 +42,6 @@ function PunchlinesDetail() {
     const start = new Date(punchline.contest.postStartDate);
     const end = new Date(punchline.contest.postEndDate);
     const current = new Date();
-    console.log(start, end, current);
     return start < current && current < end;
   }, [punchline]);
 
@@ -54,7 +53,6 @@ function PunchlinesDetail() {
     const start = new Date(punchline.contest.pollStartDate);
     const end = new Date(punchline.contest.pollEndDate);
     const current = new Date();
-    console.log(start, end, current);
     return start < current && current < end;
   }, [punchline]);
 
