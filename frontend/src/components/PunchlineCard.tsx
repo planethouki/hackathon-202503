@@ -37,13 +37,17 @@ const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showContest = tr
           </div>
         }
         {showUser && punchline.user &&
-          <div>
+          <div className="mb-3">
             <span>投稿者: </span>
             <Link to={`/users/${punchline.userId}/profile`}>
               {punchline.user.displayName}
             </Link>
           </div>
         }
+        <div className="mb-3">
+          <span>得票数: </span>
+          <span>{punchline.pollCount}</span>
+        </div>
       </Card.Footer>
     </Card>
   );
