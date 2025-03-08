@@ -13,7 +13,7 @@ export const usePollPostCall = (): UsePollPostCallReturn => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const postPoll = useCallback(async (punchlineId: string, emoji: string) => {
+  const postPoll = async (punchlineId: string, emoji: string) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -33,7 +33,7 @@ export const usePollPostCall = (): UsePollPostCallReturn => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  };
 
   return { send: postPoll, isLoading, error };
 };
