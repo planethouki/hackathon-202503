@@ -16,7 +16,7 @@ function PunchlinesDetail() {
   const { poll, alreadyPolled, refresh: refreshPollInfo, error: pollInfoError } = usePollInfoGetCall(id);
 
   const [showSentSuccess, setShowSentSuccess] = useState(false);
-  const [showSentError, setShowSentError] = useState<boolean>(false);
+  const [showSentError, setShowSentError] = useState(false);
 
   useEffect(() => {
     if (!showSentSuccess) {return}
