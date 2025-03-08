@@ -7,6 +7,16 @@ export interface Punchline {
   createdAt: string;
   user?: User;
   contest?: Contest;
+  polls?: Poll[];
+  pollCount: number;
+}
+
+export interface Poll {
+  id: string;
+  userId: string;
+  createdAt: string;
+  emoji: string;
+  user?: User;
 }
 
 export interface Contest {
