@@ -1,8 +1,9 @@
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import { useAuth } from "../../AuthProvider.tsx";
 import {LoadingBlock} from "../../components/Loading.tsx";
 import PunchlineCard from "../../components/PunchlineCard.tsx";
 import {useUsersDetailApi} from "../../hooks/usersApi.ts";
+import {Link} from "react-router";
 import {Avatar} from "../../components/Avatar.tsx";
 
 function MyPage() {
@@ -24,6 +25,16 @@ function MyPage() {
         <Container>
           <h2 className="mb-5">
             プロフィール
+            <Link to="/mypage/profile/edit" className="d-inline-block ms-3">
+              <Button
+                size="sm"
+                as="span"
+                variant="outline-primary"
+                href="/mypage/profile/edit"
+              >
+                編集
+              </Button>
+            </Link>
           </h2>
           {(isLoading || loading) && <LoadingBlock />}
           <div className="mb-5" style={{ maxWidth: 120 }}>
