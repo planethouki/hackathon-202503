@@ -22,6 +22,7 @@ export const createPunchline = onCall<Punchline>({
     createdAt: new Date().toISOString(),
     userId: uid,
     pollCount: 0,
+    rankingInContest: 0,
     ...punchline,
   });
 
