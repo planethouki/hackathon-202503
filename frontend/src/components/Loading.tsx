@@ -1,7 +1,9 @@
+import {Spinner} from "react-bootstrap";
+
 export function LoadingBlock() {
   return (
-    <div className="d-flex justify-content-center align-items-center">
-      <i className="bi bi-arrow-repeat spin" style={{ fontSize: '2rem' }}></i>
-    </div>
+    <Spinner animation="border" role="status" as="div">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
   )
 }
