@@ -12,13 +12,13 @@ export const createPoll = onCall<Poll>({
   const uid = request.auth?.uid;
 
   if (uid === undefined) {
-    throw new HttpsError("permission-denied", "uid not found");
+    throw new HttpsError("permission-denied", "ログインが必要です");
   }
   const pRef = db.doc(`punchlines/${poll.punchlineId}`);
   const pSnap = await pRef.get();
 
   if (!pSnap.exists) {
-    throw new HttpsError("not-found", "punchline not found");
+    throw new HttpsError("not-found", "対象のデータが見つかりません");
   }
 
   const userPollCountSnap = await pRef
@@ -29,7 +29,7 @@ export const createPoll = onCall<Poll>({
     .get();
 
   if (userPollCountSnap.data().count !== 0) {
-    throw new HttpsError("already-exists", "user poll already exists");
+    throw new HttpsError("already-exists", "既に投票済みです");
   }
 
   const pollId = generateRandomString();

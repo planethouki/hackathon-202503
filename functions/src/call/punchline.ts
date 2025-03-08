@@ -12,7 +12,7 @@ export const createPunchline = onCall<Punchline>({
   const uid = request.auth?.uid;
 
   if (uid === undefined) {
-    throw new HttpsError("permission-denied", "uid not found");
+    throw new HttpsError("permission-denied", "ログインが必要です");
   }
 
   const id = generateRandomString();
