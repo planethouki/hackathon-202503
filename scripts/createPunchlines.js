@@ -22,6 +22,7 @@ const initialPunchlines = [
 ].map((c, i) => {
   return {
     ...c,
+    pollCount: 0,
     createdAt: generateRandomDate(startDate, endDate),
   }
 });
