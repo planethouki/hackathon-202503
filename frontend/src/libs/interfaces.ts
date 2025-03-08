@@ -36,6 +36,7 @@ export interface User {
   authenticateId?: string;
   displayName?: string;
   bio?: string;
+  avatarFileName: string;
   photoURL?: string;
   createdAt: string;
 }

@@ -1,8 +1,9 @@
-import {Col, Container, Image, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import { useAuth } from "../../AuthProvider.tsx";
 import {LoadingBlock} from "../../components/Loading.tsx";
 import PunchlineCard from "../../components/PunchlineCard.tsx";
 import {useUsersDetailApi} from "../../hooks/usersApi.ts";
+import {Avatar} from "../../components/Avatar.tsx";
 
 function MyPage() {
   const { loading, user: authUser } = useAuth();
@@ -26,11 +27,7 @@ function MyPage() {
           </h2>
           {(isLoading || loading) && <LoadingBlock />}
           <div className="mb-5" style={{ maxWidth: 120 }}>
-            <Image
-              roundedCircle
-              src={user?.photoURL || '/default-avatar.png'}
-              className="w-100"
-            />
+            <Avatar />
           </div>
           <div className="">
             ニックネーム: {user?.displayName ?? "未設定"}

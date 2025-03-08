@@ -1,9 +1,10 @@
 import {useEffect} from "react";
-import {Col, Container, Image, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import {useParams, useNavigate} from "react-router";
 import {useUsersDetailApi} from "../../hooks/usersApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
 import PunchlineCard from "../../components/PunchlineCard.tsx";
+import {Avatar} from "../../components/Avatar.tsx";
 
 function UsersDetail() {
   const navigate = useNavigate();
@@ -38,10 +39,7 @@ function UsersDetail() {
             {user?.displayName}
           </h2>
           <div className="mb-5" style={{ maxWidth: 320 }}>
-            <Image
-              roundedCircle
-              src={user?.photoURL || '/default-avatar.png'}
-            />
+            {user && <Avatar fileName={user?.avatarFileName} />}
           </div>
           <div className="mb-5">
             {user?.bio}

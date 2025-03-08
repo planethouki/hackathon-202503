@@ -2,6 +2,7 @@ import { Card, Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router";
 import { useHomeApi } from "../hooks/homeApi.ts";
 import PunchlineCard from "../components/PunchlineCard.tsx";
+import {Avatar} from "../components/Avatar.tsx";
 
 function Loading() {
   return (
@@ -59,17 +60,17 @@ function Home() {
               <Col key={u.id}>
                 <Card style={{ textAlign: "center", cursor: "pointer" }}>
                   <Link to={`/users/${u.id}/profile`}>
-                    <Card.Img
-                      variant="top"
-                      src={u.photoURL || "/default-avatar.png"}
-                      alt={`ユーザー ${u.displayName}`}
+                    <span
+                      className="d-inline-block"
                       style={{
                         width: "150px",
                         height: "150px",
                         borderRadius: "50%",
                         margin: "10px auto",
                       }}
-                    />
+                    >
+                      <Avatar fileName={u.avatarFileName} />
+                    </span>
                   </Link>
                   <Card.Body>
                     <Card.Title>{u.displayName}</Card.Title>
