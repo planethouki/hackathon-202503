@@ -9,6 +9,7 @@ export interface Punchline {
   contest?: Contest;
   polls?: Poll[];
   pollCount: number;
+  rankingInContest: number;
 }
 
 export interface Poll {

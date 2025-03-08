@@ -14,11 +14,46 @@ const youTubeUrl = "https://www.youtube.com/embed/M0xy9bGhn4Y";
 
 
 const initialPunchlines = [
-  { id: "0ySrs5HVwhP1hmFw1UZl", title: "歯科のダンス", url: youTubeUrl, contestId: "a1b2c3d4e5f6g7h8i9j0", userId: "dummy1" },
-  { id: "z2BcL0hqGPS2MnSsk9JP", title: "パンの探検", url: youTubeUrl, contestId: "a1b2c3d4e5f6g7h8i9j0", userId: "dummy1" },
-  { id: "JvbLqobYoHMzzuPLl5n7", title: "猫の逆襲", url: youTubeUrl, contestId: "a1b2c3d4e5f6g7h8i9j0", userId: "dummy1" },
-  { id: "5FSTlSGfDAr2URda2xSc", title: "迫る影！", url: youTubeUrl, contestId: "a1b2c3d4e5f6g7h8i9j0", userId: "dummy1" },
-  { id: "eYc8F7LYWnGtQLg9QR7M", title: "ワンコの大失敗", url: youTubeUrl, contestId: "k1l2m3n4o5p6q7r8s9t0", userId: "dummy2" },
+  {
+    id: "0ySrs5HVwhP1hmFw1UZl",
+    title: "歯科のダンス",
+    url: youTubeUrl,
+    contestId: "a1b2c3d4e5f6g7h8i9j0",
+    userId: "dummy1",
+    rankingInContest: 1,
+  },
+  {
+    id: "z2BcL0hqGPS2MnSsk9JP",
+    title: "パンの探検",
+    url: youTubeUrl,
+    contestId: "a1b2c3d4e5f6g7h8i9j0",
+    userId: "dummy1",
+    rankingInContest: 1,
+  },
+  {
+    id: "JvbLqobYoHMzzuPLl5n7",
+    title: "猫の逆襲",
+    url: youTubeUrl,
+    contestId: "a1b2c3d4e5f6g7h8i9j0",
+    userId: "dummy1",
+    rankingInContest: 1,
+  },
+  {
+    id: "5FSTlSGfDAr2URda2xSc",
+    title: "迫る影！",
+    url: youTubeUrl,
+    contestId: "a1b2c3d4e5f6g7h8i9j0",
+    userId: "dummy1",
+    rankingInContest: 1,
+  },
+  {
+    id: "eYc8F7LYWnGtQLg9QR7M",
+    title: "ワンコの大失敗",
+    url: youTubeUrl,
+    contestId: "k1l2m3n4o5p6q7r8s9t0",
+    userId: "dummy2",
+    rankingInContest: 1,
+  },
 ].map((c, i) => {
   return {
     ...c,
