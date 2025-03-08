@@ -21,6 +21,17 @@ export const createPoll = onCall<Poll>({
     throw new HttpsError("not-found", "punchline not found");
   }
 
+  const userPollCountSnap = await pRef
+    .collection("polls")
+    .where("userId", "==", uid)
+    .limit(1)
+    .count()
+    .get();
+
+  if (userPollCountSnap.data().count !== 0) {
+    throw new HttpsError("already-exists", "user poll already exists");
+  }
+
   const pollId = generateRandomString();
   await pRef.collection("polls").doc(pollId).set({
     id: pollId,
