@@ -127,6 +127,15 @@ function PunchlinesDetail() {
               得票数: {punchline?.pollCount}
             </p>
             <p>
+              <span>順位: {punchline?.rankingInContest}</span>
+              {punchline?.contest &&
+                <>
+                  <span> / </span>
+                  <span>{punchline.contest.punchlineCount}</span>
+                </>
+              }
+            </p>
+            <p>
               投稿日時: {punchline && new Date(punchline?.createdAt).toLocaleString()}
             </p>
           </div>

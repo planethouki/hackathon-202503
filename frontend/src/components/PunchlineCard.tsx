@@ -7,9 +7,10 @@ interface Props {
   punchline: Punchline
   showUser?: boolean
   showContest?: boolean
+  showRanking?: boolean
 }
 
-const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showContest = true }) => {
+const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showContest = true, showRanking = false, }) => {
 
   return (
     <Card>
@@ -48,6 +49,18 @@ const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showContest = tr
           <span>得票数: </span>
           <span>{punchline.pollCount}</span>
         </div>
+        {showRanking &&
+          <div className="mb-3">
+            <span>順位: </span>
+            <span>{punchline.rankingInContest}</span>
+            {punchline?.contest &&
+              <>
+                <span> / </span>
+                <span>{punchline.contest.punchlineCount}</span>
+              </>
+            }
+          </div>
+        }
       </Card.Footer>
     </Card>
   );
