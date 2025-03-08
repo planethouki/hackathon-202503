@@ -12,6 +12,7 @@
     "deploy": "firebase deploy --only hosting"
   },
   "dependencies": {
+    "@twemoji/api": "^15.1.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "firebase": "^11.2.0",
