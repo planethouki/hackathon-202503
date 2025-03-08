@@ -27,7 +27,7 @@ function MyPage() {
           </h2>
           {(isLoading || loading) && <LoadingBlock />}
           <div className="mb-5" style={{ maxWidth: 120 }}>
-            <Avatar />
+            <Avatar fileName={user?.avatarFileName} />
           </div>
           <div className="">
             ニックネーム: {user?.displayName ?? "未設定"}
