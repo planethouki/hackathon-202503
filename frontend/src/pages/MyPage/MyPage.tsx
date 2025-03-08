@@ -1,8 +1,8 @@
 import {Col, Container, Image, Row} from "react-bootstrap";
-import { useAuth } from "../AuthProvider.tsx";
-import {LoadingBlock} from "../components/Loading.tsx";
-import PunchlineCard from "../components/PunchlineCard.tsx";
-import {useUsersDetailApi} from "../hooks/usersApi.ts";
+import { useAuth } from "../../AuthProvider.tsx";
+import {LoadingBlock} from "../../components/Loading.tsx";
+import PunchlineCard from "../../components/PunchlineCard.tsx";
+import {useUsersDetailApi} from "../../hooks/usersApi.ts";
 
 function MyPage() {
   const { loading, user: authUser } = useAuth();

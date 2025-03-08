@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router";
 import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
 import Logout from "./pages/Logout.tsx";
-import MyPage from "./pages/MyPage.tsx";
+import MyPage from "./pages/MyPage/MyPage.tsx";
 import NetaNew from "./pages/Neta/New.tsx";
 import NetaNewDetail from "./pages/Neta/New/Detail.tsx";
 import NetaNewDetailConfirm from "./pages/Neta/New/DetailConfirm.tsx";
