@@ -14,7 +14,7 @@ export const createUserDocument = functions
         id: user.uid,
         authenticationId: user.uid,
         displayName: user.displayName || null,
-        photoURL: user.photoURL || null,
+        avatarFileName: "1F923.svg",
         createdAt: new Date().toISOString(),
       };
 
