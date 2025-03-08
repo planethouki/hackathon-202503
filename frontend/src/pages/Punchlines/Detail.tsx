@@ -3,6 +3,7 @@ import {Container, Button, ButtonGroup, Image} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {usePunchlinesDetailApi} from "../../hooks/punchlinesApi.ts";
 import {usePollPostCall} from "../../hooks/pollPostApi.ts";
+import {usePollInfoGetCall} from "../../hooks/pollPostApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
 import {Development} from "../../components/Development.tsx";
 
@@ -12,6 +13,7 @@ function PunchlinesDetail() {
 
   const { isLoading, punchline } = usePunchlinesDetailApi(id);
   const { isLoading: isSending, send, error: sendError } = usePollPostCall();
+  const { poll, alreadyPolled, refresh: refreshPollInfo, error: pollInfoError } = usePollInfoGetCall(id);
 
   const [showSentSuccess, setShowSentSuccess] = useState(false);
   const [showSentError, setShowSentError] = useState<boolean>(false);
@@ -34,7 +36,7 @@ function PunchlinesDetail() {
     }
   }, [id]);
 
-  const canPost = useMemo(() => {
+  const inInPostPeriod = useMemo(() => {
     if (!(punchline && punchline.contest)) {
       return false;
     }
@@ -45,7 +47,7 @@ function PunchlinesDetail() {
     return start < current && current < end;
   }, [punchline]);
 
-  const canPoll = useMemo(() => {
+  const isInPollPeriod = useMemo(() => {
     if (!(punchline && punchline.contest)) {
       return false;
     }
@@ -55,6 +57,17 @@ function PunchlinesDetail() {
     const current = new Date();
     return start < current && current < end;
   }, [punchline]);
+
+  const disabledPoll = useMemo(() => {
+    if (isSending) return true;
+    if (alreadyPolled === null) return true;
+    return alreadyPolled;
+  }, [alreadyPolled, isSending]);
+
+  const isPolledEmoji = useCallback((emoji: string) => {
+    if (poll === null) return false;
+    return poll.emoji === emoji;
+  }, [poll]);
 
   const submitPoll = useCallback(async (emoji: string) => {
     if (id === undefined) {
@@ -67,7 +80,8 @@ function PunchlinesDetail() {
     } else {
       setShowSentError(true);
     }
-  }, [id, send]);
+    await refreshPollInfo();
+  }, [id, send, refreshPollInfo]);
 
   if (!id) {
     return null;
@@ -116,7 +130,7 @@ function PunchlinesDetail() {
             </p>
           </div>
           <div className="mb-5">
-            {canPost ? (
+            {inInPostPeriod ? (
               <Link to={`/punchline/post/${id}`}>
                 <Button variant="primary">自分も回答する</Button>
               </Link>
@@ -126,17 +140,26 @@ function PunchlinesDetail() {
           </div>
           <div className="mb-5">
             <h3>投票する</h3>
-            {canPoll ? (
+            {isInPollPeriod ? (
               <>
                 <ButtonGroup as="div">
                   {[1,2,3,4].map((emoji) => (
                     <Button
-                      variant="outline-primary"
+                      variant={isPolledEmoji(emoji.toString()) ? "primary" : "outline-primary"}
+                      className="position-relative"
                       style={{ maxWidth: 100 }}
                       onClick={() => submitPoll(emoji.toString())}
-                      disabled={isSending}
+                      disabled={disabledPoll}
                     >
                       <Image src={`/emoji${emoji}.jpg`} alt={`絵文字${emoji}`} className="w-100" />
+                      {isPolledEmoji(emoji.toString()) &&
+                        <span
+                          className="position-absolute top-50 start-50 bold text-nowrap bg-primary rounded"
+                          style={{ transform: "translate(-50%, -50%)" }}
+                        >
+                          投票済み
+                        </span>
+                      }
                     </Button>
                   ))}
                 </ButtonGroup>
@@ -153,12 +176,22 @@ function PunchlinesDetail() {
               <span>{sendError}</span>
             }
           </div>
+          <div className="mb-5">
+            {alreadyPolled === true &&
+              <span>すでに投票済みです</span>
+            }
+            {pollInfoError &&
+              <span>{pollInfoError}</span>
+            }
+          </div>
         </Container>
       </div>
 
       <Development>
         <div>投稿: {punchline?.contest?.pollStartDate} - {punchline?.contest?.pollEndDate}</div>
         <div>投票: {punchline?.contest?.postStartDate} - {punchline?.contest?.postEndDate}</div>
+        <div>投票情報: {JSON.stringify(poll)}</div>
+        <div>投票済みか: {JSON.stringify(alreadyPolled)}</div>
       </Development>
     </>
   );

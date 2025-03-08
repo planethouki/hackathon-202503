@@ -46,3 +46,37 @@ export const createPoll = onCall<Poll>({
   };
 });
 
+export const getPolls = onCall<{punchlineId: string}>({
+  cors: true,
+}, async (request) => {
+  const uid = request.auth?.uid;
+
+  if (uid === undefined) {
+    throw new HttpsError("permission-denied", "ログインが必要です");
+  }
+
+  const {punchlineId} = request.data;
+
+  if (!punchlineId) {
+    throw new HttpsError("permission-denied", "対象のデータが見つかりませんでした");
+  }
+
+  const pSnap = await db
+    .collection("punchlines")
+    .doc(punchlineId)
+    .collection("polls")
+    .where("userId", "==", uid)
+    .get();
+
+  const polls = pSnap
+    .docs
+    .map((doc) => doc.data())
+    .sort((a, b) => a.createdAt - b.createdAt);
+
+  return {
+    success: true,
+    message: `Retrieved ${polls.length} poll(s) successfully`,
+    polls,
+    alreadyPolled: polls.length > 0,
+  };
+});
