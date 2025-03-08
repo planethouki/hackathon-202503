@@ -1,6 +1,7 @@
 import {onDocumentWritten} from "firebase-functions/v2/firestore";
 import {getFirestore} from "firebase-admin/firestore";
 import {logger} from "firebase-functions";
+import updateRanking from "./lib/updateRanking";
 
 const db = getFirestore();
 
@@ -20,7 +21,10 @@ export const onPunchlineWritten = onDocumentWritten(
 
     // 回答数更新
     const afterData = event.data?.after?.data();
-    const contestId = afterData?.contestId as string | undefined;
+    const beforeData = event.data?.before?.data();
+    let contestId;
+    if (afterData) contestId = afterData.contestId;
+    else if (beforeData) contestId = beforeData.contestId;
 
     if (!contestId) {
       logger.error("Could not find any contest id");
@@ -37,5 +41,8 @@ export const onPunchlineWritten = onDocumentWritten(
     await db
       .doc(`contests/${contestId}`)
       .set({punchlineCount: countEqContestId}, {merge: true});
+
+    // ランキング更新
+    await updateRanking(contestId);
   }
 );

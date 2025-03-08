@@ -1,6 +1,7 @@
 import {onDocumentWritten} from "firebase-functions/v2/firestore";
 import {getFirestore} from "firebase-admin/firestore";
 import {logger} from "firebase-functions";
+import updateRanking from "./lib/updateRanking";
 
 const db = getFirestore();
 
@@ -27,23 +28,6 @@ export const onPollWritten = onDocumentWritten(
     await pRef.set({pollCount: count}, {merge: true});
 
     // ランキング更新
-    const contestId = punchline.contestId;
-
-    const punchlinesContestEq = await db
-      .collection("punchlines")
-      .where("contestId", "==", contestId)
-      .select("id", "pollCount")
-      .get()
-      .then((snap) => snap.docs.map((doc) => doc.data()));
-
-    const punchlinesSorted = punchlinesContestEq
-      .sort((a, b) => a.pollCounte - b.pollCount);
-
-    for (const p of punchlinesSorted) {
-      const i = punchlinesSorted.indexOf(p);
-      await db
-        .doc(`punchlines/${p.id}`)
-        .set({rankingInContest: i + 1}, {merge: true});
-    }
+    await updateRanking(punchline.contestId);
   }
 );
