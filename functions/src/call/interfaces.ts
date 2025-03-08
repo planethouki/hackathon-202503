@@ -3,3 +3,8 @@ export interface Punchline {
   url: string;
   contestId: string;
 }
+
+export interface Poll {
+  punchlineId: string;
+  emoji: string;
+}
