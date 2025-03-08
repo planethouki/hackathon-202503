@@ -1,7 +1,8 @@
-import {useEffect, useMemo} from "react";
+import {useEffect, useMemo, useCallback, useState} from "react";
 import {Container, Button, ButtonGroup, Image} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {usePunchlinesDetailApi} from "../../hooks/punchlinesApi.ts";
+import {usePollPostCall} from "../../hooks/pollPostApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
 import {Development} from "../../components/Development.tsx";
 
@@ -10,6 +11,22 @@ function PunchlinesDetail() {
   const {id} = useParams<{ id: string }>();
 
   const { isLoading, punchline } = usePunchlinesDetailApi(id);
+  const { isLoading: isSending, send, error: sendError } = usePollPostCall();
+
+  const [showSentSuccess, setShowSentSuccess] = useState(false);
+  const [showSentError, setShowSentError] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!showSentSuccess) {return}
+    const timeout = setTimeout(() => setShowSentSuccess(false), 2000);
+    return () => clearTimeout(timeout);
+  }, [showSentSuccess, setShowSentSuccess]);
+
+  useEffect(() => {
+    if (!showSentError) {return}
+    const timeout = setTimeout(() => setShowSentError(false), 2000);
+    return () => clearTimeout(timeout);
+  }, [showSentError, setShowSentError]);
 
   useEffect(() => {
     if (id === undefined) {
@@ -40,6 +57,19 @@ function PunchlinesDetail() {
     console.log(start, end, current);
     return start < current && current < end;
   }, [punchline]);
+
+  const submitPoll = useCallback(async (emoji: string) => {
+    if (id === undefined) {
+      return;
+    }
+
+    const {success} = await send(id, emoji);
+    if (success) {
+      setShowSentSuccess(true);
+    } else {
+      setShowSentError(true);
+    }
+  }, [id, send]);
 
   if (!id) {
     return null;
@@ -84,27 +114,33 @@ function PunchlinesDetail() {
             )}
           </div>
           <div className="mb-5">
+            <h3>投票する</h3>
             {canPoll ? (
               <>
-                <h3>投票する</h3>
                 <ButtonGroup as="div">
-                  <Button variant="outline-primary" style={{ width: 100 }}>
-                    <Image src="/emoji1.jpg" alt="絵文字１" className="w-100" />
-                  </Button>
-                  <Button variant="outline-primary" style={{ width: 100 }}>
-                    <Image src="/emoji2.jpg" alt="絵文字２" className="w-100" />
-                  </Button>
-                  <Button variant="outline-primary" style={{ width: 100 }}>
-                    <Image src="/emoji3.jpg" alt="絵文字３" className="w-100" />
-                  </Button>
-                  <Button variant="outline-primary" style={{ width: 100 }}>
-                    <Image src="/emoji4.jpg" alt="絵文字４" className="w-100" />
-                  </Button>
+                  {[1,2,3,4].map((emoji) => (
+                    <Button
+                      variant="outline-primary"
+                      style={{ maxWidth: 100 }}
+                      onClick={() => submitPoll(emoji.toString())}
+                      disabled={isSending}
+                    >
+                      <Image src={`/emoji${emoji}.jpg`} alt={`絵文字${emoji}`} className="w-100" />
+                    </Button>
+                  ))}
                 </ButtonGroup>
               </>
             ) : (
-              <Button variant="primary" disabled>自分も回答する（期限切れです）</Button>
+              <span>投票の期間は終了しました。</span>
             )}
+          </div>
+          <div className="mb-5">
+            {showSentSuccess &&
+              <span>投票しました！</span>
+            }
+            {showSentError &&
+              <span>{sendError}</span>
+            }
           </div>
         </Container>
       </div>
