@@ -1,8 +1,9 @@
 import {useEffect, useMemo} from "react";
-import {Container, Button} from "react-bootstrap";
+import {Container, Button, ButtonGroup, Image} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {usePunchlinesDetailApi} from "../../hooks/punchlinesApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
+import {Development} from "../../components/Development.tsx";
 
 function PunchlinesDetail() {
   const navigate = useNavigate();
@@ -23,6 +24,18 @@ function PunchlinesDetail() {
 
     const start = new Date(punchline.contest.postStartDate);
     const end = new Date(punchline.contest.postEndDate);
+    const current = new Date();
+    console.log(start, end, current);
+    return start < current && current < end;
+  }, [punchline]);
+
+  const canPoll = useMemo(() => {
+    if (!(punchline && punchline.contest)) {
+      return false;
+    }
+
+    const start = new Date(punchline.contest.pollStartDate);
+    const end = new Date(punchline.contest.pollEndDate);
     const current = new Date();
     console.log(start, end, current);
     return start < current && current < end;
@@ -61,13 +74,38 @@ function PunchlinesDetail() {
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen></iframe>
           </div>
-          {canPost ? (
-            <Link to={`/punchline/post/${id}`}>
-              <Button variant="primary">自分も回答する</Button>
-            </Link>
-          ) : (
-            <Button variant="primary" disabled>自分も回答する（期限切れです）</Button>
-          )}
+          <div className="mb-5">
+            {canPost ? (
+              <Link to={`/punchline/post/${id}`}>
+                <Button variant="primary">自分も回答する</Button>
+              </Link>
+            ) : (
+              <Button variant="primary" disabled>自分も回答する（期限切れです）</Button>
+            )}
+          </div>
+          <div className="mb-5">
+            {canPoll ? (
+              <>
+                <h3>投票する</h3>
+                <ButtonGroup as="div">
+                  <Button variant="outline-primary" style={{ width: 100 }}>
+                    <Image src="/emoji1.jpg" alt="絵文字１" className="w-100" />
+                  </Button>
+                  <Button variant="outline-primary" style={{ width: 100 }}>
+                    <Image src="/emoji2.jpg" alt="絵文字２" className="w-100" />
+                  </Button>
+                  <Button variant="outline-primary" style={{ width: 100 }}>
+                    <Image src="/emoji3.jpg" alt="絵文字３" className="w-100" />
+                  </Button>
+                  <Button variant="outline-primary" style={{ width: 100 }}>
+                    <Image src="/emoji4.jpg" alt="絵文字４" className="w-100" />
+                  </Button>
+                </ButtonGroup>
+              </>
+            ) : (
+              <Button variant="primary" disabled>自分も回答する（期限切れです）</Button>
+            )}
+          </div>
         </Container>
       </div>
 
