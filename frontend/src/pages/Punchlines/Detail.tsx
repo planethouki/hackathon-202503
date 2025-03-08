@@ -70,6 +70,11 @@ function PunchlinesDetail() {
           )}
         </Container>
       </div>
+
+      <Development>
+        <div>投稿: {punchline?.contest?.pollStartDate} - {punchline?.contest?.pollEndDate}</div>
+        <div>投票: {punchline?.contest?.postStartDate} - {punchline?.contest?.postEndDate}</div>
+      </Development>
     </>
   );
 }
