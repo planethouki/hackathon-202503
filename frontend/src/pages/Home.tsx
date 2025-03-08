@@ -3,14 +3,7 @@ import { Link } from "react-router";
 import { useHomeApi } from "../hooks/homeApi.ts";
 import PunchlineCard from "../components/PunchlineCard.tsx";
 import {Avatar} from "../components/Avatar.tsx";
-
-function Loading() {
-  return (
-    <div className="d-flex justify-content-center align-items-center">
-      <i className="bi bi-arrow-repeat spin" style={{ fontSize: '2rem' }}></i>
-    </div>
-  )
-}
+import {LoadingBlock} from "../components/Loading.tsx";
 
 function Home() {
   const {
@@ -38,7 +31,7 @@ function Home() {
               </Link>
             </div>
           </div>
-          {isLoading && <Loading />}
+          {isLoading && <LoadingBlock />}
           <Row xs={1} sm={2} md={4} className="g-4">
             {punchlines?.map((p) => {
               return (
@@ -54,7 +47,7 @@ function Home() {
       <div className="mb-5 py-5" style={{backgroundColor: "#fffacd"}}>
         <Container>
           <h2 className="mb-5">新着作家</h2>
-          {isLoading && <Loading />}
+          {isLoading && <LoadingBlock />}
           <Row xs={"auto"} className="g-4">
             {users?.map((u) => (
               <Col key={u.id}>
@@ -85,7 +78,7 @@ function Home() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           <h2 className="mb-5">新着お題</h2>
-          {isLoading && <Loading />}
+          {isLoading && <LoadingBlock />}
           <Row xs={1} sm={2} md={4} className="g-4">
             {contests?.map((c) => (
               <Col key={c.id}>
