@@ -50,3 +50,4 @@ export * from "./generateContest";
 export * from "./createUserDocument";
 export * from "./testCall";
 export * from "./call";
+export * from "./firestore";
