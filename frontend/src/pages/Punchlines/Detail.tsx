@@ -146,6 +146,7 @@ function PunchlinesDetail() {
                 <ButtonGroup as="div">
                   {[1,2,3,4].map((emoji) => (
                     <Button
+                      key={emoji}
                       variant={isPolledEmoji(emoji.toString()) ? "primary" : "outline-primary"}
                       className="position-relative"
                       style={{ maxWidth: 100 }}
