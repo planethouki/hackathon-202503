@@ -94,13 +94,26 @@ function PunchlinesDetail() {
           <h2>
             {punchline?.title}
           </h2>
-          <div className="mb-5" style={{ maxWidth: 320 }}>
+          <div className="mb-3" style={{ maxWidth: 320 }}>
             <iframe src={punchline?.url}
                     style={{ aspectRatio: 9/16, width: "100%" }}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen></iframe>
+          </div>
+          <div className="mb-5">
+            {punchline?.user &&
+              <p>
+                回答者: <Link to={`/users/${punchline.user.id}/profile`}>{punchline.user.displayName}</Link>
+              </p>
+            }
+            <p>
+              得票数: {punchline?.pollCount}
+            </p>
+            <p>
+              投稿日時: {punchline && new Date(punchline?.createdAt).toLocaleString()}
+            </p>
           </div>
           <div className="mb-5">
             {canPost ? (
