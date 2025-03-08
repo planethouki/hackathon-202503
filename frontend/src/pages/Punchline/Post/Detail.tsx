@@ -50,64 +50,6 @@ function PunchlinePostDetail() {
     navigate(`/punchline/post/${id}/confirm`);
   }
 
-  function Expired() {
-    return (
-      <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
-        <Container>
-          <div className="mb-5">
-            回答期限を過ぎています。
-          </div>
-        </Container>
-      </div>
-    );
-  }
-
-  function PostForm() {
-    return (
-      <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
-        <Container>
-          <h2 className="mb-5">
-            回答
-          </h2>
-          <Form onSubmit={onSubmit} onChange={onChange}>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label>タイトル</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="キャッチーなタイトル"
-                required
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>YouTube ShortsのURL</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="https://youtube.com/shorts/M0xy9bGhn4Y?feature=shared"
-                required
-                pattern="https://.+"
-                value={youTubeUrl}
-                onChange={(e) => setYouTubeUrl(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Check
-              className="mb-3"
-              type="checkbox"
-              id="exampleForm.ControlCheckbox1"
-              label="私はこの動画に関するすべての権利を保有しています。"
-              required
-              checked={isChecked}
-              onChange={(e) => setIsChecked(e.target.checked)}
-            />
-            <Button variant="primary" type="submit" disabled={!validated}>確認</Button>
-          </Form>
-        </Container>
-      </div>
-    );
-  }
-
   return (
     <>
       <Container>
@@ -131,7 +73,61 @@ function PunchlinePostDetail() {
         </Container>
       </div>
 
-      {canPost ? <PostForm /> : <Expired />}
+      {canPost ? (
+        <>
+          <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
+            <Container>
+              <h2 className="mb-5">
+                回答
+              </h2>
+              <Form onSubmit={onSubmit} onChange={onChange}>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                  <Form.Label>タイトル</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    placeholder="キャッチーなタイトル"
+                    required
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Form.Label>YouTube ShortsのURL</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="https://youtube.com/shorts/M0xy9bGhn4Y?feature=shared"
+                    required
+                    pattern="https://.+"
+                    value={youTubeUrl}
+                    onChange={(e) => setYouTubeUrl(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Check
+                  className="mb-3"
+                  type="checkbox"
+                  id="exampleForm.ControlCheckbox1"
+                  label="私はこの動画に関するすべての権利を保有しています。"
+                  required
+                  checked={isChecked}
+                  onChange={(e) => setIsChecked(e.target.checked)}
+                />
+                <Button variant="primary" type="submit" disabled={!validated}>確認</Button>
+              </Form>
+            </Container>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
+            <Container>
+              <div className="mb-5">
+                回答期限を過ぎています。
+              </div>
+            </Container>
+          </div>
+        </>
+      )}
     </>
   );
 }
