@@ -6,17 +6,29 @@ import {getFirestore} from "firebase-admin/firestore";
 import {logger} from "firebase-functions";
 import updateRanking from "./lib/updateRanking";
 import {transfer, calcAddress} from "./lib/eth";
+import {generateRandomString} from "../utils";
 
 const db = getFirestore();
 
 export const onPollCreated = onDocumentCreated(
   "punchlines/{punchlineId}/polls/{pollId}", async (event) => {
     const punchlineId = event.params.punchlineId;
+    const pollId = event.params.pollId;
     await common(punchlineId);
 
     // ETHに書き込む
     logger.info("New poll created; updating ETH transfer for recipient.");
-    await transfer(calcAddress(punchlineId));
+    const id = generateRandomString();
+    const result = await transfer(calcAddress(punchlineId));
+    await db.collection("transactions").doc(id).set({
+      id,
+      pollId,
+      punchlineId,
+      hash: result.hash,
+      from: result.from,
+      to: result.to,
+      createdAt: new Date().toISOString(),
+    });
   }
 );
 
