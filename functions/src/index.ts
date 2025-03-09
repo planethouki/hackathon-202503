@@ -24,7 +24,6 @@ import apiApp from "./api";
 
 export const api = onRequest(apiApp);
 
-export * from "./generateContest";
 export * from "./auth";
 export * from "./call";
 export * from "./firestore";
