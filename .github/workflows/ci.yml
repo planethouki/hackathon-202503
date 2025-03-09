@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  FOUNDRY_PROFILE: ci
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -36,3 +39,41 @@ jobs:
       - name: Build Functions
         working-directory: ./functions
         run: npm run build
+
+  check:
+    strategy:
+      fail-fast: true
+
+    name: Foundry project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Show Forge version
+        run: |
+          forge --version
+
+      - name: Run Forge fmt
+        working-directory: ./contracts
+        run: |
+          forge fmt --check
+        id: fmt
+
+      - name: Run Forge build
+        working-directory: ./contracts
+        run: |
+          forge build --sizes
+        id: build
+
+      - name: Run Forge tests
+        working-directory: ./contracts
+        run: |
+          forge test -vvv
+        id: test
