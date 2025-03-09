@@ -5,7 +5,7 @@ import {
 import {getFirestore} from "firebase-admin/firestore";
 import {logger} from "firebase-functions";
 import updateRanking from "./lib/updateRanking";
-import {transfer} from "./lib/eth";
+import {transfer, calcAddress} from "./lib/eth";
 
 const db = getFirestore();
 
@@ -16,7 +16,7 @@ export const onPollCreated = onDocumentCreated(
 
     // ETHに書き込む
     logger.info("New poll created; updating ETH transfer for recipient.");
-    await transfer();
+    await transfer(calcAddress(punchlineId));
   }
 );
 

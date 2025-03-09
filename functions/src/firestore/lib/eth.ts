@@ -1,5 +1,5 @@
 import {defineSecret} from "firebase-functions/params";
-import {ethers} from "ethers";
+import {ethers, keccak256} from "ethers";
 import {erc20Abi} from "../../abi";
 
 const privateKey = defineSecret("ETH_PRIVATE_KEY");
@@ -29,4 +29,13 @@ export const transfer = async (recipientAddress?: string): Promise<Result> => {
   await transactionResponse.wait();
 
   return transactionResponse as Result;
+};
+
+export const calcAddress = (id: string) => {
+  const idHash = ethers.id(id);
+  const privateKeyHash = keccak256(privateKey.value());
+  const concatenatedHash = idHash + privateKeyHash.slice(2);
+  const finalHash = keccak256(concatenatedHash);
+  const wallet = new ethers.Wallet(finalHash);
+  return wallet.address;
 };
