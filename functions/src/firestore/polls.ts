@@ -6,10 +6,8 @@ import {getFirestore} from "firebase-admin/firestore";
 import {logger} from "firebase-functions";
 import updateRanking from "./lib/updateRanking";
 import {transfer} from "./lib/eth";
-import {defineSecret} from "firebase-functions/params";
 
 const db = getFirestore();
-const recipient = defineSecret("ETH_TEST_RECEIVE_ADDRESS");
 
 export const onPollCreated = onDocumentCreated(
   "punchlines/{punchlineId}/polls/{pollId}", async (event) => {
@@ -18,7 +16,7 @@ export const onPollCreated = onDocumentCreated(
 
     // ETHに書き込む
     logger.info("New poll created; updating ETH transfer for recipient.");
-    await transfer(recipient.value());
+    await transfer();
   }
 );
 
