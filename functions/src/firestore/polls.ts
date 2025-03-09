@@ -5,7 +5,7 @@ import {
 import {getFirestore} from "firebase-admin/firestore";
 import {logger} from "firebase-functions";
 import updateRanking from "./lib/updateRanking";
-import {transfer, calcAddress} from "./lib/eth";
+import {transfer, calcAddress} from "../ethUtils";
 import {generateRandomString} from "../utils";
 
 const db = getFirestore();

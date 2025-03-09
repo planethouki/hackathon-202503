@@ -1,6 +1,6 @@
 import {defineSecret} from "firebase-functions/params";
 import {ethers, keccak256} from "ethers";
-import {erc20Abi} from "../../abi";
+import {erc20Abi} from "./abi";
 
 const privateKey = defineSecret("ETH_PRIVATE_KEY");
 const rpcUrl = defineSecret("ETH_RPC_URL");
