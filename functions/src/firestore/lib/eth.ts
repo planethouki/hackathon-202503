@@ -23,7 +23,7 @@ export const transfer = async (recipientAddress?: string): Promise<Result> => {
   );
   const transactionResponse = await contract.transfer(
     recipientAddress || recipient.value(),
-    1,
+    BigInt(10) ** BigInt(18),
   );
 
   await transactionResponse.wait();
