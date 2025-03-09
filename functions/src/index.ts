@@ -47,7 +47,7 @@ export const testExpress = onRequest(testApp);
 export const api = onRequest(apiApp);
 
 export * from "./generateContest";
-export * from "./createUserDocument";
+export * from "./auth";
 export * from "./testCall";
 export * from "./call";
 export * from "./firestore";
