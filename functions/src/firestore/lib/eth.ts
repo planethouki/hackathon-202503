@@ -12,14 +12,7 @@ interface Result {
   to: string;
 }
 
-/**
- * Transfers a small amount of tokens
- * from the wallet to a predefined recipient address.
- *
- * @param {string} recipientAddress - The address of the recipient.
- * @return {Promise<Result>} - The details of the transaction.
- */
-async function transfer(recipientAddress: string): Promise<Result> {
+export const transfer = async (recipientAddress: string): Promise<Result> => {
   const provider = new ethers.JsonRpcProvider(rpcUrl.value());
   const wallet = new ethers.Wallet(privateKey.value(), provider);
   const contract = new ethers.Contract(
@@ -35,6 +28,4 @@ async function transfer(recipientAddress: string): Promise<Result> {
   await transactionResponse.wait();
 
   return transactionResponse as Result;
-}
-
-export default transfer;
+};

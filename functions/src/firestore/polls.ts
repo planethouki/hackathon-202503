@@ -5,7 +5,7 @@ import {
 import {getFirestore} from "firebase-admin/firestore";
 import {logger} from "firebase-functions";
 import updateRanking from "./lib/updateRanking";
-import transfer from "./lib/erc20Transfer";
+import {transfer} from "./lib/eth";
 import {defineSecret} from "firebase-functions/params";
 
 const db = getFirestore();
