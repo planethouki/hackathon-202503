@@ -14,7 +14,3 @@ getbal-anvil:
 .PHONY: deploy-minato
 deploy-minato:
 	forge script script/PollToken.s.sol --rpc-url ${SONEIUM_RPC_URL} --broadcast
-
-.PHONY: cp-artifact
-cp-artifact:
-	forge script script/CopyArtifacts.s.sol
