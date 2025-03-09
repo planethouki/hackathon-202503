@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import {Script, console} from "forge-std/Script.sol";
 
 contract GetBalanceScript is Script {
-    function run() public {
+    function run() public view {
         uint256 chainId = block.chainid;
         console.log("Current chain ID:", chainId);
 
