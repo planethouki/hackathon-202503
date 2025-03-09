@@ -1,5 +1,6 @@
 import * as express from "express";
 import {getFirestore} from "firebase-admin/firestore";
+import {calcAddress} from "../ethUtils";
 
 const db = getFirestore();
 
@@ -66,10 +67,12 @@ app.get("/latest", async (req, res) => {
       const matchingUser = usersDetails.find(
         (contest) => contest.id === punchline.userId
       );
+      const pollAddress = calcAddress(punchline.id);
       return {
         ...punchline,
         contest: matchingContest || null,
         user: matchingUser || null,
+        pollAddress,
       };
     });
 
@@ -132,11 +135,14 @@ app.get("/:id", async (req: express.Request, res: express.Response) => {
     (contest) => contest.id === punchline.userId
   );
 
+  const pollAddress = calcAddress(punchline.id);
+
   res.status(200).json({
     status: "success",
     punchline: {
       contest: matchingContest,
       user: matchingUser,
+      pollAddress,
       ...punchline,
     },
   });

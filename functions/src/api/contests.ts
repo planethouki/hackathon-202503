@@ -1,5 +1,6 @@
 import * as express from "express";
 import {getFirestore} from "firebase-admin/firestore";
+import {calcAddress} from "../ethUtils";
 
 const db = getFirestore();
 
@@ -49,9 +50,11 @@ app.get("/:id", async (req, res) => {
     const matchingUser = usersDetails.find(
       (contest) => contest.id === punchline.userId
     );
+    const pollAddress = calcAddress(punchline.id);
     return {
       ...punchline,
       user: matchingUser || null,
+      pollAddress,
     };
   });
 
