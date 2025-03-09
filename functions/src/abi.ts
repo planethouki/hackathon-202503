@@ -314,4 +314,4 @@ const rawErc20Abi =
 }
 `;
 
-export const erc20Abi = JSON.parse(rawErc20Abi);
+export const erc20Abi = JSON.parse(rawErc20Abi).abi;
