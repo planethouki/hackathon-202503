@@ -33,8 +33,10 @@ export const transfer = async (recipientAddress?: string): Promise<Result> => {
 
 export const calcAddress = (id: string) => {
   const idHash = ethers.id(id);
+  const contractHash = keccak256(erc20Address.value());
   const privateKeyHash = keccak256(privateKey.value());
-  const concatenatedHash = idHash + privateKeyHash.slice(2);
+  const concatenatedHash =
+    idHash + contractHash.slice(2) + privateKeyHash.slice(2);
   const finalHash = keccak256(concatenatedHash);
   const wallet = new ethers.Wallet(finalHash);
   return wallet.address;
