@@ -27,3 +27,5 @@ export const api = onRequest(apiApp);
 export * from "./auth";
 export * from "./call";
 export * from "./firestore";
+
+// export * from "./trial";
