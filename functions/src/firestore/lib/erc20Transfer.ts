@@ -19,7 +19,7 @@ interface Result {
  * @param {string} recipientAddress - The address of the recipient.
  * @return {Promise<Result>} - The details of the transaction.
  */
-async function transfer(recipientAddress: string) {
+async function transfer(recipientAddress: string): Promise<Result> {
   const provider = new ethers.JsonRpcProvider(rpcUrl.value());
   const wallet = new ethers.Wallet(privateKey.value(), provider);
   const contract = new ethers.Contract(
