@@ -14,7 +14,7 @@ contract PollTokenScript is Script {
         uint256 deployerPrivateKey;
 
         if (chainId == 31337) {
-            deployerPrivateKey == vm.envUint("PRIVATE_KEY_ANVIL");
+            deployerPrivateKey = vm.envUint("PRIVATE_KEY_ANVIL");
         } else if (chainId == 1946) {
             deployerPrivateKey = vm.envUint("PRIVATE_KEY_SONEIUM");
         } else {
