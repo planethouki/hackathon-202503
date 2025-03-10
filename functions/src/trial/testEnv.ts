@@ -1,4 +1,4 @@
-import {onRequest} from "firebase-functions/lib/v2/providers/https";
+import {onRequest} from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/lib/logger";
 import {defineSecret} from "firebase-functions/lib/params";
 

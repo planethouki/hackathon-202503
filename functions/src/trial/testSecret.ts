@@ -1,4 +1,4 @@
-import {onRequest} from "firebase-functions/lib/v2/providers/https";
+import {onRequest} from "firebase-functions/v2/https";
 
 export const testSecret = onRequest({
   secrets: ["TEST_SECRET"],
