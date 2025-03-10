@@ -1,11 +1,11 @@
-import {defineSecret} from "firebase-functions/params";
+import {defineSecret, defineString} from "firebase-functions/params";
 import {ethers, keccak256} from "ethers";
 import {erc20Abi} from "./abi";
 
 const privateKey = defineSecret("ETH_PRIVATE_KEY");
-const rpcUrl = defineSecret("ETH_RPC_URL");
-const erc20Address = defineSecret("ETH_ERC20_ADDRESS");
-const recipient = defineSecret("ETH_TEST_RECEIVE_ADDRESS");
+const rpcUrl = defineString("ETH_RPC_URL");
+const erc20Address = defineString("ETH_ERC20_ADDRESS");
+const recipient = defineString("ETH_TEST_RECEIVE_ADDRESS");
 
 interface Result {
   from: string;

@@ -7,11 +7,17 @@ import {logger} from "firebase-functions";
 import updateRanking from "./lib/updateRanking";
 import {transfer, calcAddress} from "../ethUtils";
 import {generateRandomString} from "../utils";
+import {defineSecret} from "firebase-functions/params";
 
 const db = getFirestore();
+const privateKey = defineSecret("ETH_PRIVATE_KEY");
 
 export const onPollCreated = onDocumentCreated(
-  "punchlines/{punchlineId}/polls/{pollId}", async (event) => {
+  {
+    document: "punchlines/{punchlineId}/polls/{pollId}",
+    secrets: [privateKey],
+  },
+  async (event) => {
     const punchlineId = event.params.punchlineId;
     const pollId = event.params.pollId;
     await common(punchlineId);
