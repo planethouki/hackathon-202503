@@ -8,7 +8,6 @@
  */
 
 import {setGlobalOptions} from "firebase-functions/v2";
-import {onRequest} from "firebase-functions/v2/https";
 import {initializeApp} from "firebase-admin/app";
 
 // Start writing functions
@@ -20,10 +19,7 @@ setGlobalOptions({
 
 initializeApp();
 
-import apiApp from "./api";
-
-export const api = onRequest(apiApp);
-
+export * from "./api";
 export * from "./auth";
 export * from "./call";
 export * from "./firestore";

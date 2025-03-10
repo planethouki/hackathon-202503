@@ -1,3 +1,4 @@
+import {onRequest} from "firebase-functions/v2/https";
 import * as express from "express";
 import * as cors from "cors";
 import home from "./api/home";
@@ -20,4 +21,4 @@ app.use("/contests", contests);
 app.use("/users", users);
 app.use("/punchline/post", punchlinePost);
 
-export default app;
+export const api = onRequest(app);
