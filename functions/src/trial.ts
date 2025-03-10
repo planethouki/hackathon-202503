@@ -11,3 +11,4 @@ export * from "./trial/hello";
 export * from "./trial/testCall";
 export * from "./trial/testEnv";
 export * from "./trial/testTimer";
+export * from "./trial/testSecret";
