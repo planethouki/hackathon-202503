@@ -24,7 +24,7 @@ function Home() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f0f8ff" }}>
         <Container>
           <div className="mb-5 d-flex justify-content-between">
-            <h2>新着回答</h2>
+            <h2>新着面白動画</h2>
             <div>
               <Link to="/punchlines/latest">
                 <Button as="span" variant="primary" href="/punchlines/latest">もっと見る</Button>
@@ -46,7 +46,7 @@ function Home() {
 
       <div className="mb-5 py-5" style={{backgroundColor: "#fffacd"}}>
         <Container>
-          <h2 className="mb-5">新着作家</h2>
+          <h2 className="mb-5">新着芸人</h2>
           {isLoading && <LoadingBlock />}
           <Row xs={"auto"} className="g-4">
             {users?.map((u) => (
