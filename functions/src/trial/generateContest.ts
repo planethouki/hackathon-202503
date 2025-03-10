@@ -1,8 +1,5 @@
 import OpenAI from "openai";
-import {defineSecret} from "firebase-functions/params";
 import {onRequest} from "firebase-functions/v2/https";
-
-const openaiApiKey = defineSecret("OPENAI_API_KEY");
 
 const prompt = `大喜利のお題を1つだけ考えてください。
 
@@ -12,7 +9,7 @@ const prompt = `大喜利のお題を1つだけ考えてください。
 
 const generate = async () => {
   const openai = new OpenAI({
-    apiKey: openaiApiKey.value(),
+    apiKey: process.env.OPENAI_API_KEY,
   });
 
   const response = await openai.chat.completions.create({
@@ -28,7 +25,9 @@ const generate = async () => {
   };
 };
 
-export const generateContest = onRequest(async (request, response) => {
+export const generateContest = onRequest({
+  secrets: ["OPENAI_API_KEY"],
+}, async (request, response) => {
   const result = await generate();
   response.send(result);
 });
