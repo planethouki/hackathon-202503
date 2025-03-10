@@ -7,11 +7,3 @@ export const testSecret = onRequest({
     secret: process.env.TEST_SECRET,
   });
 });
-
-export const testNoSecret = onRequest({
-  secrets: ["TEST_SECRET_NOT_FOUND"],
-}, (request, response) => {
-  response.json({
-    secret: process.env.TEST_SECRET_NOT_FOUND,
-  });
-});
