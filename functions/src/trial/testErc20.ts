@@ -1,4 +1,5 @@
 import * as express from "express";
+import {onRequest} from "firebase-functions/v2/https";
 import {defineSecret} from "firebase-functions/params";
 import {ethers} from "ethers";
 import {erc20Abi} from "../abi";
@@ -30,4 +31,4 @@ app.get("/", async (req, res) => {
   });
 });
 
-export default app;
+export const eth = onRequest(app);

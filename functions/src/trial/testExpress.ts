@@ -1,4 +1,5 @@
 import * as express from "express";
+import {onRequest} from "firebase-functions/v2/https";
 
 const app = express();
 
@@ -6,4 +7,4 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-export default app;
+export const testExpress = onRequest(app);
