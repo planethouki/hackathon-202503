@@ -5,41 +5,20 @@ import {
 import {getFirestore} from "firebase-admin/firestore";
 import {logger} from "firebase-functions";
 import updateRanking from "./lib/updateRanking";
-import {transfer, calcAddress} from "../ethUtils";
-import {generateRandomString} from "../utils";
-import {defineSecret} from "firebase-functions/params";
 
 const db = getFirestore();
-const privateKey = defineSecret("ETH_PRIVATE_KEY");
 
 export const onPollCreated = onDocumentCreated(
-  {
-    document: "punchlines/{punchlineId}/polls/{pollId}",
-    secrets: [privateKey],
-  },
+  "punchlines/{punchlineId}/polls/{pollId}",
   async (event) => {
     const punchlineId = event.params.punchlineId;
-    const pollId = event.params.pollId;
     await common(punchlineId);
-
-    // ETHに書き込む
-    logger.info("New poll created; updating ETH transfer for recipient.");
-    const id = generateRandomString();
-    const result = await transfer(calcAddress(punchlineId));
-    await db.collection("transactions").doc(id).set({
-      id,
-      pollId,
-      punchlineId,
-      hash: result.hash,
-      from: result.from,
-      to: result.to,
-      createdAt: new Date().toISOString(),
-    });
   }
 );
 
 export const onPollDeleted = onDocumentDeleted(
-  "punchlines/{punchlineId}/polls/{pollId}", async (event) => {
+  "punchlines/{punchlineId}/polls/{pollId}",
+  async (event) => {
     const punchlineId = event.params.punchlineId;
     await common(punchlineId);
   }

@@ -2,19 +2,25 @@ import {onCall, HttpsError} from "firebase-functions/v2/https";
 import {getFirestore} from "firebase-admin/firestore";
 import {Poll} from "./interfaces";
 import {generateRandomString} from "../utils";
+import {defineSecret} from "firebase-functions/lib/params";
+import {logger} from "firebase-functions";
+import {calcAddress, transfer} from "../ethUtils";
 
 const db = getFirestore();
+const privateKey = defineSecret("ETH_PRIVATE_KEY");
 
 export const createPoll = onCall<Poll>({
   cors: true,
+  secrets: [privateKey],
 }, async (request) => {
   const poll = request.data;
+  const punchlineId = poll.punchlineId;
   const uid = request.auth?.uid;
 
   if (uid === undefined) {
     throw new HttpsError("permission-denied", "ログインが必要です");
   }
-  const pRef = db.doc(`punchlines/${poll.punchlineId}`);
+  const pRef = db.doc(`punchlines/${punchlineId}`);
   const pSnap = await pRef.get();
 
   if (!pSnap.exists) {
@@ -38,6 +44,20 @@ export const createPoll = onCall<Poll>({
     createdAt: new Date().toISOString(),
     userId: uid,
     emoji: poll.emoji,
+  });
+
+  // ETHに書き込む
+  logger.info("New poll created; updating ETH transfer for recipient.");
+  const id = generateRandomString();
+  const result = await transfer(calcAddress(punchlineId));
+  await db.collection("transactions").doc(id).set({
+    id,
+    pollId,
+    punchlineId,
+    hash: result.hash,
+    from: result.from,
+    to: result.to,
+    createdAt: new Date().toISOString(),
   });
 
   return {
