@@ -41,4 +41,6 @@ export interface User {
   avatarFileName: string;
   photoURL?: string;
   createdAt: string;
+  deletedAt: string | null;
+  isDeleted: boolean;
 }
