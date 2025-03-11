@@ -4,6 +4,7 @@ import { auth } from "../firebase";
 import {
   GoogleAuthProvider,
   signInWithPopup,
+  signInAnonymously,
   browserPopupRedirectResolver,
 } from "firebase/auth";
 import { useAuth } from "../AuthProvider";
@@ -26,7 +27,7 @@ const Login: React.FC = () => {
     }
   }, [user, loading, navigate]);
 
-  const handleLogin = async () => {
+  const handleGoogleLogin = async () => {
     setIsLoggingIn(true);
     try {
       const provider = new GoogleAuthProvider();
@@ -39,6 +40,19 @@ const Login: React.FC = () => {
       setIsLoggingIn(false);
     }
   };
+
+  const handleAnonymousLogin = async () => {
+    setIsLoggingIn(true);
+    try {
+      await signInAnonymously(auth);
+      setError(null);
+    } catch (e: unknown) {
+      console.error("ログインエラー:", e);
+      setError(e instanceof Error ? e.message : "ログインに失敗しました。");
+    } finally {
+      setIsLoggingIn(false);
+    }
+  }
 
   return (
     <div className="mt-5 mb-5">
@@ -53,27 +67,42 @@ const Login: React.FC = () => {
         }
         {!loading && (
           <>
-            <div>
+            <div className="mb-3">
               <Button
                 variant="primary"
-                onClick={handleLogin}
+                onClick={handleGoogleLogin}
                 disabled={isLoggingIn}
               >
-                {isLoggingIn ? (
-                  <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                      className="me-2"
-                    />
-                    ログイン中...
-                  </>
-                ) : (
-                  "Googleでログイン"
-                )}
+                {isLoggingIn &&
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                    className="me-2"
+                  />
+                }
+                <span>Googleでログイン</span>
+              </Button>
+            </div>
+            <div>
+              <Button
+                variant="secondary"
+                onClick={handleAnonymousLogin}
+                disabled={isLoggingIn}
+              >
+                {isLoggingIn &&
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                    className="me-2"
+                  />
+                }
+                <span>匿名でログイン</span>
               </Button>
             </div>
             {error && (
