@@ -16,10 +16,11 @@ const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showContest = tr
     <Card>
       <Card.Body>
         <Card.Title>
-          <span>回答: </span>
-          <Link to={`/punchlines/${punchline.id}`}>
-            {punchline.title}
-          </Link>
+          <h3 className="text-center">
+            <Link to={`/punchlines/${punchline.id}`} className="text-black">
+              {punchline.title}
+            </Link>
+          </h3>
         </Card.Title>
       </Card.Body>
       <iframe src={punchline.url}
@@ -29,25 +30,31 @@ const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showContest = tr
               referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen></iframe>
       <Card.Footer>
-        {showContest && punchline.contest &&
-          <div className="mb-3" key={punchline.contest.id}>
-            <span>お題: </span>
-            <Link to={`/contests/${punchline.contest.id}`}>
-              {punchline.contest.title}
+        <div className="mb-2 small text-center">
+          {showContest && punchline.contest &&
+            <Link
+              to={`/contests/${punchline.contest.id}`}
+              title={`お題 ${punchline.contest.title}`}
+              className="me-2"
+            >
+              <i className="bi bi-question-square me-1"></i>
+              <span>{punchline.contest.title}</span>
             </Link>
-          </div>
-        }
-        {showUser && punchline.user &&
-          <div className="mb-3">
-            <span>投稿者: </span>
-            <Link to={`/users/${punchline.userId}/profile`}>
-              {punchline.user.displayName}
+          }
+          {showUser && punchline.user &&
+            <Link
+              to={`/users/${punchline.userId}/profile`}
+              title={`ユーザー ${punchline.user.displayName}`}
+              className="me-2"
+            >
+              <i className="bi bi-person-circle me-1"></i>
+              <span>{punchline.user.displayName}</span>
             </Link>
-          </div>
-        }
-        <div className="mb-3">
-          <span>得票数: </span>
-          <span>{punchline.pollCount}</span>
+          }
+          <span>
+            <i className="bi bi-balloon-heart"></i>
+            <span>{punchline.pollCount}</span>
+          </span>
         </div>
         {showRanking &&
           <div className="mb-3">
