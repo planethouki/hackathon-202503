@@ -1,6 +1,10 @@
 import {logger} from "firebase-functions";
 import * as functions from "firebase-functions/v1";
 import {getFirestore} from "firebase-admin/firestore";
+import {
+  generateRandomAvatarFileName,
+  generateRandomKatakanaName,
+} from "../utils";
 
 const db = getFirestore();
 
@@ -13,8 +17,8 @@ export const createUserDocument = functions
       const userDoc = {
         id: user.uid,
         authenticationId: user.uid,
-        displayName: user.displayName || null,
-        avatarFileName: "1F923.svg",
+        displayName: user.displayName || generateRandomKatakanaName(),
+        avatarFileName: generateRandomAvatarFileName(),
         createdAt: new Date().toISOString(),
       };
 
