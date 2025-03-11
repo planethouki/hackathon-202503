@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useCallback, useState} from "react";
-import {Container, Button, ButtonGroup, Image} from "react-bootstrap";
+import {Container, Button, ButtonGroup, Image, Spinner} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {usePunchlinesDetailApi} from "../../hooks/punchlinesApi.ts";
 import {usePollPostCall} from "../../hooks/pollPostApi.ts";
@@ -63,6 +63,19 @@ function PunchlinesDetail() {
     if (alreadyPolled === null) return true;
     return alreadyPolled;
   }, [alreadyPolled, isSending]);
+
+  const BlockchainAddress = useMemo(() => {
+    if (!punchline) {
+      return <Spinner />;
+    }
+    const t = import.meta.env.VITE_BLOCK_EXPLORER_ADDRESS as string;
+    const href = t.replace("{address}", punchline.pollAddress);
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {punchline.pollAddress}
+      </a>
+    );
+  }, [punchline]);
 
   const isPolledEmoji = useCallback((emoji: string) => {
     if (poll === null) return false;
@@ -199,6 +212,20 @@ function PunchlinesDetail() {
             {pollInfoError &&
               <span>{pollInfoError}</span>
             }
+          </div>
+          <div className="mb-5">
+            <div>
+              <span>ここに</span>
+              <a
+                href={import.meta.env.VITE_BLOCK_EXPLORER_TOKEN.replace("{token}", import.meta.env.VITE_POLL_TOKEN)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                投票トークン
+              </a>
+              <span>が集まります</span>
+            </div>
+            {BlockchainAddress}
           </div>
         </Container>
       </div>
