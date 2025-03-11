@@ -1,8 +1,7 @@
 import {useEffect} from "react";
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useParams, useNavigate} from "react-router";
 import {useUsersDetailApi} from "../../hooks/usersApi.ts";
-import {LoadingBlock} from "../../components/Loading.tsx";
 import PunchlineCard from "../../components/PunchlineCard.tsx";
 import {Avatar} from "../../components/Avatar.tsx";
 
@@ -34,16 +33,18 @@ function UsersDetail() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
-          {isLoading && <LoadingBlock />}
-          <h2 className="mb-5">
-            {user?.displayName}
-          </h2>
-          <div className="mb-5" style={{ maxWidth: 320 }}>
-            {user && <Avatar fileName={user?.avatarFileName} />}
-          </div>
-          <div className="mb-5">
-            {user?.bio}
-          </div>
+          {isLoading && <Spinner />}
+          {user && <>
+            <h2 className="mb-5">
+              {user.displayName}
+            </h2>
+            <div className="mb-5" style={{ maxWidth: 320 }}>
+              <Avatar fileName={user.avatarFileName} />
+            </div>
+            <div className="mb-5">
+              {user.bio}
+            </div>
+          </>}
         </Container>
       </div>
 
@@ -52,14 +53,21 @@ function UsersDetail() {
           <h2 className="mb-5">
             回答一覧
           </h2>
-          {isLoading && <LoadingBlock />}
-          <Row xs={1} sm={2} md={4} className="g-4">
-            {punchlines?.map((p) => (
-              <Col key={p.id}>
-                <PunchlineCard punchline={p} showUser={false} />
-              </Col>
-            ))}
-          </Row>
+          {isLoading && <Spinner />}
+          {punchlines &&
+            <Row xs={1} sm={2} md={4} className="g-4">
+              {punchlines.map((p) => (
+                <Col key={p.id}>
+                  <PunchlineCard punchline={p} showUser={false} />
+                </Col>
+              ))}
+              {punchlines.length === 0 &&
+                <Col>
+                  回答はありません。
+                </Col>
+              }
+            </Row>
+          }
         </Container>
       </div>
     </>
