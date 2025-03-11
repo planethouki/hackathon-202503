@@ -30,21 +30,3 @@ export const createUserDocument = functions
       logger.error("Firestoreへの書き込みエラー:", error);
     }
   });
-
-export const deleteUserDocument = functions
-  .region("asia-northeast1")
-  .auth
-  .user()
-  .onDelete(async (user) => {
-    try {
-      const userDoc = {
-        deletedAt: new Date().toISOString(),
-        isDeleted: true,
-      };
-
-      await db.collection("users").doc(user.uid).set(userDoc, {merge: true});
-      logger.info(`ユーザー削除: ${user.uid}`);
-    } catch (error) {
-      logger.error("Firestoreへの書き込みエラー:", error);
-    }
-  });
