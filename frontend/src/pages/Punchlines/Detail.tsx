@@ -208,6 +208,7 @@ function PunchlinesDetail() {
         <div>投票: {punchline?.contest?.postStartDate} - {punchline?.contest?.postEndDate}</div>
         <div>投票情報: {JSON.stringify(poll)}</div>
         <div>投票済みか: {JSON.stringify(alreadyPolled)}</div>
+        <div>投票先アドレス: {punchline?.pollAddress}</div>
       </Development>
     </>
   );
