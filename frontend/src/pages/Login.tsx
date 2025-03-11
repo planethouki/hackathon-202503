@@ -9,12 +9,9 @@ import {
 import { useAuth } from "../AuthProvider";
 import {
   Container,
-  Row,
-  Col,
   Button,
   Spinner,
   Alert,
-  Card,
 } from "react-bootstrap";
 
 const Login: React.FC = () => {
@@ -44,55 +41,50 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Container className="d-flex min-vh-100 align-items-center justify-content-center">
-      <Row className="w-100">
-        <Col xs={12} md={6} className="mx-auto">
-          <Card className="p-4 shadow-lg">
-            <Card.Body>
-              <h1 className="text-center mb-4">ログイン</h1>
-              {loading ? (
-                <div className="text-center">
-                  <Spinner animation="border" role="status">
-                    <span className="visually-hidden">読み込み中...</span>
-                  </Spinner>
-                </div>
-              ) : (
-                <>
-                  <div className="text-center">
-                    <Button
-                      variant="primary"
-                      onClick={handleLogin}
-                      disabled={isLoggingIn}
-                    >
-                      {isLoggingIn ? (
-                        <>
-                          <Spinner
-                            as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true"
-                            className="me-2"
-                          />
-                          ログイン中...
-                        </>
-                      ) : (
-                        "Googleでログイン"
-                      )}
-                    </Button>
-                  </div>
-                  {error && (
-                    <Alert variant="danger" className="mt-3">
-                      {error}
-                    </Alert>
-                  )}
-                </>
-              )}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+    <div className="mt-5 mb-5">
+      <Container>
+        <h1 className="mb-5">ログイン</h1>
+        {loading &&
+          <div>
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">読み込み中...</span>
+            </Spinner>
+          </div>
+        }
+        {!loading && (
+          <>
+            <div>
+              <Button
+                variant="primary"
+                onClick={handleLogin}
+                disabled={isLoggingIn}
+              >
+                {isLoggingIn ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                      className="me-2"
+                    />
+                    ログイン中...
+                  </>
+                ) : (
+                  "Googleでログイン"
+                )}
+              </Button>
+            </div>
+            {error && (
+              <Alert variant="danger" className="mt-3">
+                {error}
+              </Alert>
+            )}
+          </>
+        )}
+      </Container>
+    </div>
   );
 };
 
