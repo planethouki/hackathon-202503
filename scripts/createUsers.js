@@ -8,7 +8,9 @@ const initialUsers = [
     displayName: "ジョン",
     bio: "音楽と旅行が大好きなエンジニア。",
     avatarFileName: "1F31B.svg",
-    createdAt: "2025-01-05T14:23:10Z"
+    createdAt: "2025-01-05T14:23:10Z",
+    deletedAt: null,
+    isDeleted: false,
   },
   {
     id: "dummy2",
@@ -16,7 +18,9 @@ const initialUsers = [
     displayName: "マリア",
     bio: "本が大好きなイラストレーター。",
     avatarFileName: "1F359.svg",
-    createdAt: "2025-01-12T08:15:45Z"
+    createdAt: "2025-01-12T08:15:45Z",
+    deletedAt: null,
+    isDeleted: false,
   },
   {
     id: "dummy3",
@@ -24,7 +28,9 @@ const initialUsers = [
     displayName: "タカシ",
     bio: "プログラミングと写真撮影が趣味です。",
     avatarFileName: "1F414.svg",
-    createdAt: "2025-01-20T16:42:30Z"
+    createdAt: "2025-01-20T16:42:30Z",
+    deletedAt: null,
+    isDeleted: false,
   },
   {
     id: "dummy4",
@@ -32,7 +38,9 @@ const initialUsers = [
     displayName: "アイ",
     bio: "カフェ巡りと絵を描くのが好きです。",
     avatarFileName: "1F467.svg",
-    createdAt: "2025-01-07T09:50:12Z"
+    createdAt: "2025-01-07T09:50:12Z",
+    deletedAt: null,
+    isDeleted: false,
   },
   {
     id: "dummy5",
@@ -40,7 +48,9 @@ const initialUsers = [
     displayName: "クリス",
     bio: "アウトドア派で山登りが趣味です。",
     avatarFileName: "1F47D.svg",
-    createdAt: "2025-01-15T13:08:56Z"
+    createdAt: "2025-01-15T13:08:56Z",
+    deletedAt: null,
+    isDeleted: false,
   },
   {
     id: "dummy6",
@@ -48,7 +58,9 @@ const initialUsers = [
     displayName: "ミカ",
     bio: "映画鑑賞と料理を楽しんでいます。",
     avatarFileName: "1F602.svg",
-    createdAt: "2025-01-28T19:20:40Z"
+    createdAt: "2025-01-28T19:20:40Z",
+    deletedAt: null,
+    isDeleted: false,
   },
   {
     id: "dummy7",
@@ -56,7 +68,9 @@ const initialUsers = [
     displayName: "ユウタ",
     bio: "スポーツ好きの大学生。",
     avatarFileName: "1F923.svg",
-    createdAt: "2025-01-22T06:33:25Z"
+    createdAt: "2025-01-22T06:33:25Z",
+    deletedAt: null,
+    isDeleted: false,
   },
   {
     id: "dummy8",
@@ -64,7 +78,9 @@ const initialUsers = [
     displayName: "エマ",
     bio: "猫と一緒にのんびり過ごすのが好きです。",
     avatarFileName: "1FADA.svg",
-    createdAt: "2025-01-10T22:18:34Z"
+    createdAt: "2025-01-10T22:18:34Z",
+    deletedAt: null,
+    isDeleted: false,
   }
 ];
 
