@@ -2,7 +2,7 @@ import {onCall, HttpsError} from "firebase-functions/v2/https";
 import {getFirestore} from "firebase-admin/firestore";
 import {Poll} from "./interfaces";
 import {generateRandomString} from "../utils";
-import {defineSecret} from "firebase-functions/lib/params";
+import {defineSecret} from "firebase-functions/params";
 import {logger} from "firebase-functions";
 import {calcAddress, transfer} from "../ethUtils";
 
