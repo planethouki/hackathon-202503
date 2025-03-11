@@ -101,6 +101,18 @@ function PunchlinesDetail() {
     return null;
   }
 
+  if (!punchline) {
+    return (
+      <Container>
+        <div className="mt-5 mb-5">
+          <Container>
+            <Spinner />
+          </Container>
+        </div>
+      </Container>
+    );
+  }
+
   return (
     <>
       <Container>
@@ -114,16 +126,16 @@ function PunchlinesDetail() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           {isLoading && <LoadingBlock />}
-          {punchline?.contest && (
+          {punchline.contest && (
             <p>
               お題: <Link to={`/contests/${punchline.contest.id}`}>{punchline.contest.title}</Link>
             </p>
           )}
           <h2>
-            {punchline?.title}
+            {punchline.title}
           </h2>
           <div className="mb-3" style={{ maxWidth: 320 }}>
-            <iframe src={punchline?.url}
+            <iframe src={punchline.url}
                     style={{ aspectRatio: 9/16, width: "100%" }}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -131,17 +143,17 @@ function PunchlinesDetail() {
                     allowFullScreen></iframe>
           </div>
           <div className="mb-5">
-            {punchline?.user &&
+            {punchline.user &&
               <p>
                 回答者: <Link to={`/users/${punchline.user.id}/profile`}>{punchline.user.displayName}</Link>
               </p>
             }
             <p>
-              得票数: {punchline?.pollCount}
+              得票数: {punchline.pollCount}
             </p>
             <p>
-              <span>順位: {punchline?.rankingInContest}</span>
-              {punchline?.contest &&
+              <span>順位: {punchline.rankingInContest}</span>
+              {punchline.contest &&
                 <>
                   <span> / </span>
                   <span>{punchline.contest.punchlineCount}</span>
@@ -149,7 +161,7 @@ function PunchlinesDetail() {
               }
             </p>
             <p>
-              投稿日時: {punchline && new Date(punchline?.createdAt).toLocaleString()}
+              投稿日時: {new Date(punchline.createdAt).toLocaleString()}
             </p>
           </div>
           <div className="mb-5">
