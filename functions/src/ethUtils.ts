@@ -22,13 +22,16 @@ export const transfer = async (recipientAddress: string): Promise<Result> => {
     wallet
   );
   const transactionResponse = await contract.transfer(
-    recipientAddress || recipient.value(),
+    recipientAddress,
     BigInt(10) ** BigInt(18),
   );
 
   await transactionResponse.wait();
 
-  return transactionResponse as Result;
+  return {
+    ...transactionResponse,
+    recipient: recipientAddress,
+  } as Result;
 };
 
 export const calcAddress = (id: string) => {
