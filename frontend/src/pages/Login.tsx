@@ -13,6 +13,7 @@ import {
   Button,
   Spinner,
   Alert,
+  Modal,
 } from "react-bootstrap";
 
 const Login: React.FC = () => {
@@ -20,6 +21,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
+  const [showAnonymousLoginModal, setShowAnonymousLoginModal] = useState(false);
 
   useEffect(() => {
     if (!loading && user) {
@@ -42,6 +44,7 @@ const Login: React.FC = () => {
   };
 
   const handleAnonymousLogin = async () => {
+    setShowAnonymousLoginModal(false);
     setIsLoggingIn(true);
     try {
       await signInAnonymously(auth);
@@ -54,66 +57,64 @@ const Login: React.FC = () => {
     }
   }
 
+  const handleCloseAnonymousLoginModal = () => setShowAnonymousLoginModal(false);
+
   return (
-    <div className="mt-5 mb-5">
-      <Container>
-        <h1 className="mb-5">ログイン</h1>
-        {loading &&
-          <div>
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">読み込み中...</span>
-            </Spinner>
-          </div>
-        }
-        {!loading && (
-          <>
-            <div className="mb-3">
-              <Button
-                variant="primary"
-                onClick={handleGoogleLogin}
-                disabled={isLoggingIn}
-              >
-                {isLoggingIn &&
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                    className="me-2"
-                  />
-                }
-                <span>Googleでログイン</span>
-              </Button>
-            </div>
+    <>
+      <div className="mt-5 mb-5">
+        <Container>
+          <h1 className="mb-5">ログイン</h1>
+          {loading &&
             <div>
-              <Button
-                variant="secondary"
-                onClick={handleAnonymousLogin}
-                disabled={isLoggingIn}
-              >
-                {isLoggingIn &&
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                    className="me-2"
-                  />
-                }
-                <span>匿名でログイン</span>
-              </Button>
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">読み込み中...</span>
+              </Spinner>
             </div>
-            {error && (
-              <Alert variant="danger" className="mt-3">
-                {error}
-              </Alert>
-            )}
-          </>
-        )}
-      </Container>
-    </div>
+          }
+          {!loading && (
+            <>
+              <div style={{ marginBottom: 300 }}>
+                <Button
+                  variant="primary"
+                  onClick={handleGoogleLogin}
+                  disabled={isLoggingIn}
+                >
+                  <span>Googleでログイン</span>
+                </Button>
+              </div>
+              <div>
+                <Button
+                  variant="link"
+                  onClick={() => setShowAnonymousLoginModal(true)}
+                  disabled={isLoggingIn}
+                >
+                  <span>匿名でログイン</span>
+                </Button>
+              </div>
+              {error && (
+                <Alert variant="danger" className="mt-3">
+                  {error}
+                </Alert>
+              )}
+            </>
+          )}
+        </Container>
+      </div>
+      <Modal show={showAnonymousLoginModal} onHide={handleCloseAnonymousLoginModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>匿名ログインしますか？</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>匿名ログインは、一度ログアウトすると、同じアカウントとしてログインすることができません。</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseAnonymousLoginModal}>
+            キャンセル
+          </Button>
+          <Button variant="primary" onClick={handleAnonymousLogin}>
+            匿名ログイン
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 
