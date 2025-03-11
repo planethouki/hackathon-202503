@@ -166,7 +166,7 @@ function PunchlinesDetail() {
           </div>
           <div className="mb-5">
             {inInPostPeriod ? (
-              <Link to={`/punchline/post/${id}`}>
+              <Link to={`/punchline/post/${punchline.contestId}`}>
                 <Button variant="primary">自分も回答する</Button>
               </Link>
             ) : (
