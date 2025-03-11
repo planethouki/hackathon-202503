@@ -35,7 +35,7 @@ function Home() {
           <Row xs={1} sm={2} md={4} className="g-4">
             {punchlines?.map((p) => {
               return (
-                <Col id={p.id}>
+                <Col key={p.id}>
                   <PunchlineCard punchline={p} />
                 </Col>
               )
