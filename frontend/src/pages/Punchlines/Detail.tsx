@@ -148,6 +148,11 @@ function PunchlinesDetail() {
               <Button variant="primary" disabled>自分も回答する（期限切れです）</Button>
             )}
           </div>
+        </Container>
+      </div>
+
+      <div className="mb-5 py-5" style={{ backgroundColor: "#fffacd" }}>
+        <Container>
           <div className="mb-5">
             <h3>投票する</h3>
             {isInPollPeriod ? (
