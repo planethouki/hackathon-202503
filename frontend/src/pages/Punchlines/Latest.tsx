@@ -1,7 +1,6 @@
 import {useState, useMemo} from "react";
-import {Container, Row, Col, Pagination} from "react-bootstrap";
+import {Container, Row, Col, Pagination, Spinner} from "react-bootstrap";
 import {usePunchlinesLatestApi} from "../../hooks/punchlinesApi.ts";
-import {LoadingBlock} from "../../components/Loading.tsx";
 import PunchlineCard from "../../components/PunchlineCard.tsx";
 
 function PunchlinesLatest() {
@@ -56,7 +55,7 @@ function PunchlinesLatest() {
             <h2>新着回答</h2>
           </div>
           <PaginationComponent />
-          {isLoading && <LoadingBlock />}
+          {isLoading && <Spinner />}
           <Row xs={1} sm={2} md={4} className="g-4 mb-5">
             {punchlines?.map((p) => (
               <Col key={p.id}>
