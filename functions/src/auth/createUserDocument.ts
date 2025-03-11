@@ -22,6 +22,7 @@ export const createUserDocument = functions
         createdAt: new Date().toISOString(),
         deletedAt: null,
         isDeleted: false,
+        bio: "未設定",
       };
 
       await db.collection("users").doc(user.uid).set(userDoc);
