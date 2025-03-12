@@ -28,7 +28,7 @@ const Header: React.FC = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/punchline/post">
-              回答する
+              投稿する
             </Nav.Link>
           </Nav>
 
