@@ -24,7 +24,7 @@ export interface Poll {
 export interface Contest {
   id: string;
   title: string;
-  imageUrl: string;
+  imageName: string;
   createdAt: string;
   postStartDate: string;
   postEndDate: string;

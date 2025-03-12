@@ -4,6 +4,7 @@ import { useHomeApi } from "../hooks/homeApi.ts";
 import PunchlineCard from "../components/PunchlineCard.tsx";
 import {Avatar} from "../components/Avatar.tsx";
 import {LoadingBlock} from "../components/Loading.tsx";
+import {ContestImage} from "../components/ContestImage.tsx";
 
 function Home() {
   const {
@@ -84,12 +85,7 @@ function Home() {
               <Col key={c.id}>
                 <Card>
                   <Link to={`/contests/${c.id}`} >
-                    <Card.Img
-                      variant="top"
-                      src={c.imageUrl}
-                      alt={`Card image ${c.title}`}
-                      style={{ cursor: "pointer", width: '100%', aspectRatio: 1 }}
-                    />
+                    <ContestImage fileName={c.imageName} alt={c.title} />
                   </Link>
                   <Card.Body>
                     <Card.Title>{c.title}</Card.Title>

@@ -1,9 +1,10 @@
 import {useEffect, useState, FormEvent, useMemo} from "react";
-import {Container, Image, Form, Button} from "react-bootstrap";
+import {Container, Form, Button} from "react-bootstrap";
 import {useParams, useNavigate} from "react-router";
 import {usePunchlinePostContestDetailApi} from "../../../hooks/punchlinePostApi.ts";
 import {LoadingBlock} from "../../../components/Loading.tsx";
 import {useTitleYouTubeContext} from "../../../contexts/TitleYouTubeContext";
+import {ContestImage} from "../../../components/ContestImage.tsx";
 
 function PunchlinePostDetail() {
   const navigate = useNavigate();
@@ -63,13 +64,17 @@ function PunchlinePostDetail() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           {isLoading && <LoadingBlock />}
-          <h2 className="mb-5">
-            お題 {contest?.title}
-          </h2>
-          <Image
-            src={contest?.imageUrl}
-            className="mb-5"
-          />
+          {contest && <>
+            <h2 className="mb-5">
+              {contest.title}
+            </h2>
+            <div style={{ maxWidth: 400 }}>
+              <ContestImage
+                fileName={contest.imageName}
+                alt={contest.title}
+              />
+            </div>
+          </>}
         </Container>
       </div>
 

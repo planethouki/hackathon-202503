@@ -3,6 +3,7 @@ import {Container, Button, Row, Col, Card} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {usePunchlinePostContestsApi} from "../../../hooks/punchlinePostApi.ts";
 import {LoadingBlock} from "../../../components/Loading.tsx";
+import {ContestImage} from "../../../components/ContestImage.tsx";
 
 function PunchlinePostComplete() {
   const navigate = useNavigate();
@@ -51,12 +52,7 @@ function PunchlinePostComplete() {
               <Col key={c.id}>
                 <Card>
                   <Link to={`/punchline/post/${c.id}`} >
-                    <Card.Img
-                      variant="top"
-                      src={c.imageUrl}
-                      alt={`Card image`}
-                      style={{ cursor: "pointer" }}
-                    />
+                    <ContestImage fileName={c.imageName} alt={c.title} />
                   </Link>
                   <Card.Body>
                     <Card.Title>{c.title}</Card.Title>

@@ -1,9 +1,10 @@
 import {useEffect} from "react";
-import {Col, Container, Image, Row, Button} from "react-bootstrap";
+import {Col, Container, Row, Button} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {useContestsDetailApi} from "../../hooks/contestsApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
 import PunchlineCard from "../../components/PunchlineCard.tsx";
+import {ContestImage} from "../../components/ContestImage.tsx";
 
 function ContestsDetail() {
   const navigate = useNavigate();
@@ -34,13 +35,17 @@ function ContestsDetail() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           {isLoading && <LoadingBlock />}
-          <h2 className="mb-5">
-            {contest?.title}
-          </h2>
-          <Image
-            src={contest?.imageUrl}
-            className="mb-5"
-          />
+          {contest && <>
+            <h2 className="mb-5">
+              {contest.title}
+            </h2>
+            <div style={{ maxWidth: 400 }}>
+              <ContestImage
+                fileName={contest.imageName}
+                alt={contest.title}
+              />
+            </div>
+          </>}
         </Container>
       </div>
 
