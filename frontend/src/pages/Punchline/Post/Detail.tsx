@@ -78,7 +78,7 @@ function PunchlinePostDetail() {
           <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
             <Container>
               <h2 className="mb-5">
-                回答
+                投稿
               </h2>
               <Form onSubmit={onSubmit} onChange={onChange}>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -86,7 +86,7 @@ function PunchlinePostDetail() {
                   <Form.Control
                     as="textarea"
                     rows={3}
-                    placeholder="キャッチーなタイトル"
+                    placeholder="例：ふとんが吹っ飛んだww"
                     required
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
@@ -122,7 +122,7 @@ function PunchlinePostDetail() {
           <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
             <Container>
               <div className="mb-5">
-                回答期限を過ぎています。
+                投稿期限を過ぎています。
               </div>
             </Container>
           </div>
