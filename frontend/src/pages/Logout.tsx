@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { Container } from "react-bootstrap";
 import { auth } from "../firebase.ts";
 import { signOut } from "firebase/auth";
 import { useAuth } from "../AuthProvider.tsx";
@@ -29,11 +30,13 @@ const Logout: React.FC = () => {
   }, [user, loading, navigate]);
 
   return (
-    <div>
-      <h1>ログアウト処理中...</h1>
-      {error && (
-        <p style={{ color: "red", marginTop: "1rem" }}>エラー: {error}</p>
-      )}
+    <div className="mt-5 mb-5 py-3 bg-light" style={{ minHeight: 300 }}>
+      <Container>
+        <h1>ログアウト処理中...</h1>
+        {error && (
+          <p style={{ color: "red", marginTop: "1rem" }}>エラー: {error}</p>
+        )}
+      </Container>
     </div>
   );
 };

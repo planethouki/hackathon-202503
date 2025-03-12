@@ -16,13 +16,7 @@ function Home() {
 
   return (
     <>
-      <div className="mt-5 mb-5">
-        <Container>
-          <h1>トップ</h1>
-        </Container>
-      </div>
-
-      <div className="mb-5 py-5" style={{ backgroundColor: "#f0f8ff" }}>
+      <div className="mt-5 mb-5 py-5" style={{ backgroundColor: "#f0f8ff" }}>
         <Container>
           <div className="mb-5 d-flex justify-content-between">
             <h2>新着面白動画</h2>

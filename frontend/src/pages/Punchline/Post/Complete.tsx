@@ -21,16 +21,9 @@ function PunchlinePostComplete() {
 
   return (
     <>
-      <Container>
-        <div className="mt-5 mb-5">
-          <Container>
-            <h1>ありがとうございました</h1>
-          </Container>
-        </div>
-      </Container>
-
-      <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
+      <div className="mt-5 mb-1 pt-3 pb-5 bg-light">
         <Container>
+          <h1 className="mb-5">ありがとうございました</h1>
           <Link to={`/punchline/post`}>
             <Button variant="primary" className="me-3">他のお題を選ぶ</Button>
           </Link>

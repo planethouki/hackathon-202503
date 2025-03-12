@@ -19,7 +19,7 @@ import UsersDetail from "./pages/Users/Detail.tsx";
 import Layout from "./layouts/Layout.tsx";
 import { TitleYouTubeProvider } from "./contexts/TitleYouTubeContext";
 import { AuthProvider } from "./AuthProvider";
-import "./App.css";
+import "./App.scss";
 
 function App() {
   return (

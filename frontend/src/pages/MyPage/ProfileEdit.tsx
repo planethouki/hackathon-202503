@@ -78,13 +78,11 @@ function ProfileEdit() {
 
   return (
     <>
-      <Container>
-        <div className="mt-5 mb-5">
-          <Container>
-            <h1>プロフィール編集</h1>
-          </Container>
-        </div>
-      </Container>
+      <div className="mt-5 mb-1 py-3 bg-light">
+        <Container>
+          <h1>プロフィール編集</h1>
+        </Container>
+      </div>
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>

@@ -61,7 +61,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <div className="mt-5 mb-5">
+      <div className="mt-5 mb-5 py-3 bg-light">
         <Container>
           <h1 className="mb-5">ログイン</h1>
           {loading &&

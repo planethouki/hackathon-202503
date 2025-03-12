@@ -13,15 +13,13 @@ function MyPage() {
 
   return (
     <>
-      <Container>
-        <div className="mt-5 mb-5">
-          <Container>
-            <h1>マイページ</h1>
-          </Container>
-        </div>
-      </Container>
+      <div className="mt-5 mb-2 py-3 bg-light">
+        <Container>
+          <h1>マイページ</h1>
+        </Container>
+      </div>
 
-      <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
+      <div className="mb-2 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           <h2 className="mb-5">
             プロフィール

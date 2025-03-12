@@ -17,7 +17,7 @@ const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showContest = tr
       <Card.Body>
         <Card.Title>
           <h3 className="text-center">
-            <Link to={`/punchlines/${punchline.id}`} className="text-black">
+            <Link to={`/punchlines/${punchline.id}`}>
               {punchline.title}
             </Link>
           </h3>
