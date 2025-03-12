@@ -49,11 +49,14 @@ function PunchlinesLatest() {
 
   return (
     <>
+      <div className="mt-5 mb-1 py-3 bg-light">
+        <Container>
+          <h1>新着面白動画</h1>
+        </Container>
+      </div>
+
       <div className="mb-5 py-5" style={{ backgroundColor: "#f0f8ff" }}>
         <Container>
-          <div className="mb-5 d-flex justify-content-between">
-            <h2>新着面白動画</h2>
-          </div>
           <PaginationComponent />
           {isLoading && <Spinner />}
           <Row xs={1} sm={2} md={4} className="g-4 mb-5">

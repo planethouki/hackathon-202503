@@ -53,36 +53,36 @@ function PunchlinePostConfirm() {
 
   return (
     <>
-      <Container>
-        <div className="mt-5 mb-5">
-          <Container>
-            <h1>投稿確認</h1>
-          </Container>
-        </div>
-      </Container>
+      <div className="mt-5 mb-1 py-3 bg-light">
+        <Container>
+          <h1>投稿確認</h1>
+        </Container>
+      </div>
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           {(isLoading || isSending) && <LoadingBlock />}
-          {contest && <>
-            <h2 className="mb-5">
-              {contest.title}
-            </h2>
-            <div style={{ maxWidth: 400 }}>
-              <ContestImage
-                fileName={contest.imageName}
-                alt={contest.title}
-              />
+          {contest &&
+            <div className="mb-5">
+              <h2 className="mb-3">
+                {contest.title}
+              </h2>
+              <div style={{ maxWidth: 100 }}>
+                <ContestImage
+                  fileName={contest.imageName}
+                  alt={contest.title}
+                />
+              </div>
             </div>
-          </>}
+          }
 
-          <h2 className="mb-5">
+          <h2 className="mb-3">
             投稿
           </h2>
           <div>
             <div className="mb-3">
-              <div>タイトル</div>
-              <div>{title}</div>
+              <span>タイトル: </span>
+              <span>{title}</span>
             </div>
             <div className="mb-3">
               <div>
