@@ -55,7 +55,7 @@ function PunchlinePostConfirm() {
       <Container>
         <div className="mt-5 mb-5">
           <Container>
-            <h1>回答確認</h1>
+            <h1>投稿確認</h1>
           </Container>
         </div>
       </Container>
@@ -72,7 +72,7 @@ function PunchlinePostConfirm() {
           />
 
           <h2 className="mb-5">
-            回答
+            投稿
           </h2>
           <div>
             <div className="mb-3">
