@@ -84,11 +84,20 @@ function Home() {
                     <ContestImage fileName={c.imageName} alt={c.title} />
                   </Link>
                   <Card.Body>
-                    <Card.Title>{c.title}</Card.Title>
+                    <Card.Title>
+                      <Link to={`/contests/${c.id}`} >
+                        {c.title}
+                      </Link>
+                    </Card.Title>
+                    {c.punchlineCount !== undefined &&
+                      <Card.Text className="small">
+                      <span title={`動画数: ${c.punchlineCount}`}>
+                        <i className="bi bi-camera-video me-1"></i>
+                        <span>{c.punchlineCount}</span>
+                      </span>
+                      </Card.Text>
+                    }
                   </Card.Body>
-                  {c.punchlineCount !== undefined &&
-                    <Card.Footer>動画数 {c.punchlineCount}</Card.Footer>
-                  }
                 </Card>
               </Col>
             ))}
