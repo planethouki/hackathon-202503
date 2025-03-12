@@ -13,7 +13,13 @@ const Header: React.FC = () => {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
+    <Navbar
+      bg="light"
+      variant="primary"
+      expand="lg"
+      sticky="top"
+      className="border border-5 border-top-0 border-start-0 border-end-0 border-primary"
+    >
       <Container>
         <Navbar.Brand as={Link} to="/">
           <Image src="/logo.png" alt="logo" width={200} />
