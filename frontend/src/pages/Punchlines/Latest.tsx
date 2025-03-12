@@ -52,7 +52,7 @@ function PunchlinesLatest() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f0f8ff" }}>
         <Container>
           <div className="mb-5 d-flex justify-content-between">
-            <h2>新着回答</h2>
+            <h2>新着面白動画</h2>
           </div>
           <PaginationComponent />
           {isLoading && <Spinner />}
