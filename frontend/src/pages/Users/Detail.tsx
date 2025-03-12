@@ -36,11 +36,11 @@ function UsersDetail() {
             <h2 className="mb-5">
               {user.displayName}
             </h2>
-            <div className="mb-5" style={{ maxWidth: 320 }}>
+            <div className="mb-5" style={{ maxWidth: 150 }}>
               <Avatar fileName={user.avatarFileName} />
             </div>
             <div className="mb-5">
-              {user.bio}
+              {user.bio || "自己紹介はありません。"}
             </div>
           </>}
         </Container>
