@@ -1,0 +1,24 @@
+$primary: rgb(10, 88, 202);
+
+$theme-colors: (
+  "primary":    rgb(10, 88, 202),
+  "secondary":  #6C757DFF,
+  "success":    #198754FF,
+  "info":       #0DCAF0FF,
+  "warning":    #FFC107FF,
+  "danger":     #DC3545FF,
+  "light":      #f5fff5,
+  "dark":       #212529FF
+);
+
+$body-color: $primary;
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+@import 'bootstrap/scss/bootstrap.scss';
+
+body {
+  font-family: "M PLUS Rounded 1c", serif;
+  background: $primary;
+  color: $primary;
+}
