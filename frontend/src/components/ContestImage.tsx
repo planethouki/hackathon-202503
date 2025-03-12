@@ -1,8 +1,15 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, CSSProperties} from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Image, Spinner } from "react-bootstrap";
 
-export function ContestImage({ fileName, alt }: { fileName: string, alt: string }) {
+interface Props {
+  fileName: string;
+  alt: string;
+  style?: CSSProperties;
+  className?: string;
+}
+
+export function ContestImage({ fileName, alt, style, className = "w-100" }: Props) {
   const [imageUrl, setImageUrl] = useState("");
 
   const storage = getStorage();
@@ -24,7 +31,8 @@ export function ContestImage({ fileName, alt }: { fileName: string, alt: string 
         <Image
           src={imageUrl}
           alt={alt}
-          className="w-100"
+          className={className}
+          style={style}
         />
       ) : (
         <Spinner />
