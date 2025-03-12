@@ -40,7 +40,7 @@ function PunchlinePost() {
                   </Card.Body>
                   {c.punchlineCount !== undefined &&
                     <Card.Footer>
-                      回答数: {c.punchlineCount}
+                      動画数: {c.punchlineCount}
                     </Card.Footer>
                   }
                 </Card>
