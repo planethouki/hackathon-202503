@@ -118,7 +118,7 @@ function PunchlinesDetail() {
       <Container>
         <div className="mt-5 mb-5">
           <Container>
-            <h1>回答詳細</h1>
+            <h1>投稿動画詳細</h1>
           </Container>
         </div>
       </Container>
@@ -145,7 +145,7 @@ function PunchlinesDetail() {
           <div className="mb-5">
             {punchline.user &&
               <p>
-                回答者: <Link to={`/users/${punchline.user.id}/profile`}>{punchline.user.displayName}</Link>
+                投稿者: <Link to={`/users/${punchline.user.id}/profile`}>{punchline.user.displayName}</Link>
               </p>
             }
             <p>
@@ -167,10 +167,10 @@ function PunchlinesDetail() {
           <div className="mb-5">
             {inInPostPeriod ? (
               <Link to={`/punchline/post/${punchline.contestId}`}>
-                <Button variant="primary">自分も回答する</Button>
+                <Button variant="primary">自分も投稿する</Button>
               </Link>
             ) : (
-              <Button variant="primary" disabled>自分も回答する（期限切れです）</Button>
+              <Button variant="primary" disabled>自分も投稿する（期限切れです）</Button>
             )}
           </div>
         </Container>
