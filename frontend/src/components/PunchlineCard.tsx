@@ -51,7 +51,8 @@ const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showContest = tr
               <span>{punchline.user.displayName}</span>
             </Link>
           }
-          <span>
+          <span
+          title={`投票数 ${punchline.pollCount}`}>
             <i className="bi bi-balloon-heart"></i>
             <span>{punchline.pollCount}</span>
           </span>
