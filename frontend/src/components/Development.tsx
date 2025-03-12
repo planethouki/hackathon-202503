@@ -6,13 +6,11 @@ export function Development({ children }: PropsWithChildren) {
 
   if (isDev) {
     return (
-      <Container>
-        <div className="mt-5 mb-5">
-          <Container>
-            {children}
-          </Container>
-        </div>
-      </Container>
+      <div className="mt-5 mb-5 bg-light">
+        <Container>
+          {children}
+        </Container>
+      </div>
     )
   }
 
