@@ -51,7 +51,7 @@ function UsersDetail() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           <h2 className="mb-5">
-            回答一覧
+            投稿一覧
           </h2>
           {isLoading && <Spinner />}
           {punchlines &&
@@ -63,7 +63,7 @@ function UsersDetail() {
               ))}
               {punchlines.length === 0 &&
                 <Col>
-                  回答はありません。
+                  投稿はありません。
                 </Col>
               }
             </Row>
