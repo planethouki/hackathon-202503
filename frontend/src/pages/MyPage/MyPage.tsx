@@ -52,7 +52,7 @@ function MyPage() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           <h2 className="mb-5">
-            回答一覧
+            投稿動画一覧
           </h2>
           {isLoading && <LoadingBlock />}
           <Row xs={1} sm={2} md={4} className="g-4">
@@ -63,7 +63,7 @@ function MyPage() {
             ))}
           </Row>
           {punchlines?.length === 0 &&
-            <div>回答はありません</div>
+            <div>投稿動画はありません</div>
           }
         </Container>
       </div>
