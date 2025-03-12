@@ -43,25 +43,27 @@ function Home() {
         <Container>
           <h2 className="mb-5">新着芸人</h2>
           {isLoading && <LoadingBlock />}
-          <Row xs={"auto"} className="g-4">
+          <Row xs={"auto"} className="g-4" style={{ maxHeight: 172, overflowY: "hidden" }}>
             {users?.map((u) => (
               <Col key={u.id}>
-                <Card style={{ textAlign: "center", cursor: "pointer" }}>
+                <Card className="text-center">
                   <Link to={`/users/${u.id}/profile`}>
                     <span
-                      className="d-inline-block"
+                      className="d-inline-block px-1"
                       style={{
-                        width: "150px",
-                        height: "150px",
-                        borderRadius: "50%",
-                        margin: "10px auto",
+                        width: "90px",
+                        height: "90px"
                       }}
                     >
                       <Avatar fileName={u.avatarFileName} />
                     </span>
                   </Link>
-                  <Card.Body>
-                    <Card.Title>{u.displayName}</Card.Title>
+                  <Card.Body className="px-1">
+                    <Card.Text>
+                      <Link to={`/users/${u.id}/profile`}>
+                        {u.displayName}
+                      </Link>
+                    </Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
