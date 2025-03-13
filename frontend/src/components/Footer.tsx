@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Anchor href="https://github.com/planethouki/hackathon-202503">
-                  GitHub
+                  GitHub Repo
                 </Anchor>
               </li>
             </ul>
