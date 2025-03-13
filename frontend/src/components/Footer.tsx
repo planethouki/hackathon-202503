@@ -8,7 +8,6 @@ const Footer: React.FC = () => {
         href={href}
         target="_blank"
         rel="noreferrer noopener"
-        className="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
       >
         {children}
       </a>
@@ -16,7 +15,7 @@ const Footer: React.FC = () => {
   }
 
   return (
-    <footer className="bg-dark text-white mt-5">
+    <footer className="bg-light mt-5">
       <Container>
         <Row className="py-4">
           <Col md={4} className="text-center">
