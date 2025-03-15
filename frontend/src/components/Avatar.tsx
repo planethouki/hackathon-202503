@@ -7,16 +7,15 @@ export function Avatar({ fileName = "1F923.svg" }: { fileName?: string }) {
 
   const storage = getStorage();
 
-  const avatarRef = ref(storage, `public/avatar/${fileName}`);
-
   useEffect(() => {
+    const avatarRef = ref(storage, `public/avatar/${fileName}`);
     getDownloadURL(avatarRef)
       .then((url) => setAvatarUrl(url))
       .catch((err) => {
         setAvatarUrl("/default-avatar.png")
         console.error(err)
       });
-  }, [avatarRef]);
+  }, [fileName]);
 
   return (
     <>
