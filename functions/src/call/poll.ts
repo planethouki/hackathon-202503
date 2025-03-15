@@ -27,9 +27,10 @@ export const createPoll = onCall<Poll>({
     throw new HttpsError("not-found", "対象のデータが見つかりません");
   }
 
-  const userPollCountSnap = await pRef
+  const userPollCountSnap = await db
     .collection("polls")
     .where("userId", "==", uid)
+    .where("punchlineId", "==", punchlineId)
     .limit(1)
     .count()
     .get();
@@ -39,11 +40,12 @@ export const createPoll = onCall<Poll>({
   }
 
   const pollId = generateRandomString();
-  await pRef.collection("polls").doc(pollId).set({
+  await db.collection("polls").doc(pollId).set({
     id: pollId,
     createdAt: new Date().toISOString(),
     userId: uid,
     emoji: poll.emoji,
+    punchlineId,
   });
 
   // ETHに書き込む
@@ -82,10 +84,9 @@ export const getPolls = onCall<{punchlineId: string}>({
   }
 
   const pSnap = await db
-    .collection("punchlines")
-    .doc(punchlineId)
     .collection("polls")
     .where("userId", "==", uid)
+    .where("punchlineId", "==", punchlineId)
     .get();
 
   const polls = pSnap

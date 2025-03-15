@@ -9,17 +9,25 @@ import updateRanking from "./lib/updateRanking";
 const db = getFirestore();
 
 export const onPollCreated = onDocumentCreated(
-  "punchlines/{punchlineId}/polls/{pollId}",
+  "polls/{pollId}",
   async (event) => {
-    const punchlineId = event.params.punchlineId;
+    if (!event.data) {
+      logger.warn("Poll data was not created");
+      return;
+    }
+    const punchlineId = event.data.data().punchlineId as string;
     await common(punchlineId);
   }
 );
 
 export const onPollDeleted = onDocumentDeleted(
-  "punchlines/{punchlineId}/polls/{pollId}",
+  "polls/{pollId}",
   async (event) => {
-    const punchlineId = event.params.punchlineId;
+    if (!event.data) {
+      logger.warn("Poll data was not found");
+      return;
+    }
+    const punchlineId = event.data.data().punchlineId as string;
     await common(punchlineId);
   }
 );
@@ -27,7 +35,8 @@ export const onPollDeleted = onDocumentDeleted(
 const common = async (punchlineId: string) => {
   // 投票数更新
   const {count} = await db
-    .collection(`punchlines/${punchlineId}/polls`)
+    .collection("polls")
+    .where("punchlineId", "==", punchlineId)
     .count()
     .get()
     .then((q) => q.data());
