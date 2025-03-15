@@ -4,6 +4,8 @@ import Login from "./pages/Login.tsx";
 import Logout from "./pages/Logout.tsx";
 import MyPage from "./pages/MyPage/MyPage.tsx";
 import ProfileEdit from "./pages/MyPage/ProfileEdit.tsx";
+import MyPolls from "./pages/MyPage/Polls.tsx";
+import MyPunchlines from "./pages/MyPage/Punchlines.tsx";
 import NetaNew from "./pages/Neta/New.tsx";
 import NetaNewDetail from "./pages/Neta/New/Detail.tsx";
 import NetaNewDetailConfirm from "./pages/Neta/New/DetailConfirm.tsx";
@@ -33,6 +35,8 @@ function App() {
             <Route path="mypage">
               <Route index element={<MyPage />} />
               <Route path="profile/edit" element={<ProfileEdit />} />
+              <Route path="polls" element={<MyPolls />} />
+              <Route path="punchlines" element={<MyPunchlines />} />
             </Route>
             <Route path="neta">
               <Route path="new">

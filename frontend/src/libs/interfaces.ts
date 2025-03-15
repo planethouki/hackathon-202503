@@ -16,6 +16,8 @@ export interface Punchline {
 export interface Poll {
   id: string;
   userId: string;
+  punchlineId: string;
+  contestId: string;
   createdAt: string;
   emoji: string;
   user?: User;

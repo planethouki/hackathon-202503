@@ -1,7 +1,6 @@
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 import { useAuth } from "../../AuthProvider.tsx";
 import {LoadingBlock} from "../../components/Loading.tsx";
-import PunchlineCard from "../../components/PunchlineCard.tsx";
 import {useUsersDetailApi} from "../../hooks/usersApi.ts";
 import {Link} from "react-router";
 import {Avatar} from "../../components/Avatar.tsx";
@@ -9,7 +8,7 @@ import {Avatar} from "../../components/Avatar.tsx";
 function MyPage() {
   const { loading, user: authUser } = useAuth();
 
-  const { isLoading, user, punchlines } = useUsersDetailApi(authUser?.uid);
+  const { isLoading, user } = useUsersDetailApi(authUser?.uid);
 
   return (
     <>
@@ -44,25 +43,26 @@ function MyPage() {
           <div className="mb-5">
             自己紹介: {user?.bio ?? "未設定"}
           </div>
-        </Container>
-      </div>
-
-      <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
-        <Container>
-          <h2 className="mb-5">
-            投稿動画一覧
-          </h2>
-          {isLoading && <LoadingBlock />}
-          <Row xs={1} sm={2} md={4} className="g-4">
-            {punchlines?.map((p) => (
-              <Col key={p.id}>
-                <PunchlineCard punchline={p} showUser={false} />
-              </Col>
-            ))}
-          </Row>
-          {punchlines?.length === 0 &&
-            <div>投稿動画はありません</div>
-          }
+          <div className="mb-5">
+            <Link to="/mypage/punchlines" className="d-inline-block me-3">
+              <Button
+                as="span"
+                variant="primary"
+                href="/mypage/punchlines"
+              >
+                投稿履歴
+              </Button>
+            </Link>
+            <Link to="/mypage/polls" className="d-inline-block me-3">
+              <Button
+                as="span"
+                variant="primary"
+                href="/mypage/polls"
+              >
+                投票履歴
+              </Button>
+            </Link>
+          </div>
         </Container>
       </div>
     </>
