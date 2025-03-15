@@ -1,7 +1,8 @@
 import {useState, useMemo} from "react";
-import {Container, Row, Col, Pagination, Spinner} from "react-bootstrap";
+import {Container, Row, Col, Spinner} from "react-bootstrap";
 import {usePunchlinesLatestApi} from "../../hooks/punchlinesApi.ts";
 import PunchlineCard from "../../components/PunchlineCard.tsx";
+import PaginationComponent from "../../components/PaginationComponent";
 
 function PunchlinesLatest() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -15,38 +16,6 @@ function PunchlinesLatest() {
     setPageNumber(number);
   };
 
-  function PaginationComponent() {
-    return (
-      <Pagination>
-        <Pagination.First
-          onClick={() => handlePageChange(1)}
-          disabled={pageNumber === 1}
-        />
-        <Pagination.Prev
-          onClick={() => handlePageChange(pageNumber - 1)}
-          disabled={pageNumber === 1}
-        />
-        {Array.from({ length: maxPage }, (_, index) => (
-          <Pagination.Item
-            key={index + 1}
-            active={index + 1 === pageNumber}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </Pagination.Item>
-        ))}
-        <Pagination.Next
-          onClick={() => handlePageChange(pageNumber + 1)}
-          disabled={pageNumber === maxPage}
-        />
-        <Pagination.Last
-          onClick={() => handlePageChange(maxPage)}
-          disabled={pageNumber === maxPage}
-        />
-      </Pagination>
-    )
-  }
-
   return (
     <>
       <div className="mt-5 mb-1 py-3 bg-light">
@@ -57,7 +26,11 @@ function PunchlinesLatest() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f0f8ff" }}>
         <Container>
-          <PaginationComponent />
+          <PaginationComponent
+            pageNumber={pageNumber}
+            maxPage={maxPage}
+            handlePageChange={handlePageChange}
+          />
           {isLoading && <Spinner />}
           <Row xs={1} sm={2} md={4} className="g-4 mb-5">
             {punchlines?.map((p) => (
@@ -66,7 +39,11 @@ function PunchlinesLatest() {
               </Col>
             ))}
           </Row>
-          <PaginationComponent />
+          <PaginationComponent
+            pageNumber={pageNumber}
+            maxPage={maxPage}
+            handlePageChange={handlePageChange}
+          />
         </Container>
       </div>
     </>
