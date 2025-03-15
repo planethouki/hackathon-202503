@@ -6,11 +6,11 @@ const db = getFirestore();
 
 const app = express();
 
-app.get("/:id", async (req, res) => {
-  const id = req.params.id;
+app.get("/:userId", async (req, res) => {
+  const userId = req.params.userId;
   const users = await db
     .collection("users")
-    .where("id", "==", id)
+    .where("id", "==", userId)
     .limit(1)
     .get()
     .then((snap) => snap.docs
@@ -22,7 +22,7 @@ app.get("/:id", async (req, res) => {
 
   const punchlines = await db
     .collection("punchlines")
-    .where("userId", "==", id)
+    .where("userId", "==", userId)
     .orderBy("createdAt", "desc")
     .limit(4)
     .get()
