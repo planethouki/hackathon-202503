@@ -20,7 +20,7 @@ import PunchlinesLatest from "./pages/Punchlines/Latest.tsx";
 import UsersDetail from "./pages/Users/Detail.tsx";
 import Layout from "./layouts/Layout.tsx";
 import { TitleYouTubeProvider } from "./contexts/TitleYouTubeContext";
-import { AuthProvider } from "./AuthProvider";
+import {AuthProvider, ProtectedRoute} from "./AuthProvider";
 import "./App.scss";
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="logout" element={<Logout />} />
-            <Route path="mypage">
+            <Route path="mypage" element={<ProtectedRoute />}>
               <Route index element={<MyPage />} />
               <Route path="profile/edit" element={<ProfileEdit />} />
               <Route path="polls" element={<MyPolls />} />

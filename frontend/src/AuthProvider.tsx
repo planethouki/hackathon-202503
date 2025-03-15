@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useState, useContext } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "./firebase";
+import {Container, Spinner} from "react-bootstrap";
+import {Outlet, Navigate} from "react-router";
 
 interface AuthContextType {
   user: User | null;
@@ -34,3 +36,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 export const useAuth = () => useContext(AuthContext);
+
+export const ProtectedRoute = () => {
+  const { user, loading } = useAuth();
+
+  if (loading) return <Container><Spinner /></Container>;
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
+};
