@@ -59,11 +59,6 @@ export const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showConte
             <i className="bi bi-balloon-heart"></i>
             <span>{punchline.pollCount}</span>
           </span>
-          <span
-            title={`投稿日 ${new Date(punchline.createdAt).toLocaleString()}`}
-          >
-            <i className="bi bi-calendar-week"></i>
-          </span>
         </div>
         {showRanking &&
           <div className="mb-3">
