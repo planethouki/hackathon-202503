@@ -63,6 +63,7 @@ function PunchlinePostDetail() {
             </Breadcrumb.Item>
           </Breadcrumb>
           <h1>詳細入力</h1>
+          <p>投稿する動画を持ってない方は、サンプル動画を投稿ください。</p>
         </Container>
       </div>
 
