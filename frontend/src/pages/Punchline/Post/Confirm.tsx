@@ -1,6 +1,6 @@
 import {useEffect, useMemo, useState} from "react";
-import {Container, Form, Button} from "react-bootstrap";
-import {useParams, useNavigate} from "react-router";
+import {Container, Form, Button, Breadcrumb} from "react-bootstrap";
+import {useParams, useNavigate, Link} from "react-router";
 import {usePunchlinePostContestDetailApi, usePunchlinePostCall} from "../../../hooks/punchlinePostApi.ts";
 import {LoadingBlock} from "../../../components/Loading.tsx";
 import {useTitleYouTubeContext} from "../../../contexts/TitleYouTubeContext";
@@ -55,6 +55,20 @@ function PunchlinePostConfirm() {
     <>
       <div className="mt-5 mb-1 py-3 bg-light">
         <Container>
+          <Breadcrumb>
+            <Breadcrumb.Item as="span" linkAs="span">
+              <Link to="/">ホーム</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item as="span" linkAs="span">
+              <Link to="/punchline/post">投稿する</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item as="span" linkAs="span">
+              <Link to={`/punchline/post/${id}`}>詳細入力</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item as="span" linkAs="span" active>
+              確認
+            </Breadcrumb.Item>
+          </Breadcrumb>
           <h1>投稿確認</h1>
         </Container>
       </div>

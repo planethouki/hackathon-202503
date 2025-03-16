@@ -15,6 +15,14 @@ function PunchlinePost() {
     <>
       <div className="mt-5 mb-1 py-3 bg-light">
         <Container>
+          <Breadcrumb>
+            <Breadcrumb.Item as="span" linkAs="span">
+              <Link to="/">ホーム</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item as="span" linkAs="span" active>
+              投稿する
+            </Breadcrumb.Item>
+          </Breadcrumb>
           <h1>お題リスト</h1>
           <p>投稿するお題を選択します。お題はジャンルのようなものです。</p>
         </Container>
