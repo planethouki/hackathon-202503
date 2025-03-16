@@ -26,7 +26,14 @@ export function Avatar({ fileName = "1F923.svg" }: { fileName?: string }) {
           className="w-100"
         />
       ) : (
-        <Spinner />
+        <span
+          className="w-100 d-flex justify-content-center align-items-center"
+          style={{
+            aspectRatio: 1,
+          }}
+        >
+          <Spinner animation="grow" />
+        </span>
       )}
     </>
   );
