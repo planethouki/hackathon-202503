@@ -7,8 +7,7 @@ import {ERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20P
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract PollToken is ERC20Permit, Ownable {
-    constructor() ERC20("Poll", "POLL") ERC20Permit("Poll") Ownable(msg.sender) {
-    }
+    constructor() ERC20("Poll", "POLL") ERC20Permit("Poll") Ownable(msg.sender) {}
 
     function poll(address to) public onlyOwner {
         _mint(to, 10 ** 18);

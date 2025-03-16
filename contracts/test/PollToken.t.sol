@@ -21,7 +21,7 @@ contract PollTokenTest is Test {
     function testMinting() public {
         vm.startPrank(owner);
         erc20.poll(user);
-        assertEq(erc20.balanceOf(user), 10**18);
+        assertEq(erc20.balanceOf(user), 10 ** 18);
         vm.stopPrank();
     }
 
