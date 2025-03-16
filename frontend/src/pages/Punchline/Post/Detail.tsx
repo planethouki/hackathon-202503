@@ -1,9 +1,10 @@
 import {useEffect, useState, FormEvent, useMemo} from "react";
-import {Container, Form, Button, Breadcrumb} from "react-bootstrap";
+import {Container, Form, Button, Breadcrumb, Modal} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {usePunchlinePostContestDetailApi} from "../../../hooks/punchlinePostApi.ts";
 import {useTitleYouTubeContext} from "../../../contexts/TitleYouTubeContext";
 import {ContestImage} from "../../../components/ContestImage.tsx";
+import {sampleMovies} from "../../../components/utils.ts";
 
 function PunchlinePostDetail() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ function PunchlinePostDetail() {
 
   const [validated, setValidated] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [showSample, setShowSample] = useState(false);
 
   const { title, setTitle, youTubeUrl, setYouTubeUrl } = useTitleYouTubeContext();
 
@@ -45,6 +47,11 @@ function PunchlinePostDetail() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate(`/punchline/post/${id}/confirm`);
+  }
+
+  const setSampleMovie = (url: string) => {
+    setYouTubeUrl(url);
+    setShowSample(false);
   }
 
   return (
@@ -99,7 +106,18 @@ function PunchlinePostDetail() {
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>YouTube ShortsのURL</Form.Label>
+                <Form.Label>
+                  <span className="me-3">
+                    YouTube ShortsのURL
+                  </span>
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    onClick={() => setShowSample(true)}
+                  >
+                    サンプル動画を設定する
+                  </Button>
+                </Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="https://youtube.com/shorts/M0xy9bGhn4Y?feature=shared"
@@ -128,6 +146,38 @@ function PunchlinePostDetail() {
           }
         </Container>
       </div>
+
+      <Modal show={showSample} onHide={() => setShowSample(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>サンプル動画</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="mb-2">こちらのサンプル動画は、自由に投稿に使うことができます。</div>
+          {sampleMovies.map((m, i) =>
+            <div key={i} className="py-2">
+              <span className="me-3">{m.title}</span>
+              <a
+                href={m.url}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="me-3"
+              >
+                <Button as="span" variant="outline-primary">
+                  <i className="bi bi-youtube"></i>
+                </Button>
+              </a>
+              <Button onClick={() => setSampleMovie(m.url)}>
+                これにする
+              </Button>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowSample(false)}>
+            キャンセル
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
