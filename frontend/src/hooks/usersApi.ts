@@ -15,7 +15,7 @@ interface UseUsersDetailApiReturn {
 
 export const useUsersDetailApi = (id: string | null | undefined): UseUsersDetailApiReturn => {
   const [user, setUser] = useState<User | null>(null);
-  const [punchlines, setPunchlines] = useState<Punchline[] | null>([]);
+  const [punchlines, setPunchlines] = useState<Punchline[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,8 +30,8 @@ export const useUsersDetailApi = (id: string | null | undefined): UseUsersDetail
     }
     try {
       const res = await fetch(new URL(`/users/${id}`, apiUrl)).then(res => res.json());
-      const user: User = res.user || null;
-      const punchlines: Punchline[] = res.punchlines || null;
+      const user: User = res.user;
+      const punchlines: Punchline[] = res.punchlines;
       setUser(user);
       setPunchlines(punchlines);
     } catch (err: unknown) {
