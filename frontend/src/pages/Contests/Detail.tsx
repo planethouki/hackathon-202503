@@ -1,5 +1,5 @@
 import {useEffect, useMemo} from "react";
-import {Col, Container, Row, Button} from "react-bootstrap";
+import {Col, Container, Row, Button, Badge} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {useContestsDetailApi} from "../../hooks/contestsApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
@@ -43,12 +43,50 @@ function ContestsDetail() {
             <h2 className="mb-5">
               {contest.title}
             </h2>
-            <div style={{ maxWidth: 400 }}>
-              <ContestImage
-                fileName={contest.imageName}
-                alt={contest.title}
-              />
-            </div>
+            <Row xs={1} md={2}>
+              <Col>
+                <div className="mb-3" style={{ maxWidth: 400 }}>
+                  <ContestImage
+                    fileName={contest.imageName}
+                    alt={contest.title}
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div className="mb-4">
+                  <h3 className="">
+                    <span className="me-3">投稿</span>
+                    {checkDateStatus(contest.postStartDate, contest.postEndDate) === "before" && <Badge bg="info">受付前</Badge>}
+                    {checkDateStatus(contest.postStartDate, contest.postEndDate) === "now" && <Badge>受付中！</Badge>}
+                    {checkDateStatus(contest.postStartDate, contest.postEndDate) === "after" && <Badge bg="secondary">終了</Badge>}
+                  </h3>
+                  <div>
+                    開始: {new Date(contest.postStartDate).toLocaleString()}
+                  </div>
+                  <div>
+                    終了: {new Date(contest.postEndDate).toLocaleString()}
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <h3 className="">
+                    <span className="me-3">投票</span>
+                    {checkDateStatus(contest.pollStartDate, contest.pollEndDate) === "before" && <Badge bg="info">投票前</Badge>}
+                    {checkDateStatus(contest.pollStartDate, contest.pollEndDate) === "now" && <Badge>投票中！</Badge>}
+                    {checkDateStatus(contest.pollStartDate, contest.pollEndDate) === "after" && <Badge bg="success">結果発表中！</Badge>}
+                  </h3>
+                  <div>
+                    開始: {new Date(contest.pollStartDate).toLocaleString()}
+                  </div>
+                  <div>
+                    終了: {new Date(contest.pollEndDate).toLocaleString()}
+                  </div>
+                </div>
+                <div className="mb-4 h3">
+                  <span className="me-1">投稿数:</span>
+                  {contest.punchlineCount}
+                </div>
+              </Col>
+            </Row>
           </>}
         </Container>
       </div>
