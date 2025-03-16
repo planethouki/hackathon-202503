@@ -166,16 +166,18 @@ function ContestsDetail() {
                 {punchlinesLatest?.length === 0 && <p>投稿はありません。</p>}
               </Row>
             </Tab>
-            <Tab eventKey="popular" title="人気">
-              <Row xs={1} sm={2} md={4} className="g-4 mb-5">
-                {punchlinesPopular?.map((p) => (
-                  <Col key={p.id}>
-                    <PunchlineCard punchline={p} showContest={false} showRanking={true} />
-                  </Col>
-                ))}
-                {punchlinesPopular?.length === 0 && <p>投稿はありません。</p>}
-              </Row>
-            </Tab>
+            {!isPollAfter &&
+              <Tab eventKey="popular" title="人気">
+                <Row xs={1} sm={2} md={4} className="g-4 mb-5">
+                  {punchlinesPopular?.map((p) => (
+                    <Col key={p.id}>
+                      <PunchlineCard punchline={p} showContest={false} showRanking={true} />
+                    </Col>
+                  ))}
+                  {punchlinesPopular?.length === 0 && <p>投稿はありません。</p>}
+                </Row>
+              </Tab>
+            }
           </Tabs>
 
           {canPost &&
