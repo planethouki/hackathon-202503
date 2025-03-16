@@ -16,6 +16,7 @@ function PunchlinePost() {
       <div className="mt-5 mb-1 py-3 bg-light">
         <Container>
           <h1>お題リスト</h1>
+          <p>お題に合致するYouTube Shortsの動画を投稿します。</p>
         </Container>
       </div>
 
