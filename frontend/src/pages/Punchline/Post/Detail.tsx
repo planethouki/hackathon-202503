@@ -57,13 +57,13 @@ function PunchlinePostDetail() {
               <Link to="/">ホーム</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item as="span" linkAs="span">
-              <Link to="/punchline/post">詳細入力</Link>
+              <Link to="/punchline/post">投稿する</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item as="span" linkAs="span" active>
-              詳細設定
+              詳細入力
             </Breadcrumb.Item>
           </Breadcrumb>
-          <h1>お題詳細</h1>
+          <h1>詳細入力</h1>
         </Container>
       </div>
 
