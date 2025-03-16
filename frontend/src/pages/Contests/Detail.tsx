@@ -63,6 +63,7 @@ function ContestsDetail() {
                 <PunchlineCard punchline={p} showContest={false} />
               </Col>
             ))}
+            {punchlines?.length === 0 && <p>投稿はありません。</p>}
           </Row>
           {canPost &&
             <Link to={`/punchline/post/${id}`}>
