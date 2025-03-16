@@ -1,7 +1,7 @@
 import {Card, Container, Row, Col, Button, Placeholder} from "react-bootstrap";
 import { Link } from "react-router";
 import { useHomeApi } from "../hooks/homeApi.ts";
-import {PunchlineCard} from "../components/PunchlineCard.tsx";
+import {PunchlineCard, PunchlineCardPlaceholder} from "../components/PunchlineCard.tsx";
 import {Avatar} from "../components/Avatar.tsx";
 import {LoadingBlock} from "../components/Loading.tsx";
 import {ContestImage} from "../components/ContestImage.tsx";
@@ -26,15 +26,19 @@ function Home() {
               </Link>
             </div>
           </div>
-          {isLoading && <LoadingBlock />}
           <Row xs={1} sm={2} md={4} className="g-4">
-            {punchlines?.map((p) => {
+            {punchlines && punchlines.map((p) => {
               return (
                 <Col key={p.id}>
                   <PunchlineCard punchline={p} />
                 </Col>
               )
             })}
+            {!punchlines && Array.from({length: 4}, (_, i) => i + 1).map((i) =>
+              <Col key={i}>
+                <PunchlineCardPlaceholder />
+              </Col>
+            )}
           </Row>
         </Container>
       </div>
@@ -67,7 +71,7 @@ function Home() {
                 </Card>
               </Col>
             ))}
-            {!users && Array.from({ length: 12 }, (_, i) => i + 1).map((i) =>
+            {!users && Array.from({length: 12}, (_, i) => i + 1).map((i) =>
               <Col key={i}>
                 <Card className="text-center">
                   <span

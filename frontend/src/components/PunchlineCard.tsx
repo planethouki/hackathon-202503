@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {Card} from "react-bootstrap";
+import {Card, Placeholder} from "react-bootstrap";
 import {Link} from "react-router";
 import {Punchline} from "../libs/interfaces";
 
@@ -69,6 +69,33 @@ export const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showConte
             }
           </div>
         }
+      </Card.Footer>
+    </Card>
+  );
+}
+
+export const PunchlineCardPlaceholder: FC = () => {
+  return (
+    <Card>
+      <Card.Body>
+        <Card.Title>
+          <Placeholder as="h3" animation="glow">
+            <Placeholder xs={12} />
+          </Placeholder>
+        </Card.Title>
+      </Card.Body>
+      <Placeholder
+        as="div"
+        animation="glow"
+        style={{ aspectRatio: 9 / 16, width: "100%" }}
+      >
+        <Placeholder xs={12} />
+      </Placeholder>
+      <Card.Footer>
+        <Placeholder as="div" animation="glow" className="text-center">
+          <Placeholder xs={4} className="me-2" />
+          <Placeholder xs={3} />
+        </Placeholder>
       </Card.Footer>
     </Card>
   );
