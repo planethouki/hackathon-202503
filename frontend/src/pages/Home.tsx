@@ -1,4 +1,4 @@
-import {Card, Container, Row, Col, Button, Placeholder} from "react-bootstrap";
+import {Card, Container, Row, Col, Button, Placeholder, Spinner} from "react-bootstrap";
 import { Link } from "react-router";
 import { useHomeApi } from "../hooks/homeApi.ts";
 import {PunchlineCard, PunchlineCardPlaceholder} from "../components/PunchlineCard.tsx";
@@ -97,9 +97,8 @@ function Home() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           <h2 className="mb-5">新着お題</h2>
-          {isLoading && <LoadingBlock />}
           <Row xs={1} sm={2} md={4} className="g-4">
-            {contests?.map((c) => (
+            {contests && contests.map((c) => (
               <Col key={c.id}>
                 <Card>
                   <Link to={`/contests/${c.id}`} >
@@ -123,6 +122,28 @@ function Home() {
                 </Card>
               </Col>
             ))}
+            {!contests && Array.from({length: 8}, (_, i) => i + 1).map((i) =>
+              <Col key={i}>
+                <Card>
+                  <span
+                    className="d-flex justify-content-center align-items-center"
+                    style={{
+                      width: "100%",
+                      aspectRatio: 1,
+                    }}
+                  >
+                  </span>
+                  <Card.Body>
+                    <Placeholder as={Card.Title} animation="glow">
+                      <Placeholder xs={12} />
+                    </Placeholder>
+                    <Placeholder as={Card.Text} animation="glow">
+                      <Placeholder xs={12} />
+                    </Placeholder>
+                  </Card.Body>
+                </Card>
+              </Col>
+            )}
           </Row>
         </Container>
       </div>
