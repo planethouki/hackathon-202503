@@ -1,5 +1,5 @@
 import {useEffect, useMemo} from "react";
-import {Col, Container, Row, Button, Badge, Tab, Tabs} from "react-bootstrap";
+import {Col, Container, Row, Button, Badge, Tab, Tabs, Image} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {useContestsDetailApi} from "../../hooks/contestsApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
@@ -27,6 +27,11 @@ function ContestsDetail() {
   const canPoll = useMemo(() => {
     if (!contest) return false;
     return checkDateStatus(contest.pollStartDate, contest.pollEndDate) === "now";
+  }, [contest]);
+
+  const isPollAfter = useMemo(() => {
+    if (!contest) return false;
+    return checkDateStatus(contest.pollStartDate, contest.pollEndDate) === "after";
   }, [contest]);
 
   if (!id) {
@@ -107,6 +112,40 @@ function ContestsDetail() {
           </>}
         </Container>
       </div>
+
+      {isPollAfter &&
+        <div className="mb-1 py-5" style={{ backgroundColor: "#f0f8ff" }}>
+          <Container>
+            <h2 className="mb-5">結果発表</h2>
+            <Row xs={1} sm={2} md={4} className="g-4 mb-5">
+              {punchlinesPopular?.filter((_, i) => i < 3).map((p) => (
+                <Col key={p.id}>
+                  {p.rankingInContest === 1 &&
+                    <h2 className="text-center">
+                      <Image src="/kkrn_icon_oukan_1.svg" alt="１位" style={{ width: 90 }} />
+                      １位
+                    </h2>
+                  }
+                  {p.rankingInContest === 2 &&
+                    <h3 className="text-center">
+                      <Image src="/kkrn_icon_oukan_2.svg" alt="２位" style={{ width: 90 }} />
+                      ２位
+                    </h3>
+                  }
+                  {p.rankingInContest === 3 &&
+                    <h3 className="text-center">
+                      <Image src="/kkrn_icon_oukan_3.svg" alt="３位" style={{ width: 90 }} />
+                      ３位
+                    </h3>
+                  }
+                  <PunchlineCard punchline={p} showContest={false} />
+                </Col>
+              ))}
+              {punchlinesPopular?.length === 0 && <p>投稿はありません。</p>}
+            </Row>
+          </Container>
+        </div>
+      }
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f0f8ff" }}>
         <Container>
