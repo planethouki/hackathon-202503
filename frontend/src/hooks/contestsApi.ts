@@ -5,7 +5,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 interface UseContestsDetailApiReturn {
   contest: Contest | null;
-  punchlines: Punchline[] | null;
+  punchlinesLatest: Punchline[] | null;
+  punchlinesPopular: Punchline[] | null;
   isLoading: boolean;
   error: string | null;
   refresh: () => Promise<void>;
@@ -13,7 +14,8 @@ interface UseContestsDetailApiReturn {
 
 export const useContestsDetailApi = (id: string | null | undefined): UseContestsDetailApiReturn => {
   const [contest, setContest] = useState<Contest | null>(null);
-  const [punchlines, setPunchlines] = useState<Punchline[] | null>([]);
+  const [punchlinesLatest, setPunchlinesLatest] = useState<Punchline[] | null>([]);
+  const [punchlinesPopular, setPunchlinesPopular] = useState<Punchline[] | null>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,16 +24,16 @@ export const useContestsDetailApi = (id: string | null | undefined): UseContests
     setError(null);
     if (!id) {
       setContest(null);
-      setPunchlines(null);
+      setPunchlinesLatest(null);
+      setPunchlinesPopular(null);
       setError("IDが不正です");
       return;
     }
     try {
       const res = await fetch(new URL(`/contests/${id}`, apiUrl)).then(res => res.json());
-      const contest: Contest = res.contest || null;
-      const punchlines: Punchline[] = res.punchlines || null;
-      setContest(contest);
-      setPunchlines(punchlines);
+      setContest(res.contest);
+      setPunchlinesLatest(res.punchlinesLatest);
+      setPunchlinesPopular(res.punchlinesPopular);
     } catch (err: unknown) {
       // errがError型であるか判定
       if (err instanceof Error) {
@@ -52,5 +54,5 @@ export const useContestsDetailApi = (id: string | null | undefined): UseContests
     await fetchContestsDetail();
   };
 
-  return { contest, punchlines, isLoading, error, refresh };
+  return { contest, punchlinesLatest, punchlinesPopular, isLoading, error, refresh };
 };

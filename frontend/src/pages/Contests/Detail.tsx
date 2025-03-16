@@ -1,5 +1,5 @@
 import {useEffect, useMemo} from "react";
-import {Col, Container, Row, Button, Badge} from "react-bootstrap";
+import {Col, Container, Row, Button, Badge, Tab, Tabs} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {useContestsDetailApi} from "../../hooks/contestsApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
@@ -11,7 +11,7 @@ function ContestsDetail() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
 
-  const { isLoading, contest, punchlines } = useContestsDetailApi(id);
+  const { isLoading, contest, punchlinesLatest, punchlinesPopular } = useContestsDetailApi(id);
 
   useEffect(() => {
     if (id === undefined) {
@@ -93,16 +93,35 @@ function ContestsDetail() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f0f8ff" }}>
         <Container>
-          <h2 className="mb-5">新着投稿</h2>
+          <h2 className="mb-5">お題に対する投稿</h2>
           {isLoading && <LoadingBlock />}
-          <Row xs={1} sm={2} md={4} className="g-4 mb-5">
-            {punchlines?.map((p) => (
-              <Col key={p.id}>
-                <PunchlineCard punchline={p} showContest={false} />
-              </Col>
-            ))}
-            {punchlines?.length === 0 && <p>投稿はありません。</p>}
-          </Row>
+          <Tabs
+            defaultActiveKey="latest"
+            id="uncontrolled-tab-example"
+            className="mb-3"
+          >
+            <Tab eventKey="latest" title="新着">
+              <Row xs={1} sm={2} md={4} className="g-4 mb-5">
+                {punchlinesLatest?.map((p) => (
+                  <Col key={p.id}>
+                    <PunchlineCard punchline={p} showContest={false} />
+                  </Col>
+                ))}
+                {punchlinesLatest?.length === 0 && <p>投稿はありません。</p>}
+              </Row>
+            </Tab>
+            <Tab eventKey="popular" title="人気">
+              <Row xs={1} sm={2} md={4} className="g-4 mb-5">
+                {punchlinesPopular?.map((p) => (
+                  <Col key={p.id}>
+                    <PunchlineCard punchline={p} showContest={false} showRanking={true} />
+                  </Col>
+                ))}
+                {punchlinesPopular?.length === 0 && <p>投稿はありません。</p>}
+              </Row>
+            </Tab>
+          </Tabs>
+
           {canPost &&
             <Link to={`/punchline/post/${id}`}>
               <Button variant="primary">私も回答する</Button>
