@@ -52,9 +52,16 @@ export const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showConte
             </Link>
           }
           <span
-          title={`投票数 ${punchline.pollCount}`}>
+            className="me-2"
+            title={`投票数 ${punchline.pollCount}`}
+          >
             <i className="bi bi-balloon-heart"></i>
             <span>{punchline.pollCount}</span>
+          </span>
+          <span
+            title={`投稿日 ${new Date(punchline.createdAt).toLocaleString()}`}
+          >
+            <i className="bi bi-calendar-week"></i>
           </span>
         </div>
         {showRanking &&
