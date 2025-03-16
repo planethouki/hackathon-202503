@@ -10,7 +10,7 @@ interface Props {
   showRanking?: boolean
 }
 
-const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showContest = true, showRanking = false, }) => {
+export const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showContest = true, showRanking = false, }) => {
 
   return (
     <Card>
@@ -73,5 +73,3 @@ const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showContest = tr
     </Card>
   );
 }
-
-export default PunchlineCard;

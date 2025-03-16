@@ -2,7 +2,7 @@ import {useEffect} from "react";
 import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useParams, useNavigate} from "react-router";
 import {useUsersDetailApi} from "../../hooks/usersApi.ts";
-import PunchlineCard from "../../components/PunchlineCard.tsx";
+import {PunchlineCard} from "../../components/PunchlineCard.tsx";
 import {Avatar} from "../../components/Avatar.tsx";
 
 function UsersDetail() {

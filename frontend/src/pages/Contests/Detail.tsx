@@ -3,7 +3,7 @@ import {Col, Container, Row, Button} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {useContestsDetailApi} from "../../hooks/contestsApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
-import PunchlineCard from "../../components/PunchlineCard.tsx";
+import {PunchlineCard} from "../../components/PunchlineCard.tsx";
 import {ContestImage} from "../../components/ContestImage.tsx";
 
 function ContestsDetail() {

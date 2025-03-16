@@ -1,7 +1,7 @@
 import {Card, Container, Row, Col, Button, Placeholder} from "react-bootstrap";
 import { Link } from "react-router";
 import { useHomeApi } from "../hooks/homeApi.ts";
-import PunchlineCard from "../components/PunchlineCard.tsx";
+import {PunchlineCard} from "../components/PunchlineCard.tsx";
 import {Avatar} from "../components/Avatar.tsx";
 import {LoadingBlock} from "../components/Loading.tsx";
 import {ContestImage} from "../components/ContestImage.tsx";

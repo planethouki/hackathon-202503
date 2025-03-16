@@ -1,7 +1,7 @@
 import {useState, useMemo} from "react";
 import {Container, Row, Col, Spinner} from "react-bootstrap";
 import {usePunchlinesLatestApi} from "../../hooks/punchlinesApi.ts";
-import PunchlineCard from "../../components/PunchlineCard.tsx";
+import {PunchlineCard} from "../../components/PunchlineCard.tsx";
 import PaginationComponent from "../../components/PaginationComponent";
 
 function PunchlinesLatest() {
