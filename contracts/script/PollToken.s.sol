@@ -23,7 +23,7 @@ contract PollTokenScript is Script {
 
         vm.startBroadcast(deployerPrivateKey);
 
-        erc20 = new PollToken(1000000 * 10 ** 18);
+        erc20 = new PollToken();
 
         vm.stopBroadcast();
     }
