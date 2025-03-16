@@ -19,9 +19,6 @@ function PunchlinePostDetail() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    setTitle("");
-    setYouTubeUrl("");
   }, []);
 
   useEffect(() => {

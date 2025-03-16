@@ -4,17 +4,22 @@ import {useParams, useNavigate, Link} from "react-router";
 import {usePunchlinePostContestsApi} from "../../../hooks/punchlinePostApi.ts";
 import {LoadingBlock} from "../../../components/Loading.tsx";
 import {ContestImage} from "../../../components/ContestImage.tsx";
+import {useTitleYouTubeContext} from "../../../contexts/TitleYouTubeContext.tsx";
 
 function PunchlinePostComplete() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
 
   const {isLoading, contests} = usePunchlinePostContestsApi();
+  const { setTitle, setYouTubeUrl } = useTitleYouTubeContext();
 
   useEffect(() => {
     if (id === undefined) {
       navigate("/punchline/post");
     }
+
+    setTitle("");
+    setYouTubeUrl("");
 
     window.scrollTo(0, 0);
   }, [id]);
