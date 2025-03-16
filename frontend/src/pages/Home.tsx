@@ -1,9 +1,8 @@
-import {Card, Container, Row, Col, Button, Placeholder, Spinner} from "react-bootstrap";
+import {Card, Container, Row, Col, Button, Placeholder} from "react-bootstrap";
 import { Link } from "react-router";
 import { useHomeApi } from "../hooks/homeApi.ts";
 import {PunchlineCard, PunchlineCardPlaceholder} from "../components/PunchlineCard.tsx";
 import {Avatar} from "../components/Avatar.tsx";
-import {LoadingBlock} from "../components/Loading.tsx";
 import {ContestImage} from "../components/ContestImage.tsx";
 
 function Home() {
@@ -11,7 +10,6 @@ function Home() {
     contests,
     users,
     punchlines,
-    isLoading,
   } = useHomeApi();
 
   return (
