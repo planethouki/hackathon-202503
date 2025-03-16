@@ -1,4 +1,4 @@
-import {Card, Container, Row, Col, Button, Placeholder} from "react-bootstrap";
+import {Card, Container, Row, Col, Button, Placeholder, Badge} from "react-bootstrap";
 import { Link } from "react-router";
 import { useHomeApi } from "../hooks/homeApi.ts";
 import {PunchlineCard, PunchlineCardPlaceholder} from "../components/PunchlineCard.tsx";
@@ -11,6 +11,18 @@ function Home() {
     users,
     punchlines,
   } = useHomeApi();
+
+  const checkDateStatus = (start: string, end: string): "before" | "now" | "after" => {
+    const now = Date.now();
+    const startTime = new Date(start).getTime();
+    const endTime = new Date(end).getTime();
+    if (now < startTime) {
+      return "before";
+    } else if (endTime < now) {
+      return "after";
+    }
+    return "now";
+  }
 
   return (
     <>
@@ -99,23 +111,32 @@ function Home() {
             {contests && contests.map((c) => (
               <Col key={c.id}>
                 <Card>
-                  <Link to={`/contests/${c.id}`} >
-                    <ContestImage fileName={c.imageName} alt={c.title} />
-                  </Link>
+                  <div className="position-relative">
+                    <Link to={`/contests/${c.id}`} >
+                      <ContestImage fileName={c.imageName} alt={c.title} />
+                    </Link>
+                    <div className="position-absolute d-flex flex-column gap-2" style={{ bottom: 10, right: 10 }}>
+                      {checkDateStatus(c.postStartDate, c.postEndDate) === "before" && <Badge bg="info">投稿受付前</Badge>}
+                      {checkDateStatus(c.postStartDate, c.postEndDate) === "now" && <Badge>投稿受付中！</Badge>}
+                      {checkDateStatus(c.pollStartDate, c.pollEndDate) === "before" && <Badge bg="info">投票前</Badge>}
+                      {checkDateStatus(c.pollStartDate, c.pollEndDate) === "now" && <Badge>投票中！</Badge>}
+                      {checkDateStatus(c.pollStartDate, c.pollEndDate) === "after" && <Badge bg="success">結果発表中！</Badge>}
+                    </div>
+                  </div>
                   <Card.Body>
                     <Card.Title>
                       <Link to={`/contests/${c.id}`} >
                         {c.title}
                       </Link>
                     </Card.Title>
-                    {c.punchlineCount !== undefined &&
-                      <Card.Text className="small">
-                      <span title={`動画数: ${c.punchlineCount}`}>
-                        <i className="bi bi-camera-video me-1"></i>
-                        <span>{c.punchlineCount}</span>
-                      </span>
-                      </Card.Text>
-                    }
+                    <Card.Text>
+                      {c.punchlineCount !== undefined &&
+                        <span className="small me-3" title={`動画数: ${c.punchlineCount}`}>
+                          <i className="bi bi-camera-video me-1"></i>
+                          <span>{c.punchlineCount}</span>
+                        </span>
+                      }
+                    </Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
