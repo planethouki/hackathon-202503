@@ -152,10 +152,10 @@ function PunchlinePostDetail() {
           <Modal.Title>サンプル動画</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="mb-2">こちらのサンプル動画は、自由に投稿に使うことができます。</div>
+          <div className="mb-5">こちらのサンプル動画は、自由に投稿に使うことができます。</div>
           {sampleMovies.map((m, i) =>
             <div key={i} className="py-2">
-              <span className="me-3">{m.title}</span>
+              <span className="me-3 h5">{m.title}</span>
               <a
                 href={m.url}
                 target="_blank"
@@ -163,7 +163,8 @@ function PunchlinePostDetail() {
                 className="me-3"
               >
                 <Button as="span" variant="outline-primary">
-                  <i className="bi bi-youtube"></i>
+                  <i className="bi bi-youtube me-2"></i>
+                  YouTubeで確認
                 </Button>
               </a>
               <Button onClick={() => setSampleMovie(m.url)}>
