@@ -77,6 +77,8 @@ function PunchlinesDetail() {
     );
   }, [punchline]);
 
+  const pollTokenHref = import.meta.env.VITE_BLOCK_EXPLORER_TOKEN.replace("{token}", import.meta.env.VITE_POLL_TOKEN)
+
   const isPolledEmoji = useCallback((emoji: string) => {
     if (poll === null) return false;
     return poll.emoji === emoji;
@@ -231,7 +233,7 @@ function PunchlinesDetail() {
             <div>
               <span>ここに</span>
               <a
-                href={import.meta.env.VITE_BLOCK_EXPLORER_TOKEN.replace("{token}", import.meta.env.VITE_POLL_TOKEN)}
+                href={pollTokenHref}
                 target="_blank"
                 rel="noopener noreferrer"
               >
