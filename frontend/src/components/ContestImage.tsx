@@ -32,7 +32,14 @@ export function ContestImage({ fileName, alt }: Props) {
           className="w-100"
         />
       ) : (
-        <Spinner />
+        <span
+          className="w-100 d-flex justify-content-center align-items-center"
+          style={{
+            aspectRatio: 1,
+          }}
+        >
+          <Spinner animation="grow" />
+        </span>
       )}
     </>
   );
