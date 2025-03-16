@@ -55,7 +55,7 @@ function MyPage() {
             {punchlines && (
               punchlines.map((p) => {
                 return (
-                  <div className="mb-1">
+                  <div key={p.id} className="mb-1">
                     <span className="me-3">
                       <Link to={`/punchlines/${p.id}`} className="">
                         {p.title}
