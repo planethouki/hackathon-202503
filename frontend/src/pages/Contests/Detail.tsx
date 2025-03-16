@@ -24,6 +24,11 @@ function ContestsDetail() {
     return checkDateStatus(contest.postStartDate, contest.postEndDate) === "now";
   }, [contest]);
 
+  const canPoll = useMemo(() => {
+    if (!contest) return false;
+    return checkDateStatus(contest.pollStartDate, contest.pollEndDate) === "now";
+  }, [contest]);
+
   if (!id) {
     return null;
   }
@@ -86,6 +91,11 @@ function ContestsDetail() {
                   </div>
                   <div>
                     終了: {new Date(contest.pollEndDate).toLocaleString()}
+                  </div>
+                  <div>
+                    {canPoll &&
+                      <span>投票は、各投稿のページで行えます。</span>
+                    }
                   </div>
                 </div>
                 <div className="mb-4 h3">
