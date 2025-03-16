@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useCallback, useState} from "react";
-import {Container, Button, ButtonGroup, Image, Spinner} from "react-bootstrap";
+import {Container, Button, ButtonGroup, Image, Spinner, Row, Col} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {usePunchlinesDetailApi} from "../../hooks/punchlinesApi.ts";
 import {usePollPostCall} from "../../hooks/pollPostApi.ts";
@@ -122,53 +122,59 @@ function PunchlinesDetail() {
       <div className="mb-1 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           {isLoading && <LoadingBlock />}
-          {punchline.contest && (
-            <p>
-              お題: <Link to={`/contests/${punchline.contest.id}`}>{punchline.contest.title}</Link>
-            </p>
-          )}
-          <h2>
-            {punchline.title}
-          </h2>
-          <div className="mb-3" style={{ maxWidth: 320 }}>
-            <iframe src={punchline.url}
-                    style={{ aspectRatio: 9/16, width: "100%" }}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen></iframe>
-          </div>
-          <div className="mb-5">
-            {punchline.user &&
-              <p>
-                投稿者: <Link to={`/users/${punchline.user.id}/profile`}>{punchline.user.displayName}</Link>
-              </p>
-            }
-            <p>
-              得票数: {punchline.pollCount}
-            </p>
-            <p>
-              <span>順位: {punchline.rankingInContest}</span>
-              {punchline.contest &&
-                <>
-                  <span> / </span>
-                  <span>{punchline.contest.punchlineCount}</span>
-                </>
-              }
-            </p>
-            <p>
-              投稿日時: {new Date(punchline.createdAt).toLocaleString()}
-            </p>
-          </div>
-          <div className="mb-5">
-            {inInPostPeriod ? (
-              <Link to={`/punchline/post/${punchline.contestId}`}>
-                <Button variant="primary">自分も投稿する</Button>
-              </Link>
-            ) : (
-              <Button variant="primary" disabled>自分も投稿する（期限切れです）</Button>
-            )}
-          </div>
+          <Row xs={1} md={2}>
+            <Col>
+              <div className="mb-3 mx-auto" style={{ maxWidth: 320 }}>
+                <iframe src={punchline.url}
+                        style={{ aspectRatio: 9/16, width: "100%" }}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen></iframe>
+              </div>
+            </Col>
+            <Col>
+              <div className="mb-5">
+                <h2 className="mb-3">
+                  {punchline.title}
+                </h2>
+                {punchline.contest && (
+                  <p>
+                    お題: <Link to={`/contests/${punchline.contest.id}`}>{punchline.contest.title}</Link>
+                  </p>
+                )}
+                {punchline.user &&
+                  <p>
+                    投稿者: <Link to={`/users/${punchline.user.id}/profile`}>{punchline.user.displayName}</Link>
+                  </p>
+                }
+                <p>
+                  得票数: {punchline.pollCount}
+                </p>
+                <p>
+                  <span>順位: {punchline.rankingInContest}</span>
+                  {punchline.contest &&
+                    <>
+                      <span> / </span>
+                      <span>{punchline.contest.punchlineCount}</span>
+                    </>
+                  }
+                </p>
+                <p>
+                  投稿日時: {new Date(punchline.createdAt).toLocaleString()}
+                </p>
+              </div>
+              <div className="mb-5">
+                {inInPostPeriod ? (
+                  <Link to={`/punchline/post/${punchline.contestId}`}>
+                    <Button variant="primary">自分も投稿する</Button>
+                  </Link>
+                ) : (
+                  <Button variant="primary" disabled>投稿受付は終了しました</Button>
+                )}
+              </div>
+            </Col>
+          </Row>
         </Container>
       </div>
 
