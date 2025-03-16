@@ -1,10 +1,11 @@
-import {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 import {Col, Container, Row, Button} from "react-bootstrap";
 import {useParams, useNavigate, Link} from "react-router";
 import {useContestsDetailApi} from "../../hooks/contestsApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
 import {PunchlineCard} from "../../components/PunchlineCard.tsx";
 import {ContestImage} from "../../components/ContestImage.tsx";
+import {checkDateStatus} from "../../components/utils.ts";
 
 function ContestsDetail() {
   const navigate = useNavigate();
@@ -17,6 +18,11 @@ function ContestsDetail() {
       navigate("/");
     }
   }, [id]);
+
+  const canPost = useMemo(() => {
+    if (!contest) return false;
+    return checkDateStatus(contest.postStartDate, contest.postEndDate) === "now";
+  }, [contest]);
 
   if (!id) {
     return null;
@@ -58,9 +64,11 @@ function ContestsDetail() {
               </Col>
             ))}
           </Row>
-          <Link to={`/punchline/post/${id}`}>
-            <Button variant="primary">私も回答する</Button>
-          </Link>
+          {canPost &&
+            <Link to={`/punchline/post/${id}`}>
+              <Button variant="primary">私も回答する</Button>
+            </Link>
+          }
         </Container>
       </div>
     </>
