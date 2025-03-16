@@ -107,7 +107,7 @@ function Home() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
           <h2 className="mb-5">新着お題</h2>
-          <Row xs={1} sm={2} md={4} className="g-4">
+          <Row xs={2} sm={3} md={4} className="g-4">
             {contests && contests.map((c) => (
               <Col key={c.id}>
                 <Card>
