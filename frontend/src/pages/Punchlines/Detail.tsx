@@ -113,6 +113,56 @@ function PunchlinesDetail() {
     );
   }
 
+  function PollSection() {
+    return (<>
+      <div className="mb-3">
+        <h5>投票する</h5>
+        {isInPollPeriod ? (
+          <>
+            <ButtonGroup as="div">
+              {[1,2,3,4].map((emoji) => (
+                <Button
+                  key={emoji}
+                  variant={isPolledEmoji(emoji.toString()) ? "primary" : "outline-primary"}
+                  className="position-relative"
+                  style={{ maxWidth: 100 }}
+                  onClick={() => submitPoll(emoji.toString())}
+                  disabled={disabledPoll}
+                >
+                  <Image src={`/emoji${emoji}.jpg`} alt={`絵文字${emoji}`} className="w-100" />
+                  {isPolledEmoji(emoji.toString()) &&
+                    <span
+                      className="position-absolute top-50 start-50 bold text-nowrap bg-primary rounded"
+                      style={{ transform: "translate(-50%, -50%)" }}
+                    >
+                      投票済み
+                    </span>
+                  }
+                </Button>
+              ))}
+            </ButtonGroup>
+          </>
+        ) : (
+          <span>投票の期間は終了しました。</span>
+        )}
+      </div>
+      <div>
+        {showSentSuccess &&
+          <span>投票しました！</span>
+        }
+        {showSentError &&
+          <span>{sendError}</span>
+        }
+        {alreadyPolled === true &&
+          <span>すでに投票済みです</span>
+        }
+        {pollInfoError &&
+          <span>{pollInfoError}</span>
+        }
+      </div>
+    </>)
+  }
+
   return (
     <>
       <div className="mt-5 mb-1 py-3 bg-light">
@@ -167,13 +217,7 @@ function PunchlinesDetail() {
                 </p>
               </div>
               <div className="mb-5">
-                {inInPostPeriod ? (
-                  <Link to={`/punchline/post/${punchline.contestId}`}>
-                    <Button variant="primary">自分も投稿する</Button>
-                  </Link>
-                ) : (
-                  <Button variant="primary" disabled>投稿受付は終了しました</Button>
-                )}
+                <PollSection />
               </div>
             </Col>
           </Row>
@@ -183,55 +227,12 @@ function PunchlinesDetail() {
       <div className="mb-5 py-5" style={{ backgroundColor: "#fffacd" }}>
         <Container>
           <div className="mb-5">
-            <h3>投票する</h3>
-            {isInPollPeriod ? (
-              <>
-                <ButtonGroup as="div">
-                  {[1,2,3,4].map((emoji) => (
-                    <Button
-                      key={emoji}
-                      variant={isPolledEmoji(emoji.toString()) ? "primary" : "outline-primary"}
-                      className="position-relative"
-                      style={{ maxWidth: 100 }}
-                      onClick={() => submitPoll(emoji.toString())}
-                      disabled={disabledPoll}
-                    >
-                      <Image src={`/emoji${emoji}.jpg`} alt={`絵文字${emoji}`} className="w-100" />
-                      {isPolledEmoji(emoji.toString()) &&
-                        <span
-                          className="position-absolute top-50 start-50 bold text-nowrap bg-primary rounded"
-                          style={{ transform: "translate(-50%, -50%)" }}
-                        >
-                          投票済み
-                        </span>
-                      }
-                    </Button>
-                  ))}
-                </ButtonGroup>
-              </>
-            ) : (
-              <span>投票の期間は終了しました。</span>
-            )}
+            <h3>その他情報</h3>
           </div>
           <div className="mb-5">
-            {showSentSuccess &&
-              <span>投票しました！</span>
-            }
-            {showSentError &&
-              <span>{sendError}</span>
-            }
-          </div>
-          <div className="mb-5">
-            {alreadyPolled === true &&
-              <span>すでに投票済みです</span>
-            }
-            {pollInfoError &&
-              <span>{pollInfoError}</span>
-            }
-          </div>
-          <div className="mb-5">
+            <h5 className="mb-3">ブロックチェーン</h5>
             <div>
-              <span>ここに</span>
+              <span>このアカウントに</span>
               <a
                 href={pollTokenHref}
                 target="_blank"
@@ -242,6 +243,16 @@ function PunchlinesDetail() {
               <span>が集まります</span>
             </div>
             {BlockchainAddress}
+          </div>
+          <div className="mb-5">
+            <h5 className="mb-3">投稿</h5>
+            {inInPostPeriod ? (
+              <Link to={`/punchline/post/${punchline.contestId}`}>
+                <Button variant="primary">自分もこのお題に投稿する</Button>
+              </Link>
+            ) : (
+              <Button variant="primary" disabled>投稿受付は終了しました</Button>
+            )}
           </div>
         </Container>
       </div>
