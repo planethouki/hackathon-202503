@@ -22,13 +22,13 @@ const Footer: React.FC = () => {
             <h5>メンバー</h5>
             <ul className="list-unstyled">
               <li>
-                <Anchor href="https://x.com/begin_indiegame">
-                  初川鳳一
+                <Anchor href="https://x.com/planethouki">
+                  planet★箒星
                 </Anchor>
               </li>
               <li>
-                <Anchor href="https://x.com/planethouki">
-                  planet★箒星
+                <Anchor href="https://x.com/begin_indiegame">
+                  初川鳳一
                 </Anchor>
               </li>
             </ul>
