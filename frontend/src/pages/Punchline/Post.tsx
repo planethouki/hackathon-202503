@@ -1,4 +1,4 @@
-import {Button, Card, Col, Container, Row} from "react-bootstrap";
+import {Button, Card, Col, Container, Row, Breadcrumb} from "react-bootstrap";
 import { Link } from "react-router";
 import {usePunchlinePostContestsApi} from "../../hooks/punchlinePostApi.ts";
 import {LoadingBlock} from "../../components/Loading.tsx";
@@ -16,7 +16,7 @@ function PunchlinePost() {
       <div className="mt-5 mb-1 py-3 bg-light">
         <Container>
           <h1>お題リスト</h1>
-          <p>お題に合致するYouTube Shortsの動画を投稿します。</p>
+          <p>投稿するお題を選択します。お題はジャンルのようなものです。</p>
         </Container>
       </div>
 
