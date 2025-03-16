@@ -1,4 +1,4 @@
-import { Card, Container, Row, Col, Button } from "react-bootstrap";
+import {Card, Container, Row, Col, Button, Placeholder} from "react-bootstrap";
 import { Link } from "react-router";
 import { useHomeApi } from "../hooks/homeApi.ts";
 import PunchlineCard from "../components/PunchlineCard.tsx";
@@ -42,9 +42,8 @@ function Home() {
       <div className="mb-5 py-5" style={{backgroundColor: "#fffacd"}}>
         <Container>
           <h2 className="mb-5">新着芸人</h2>
-          {isLoading && <LoadingBlock />}
           <Row xs={"auto"} className="g-4" style={{ maxHeight: 172, overflowY: "hidden" }}>
-            {users?.map((u) => (
+            {users && users.map((u) => (
               <Col key={u.id}>
                 <Card className="text-center">
                   <Link to={`/users/${u.id}/profile`}>
@@ -68,6 +67,25 @@ function Home() {
                 </Card>
               </Col>
             ))}
+            {!users && Array.from({ length: 12 }, (_, i) => i + 1).map((i) =>
+              <Col key={i}>
+                <Card className="text-center">
+                  <span
+                    className="d-inline-block px-1"
+                    style={{
+                      width: "90px",
+                      height: "90px"
+                    }}
+                  >
+                  </span>
+                  <Card.Body className="px-1">
+                    <Placeholder as={Card.Text} animation="glow">
+                      <Placeholder xs={12} />
+                    </Placeholder>
+                  </Card.Body>
+                </Card>
+              </Col>
+            )}
           </Row>
         </Container>
       </div>
