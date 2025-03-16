@@ -56,34 +56,10 @@ function Home() {
       <div className="mb-5 py-5" style={{backgroundColor: "#fffacd"}}>
         <Container>
           <h2 className="mb-5">新着芸人</h2>
-          <Row xs={"auto"} className="g-4" style={{ maxHeight: 172, overflowY: "hidden" }}>
+          <div className="overflow-x-scroll text-nowrap pb-2">
             {users && users.map((u) => (
-              <Col key={u.id}>
-                <Card className="text-center">
-                  <Link to={`/users/${u.id}/profile`}>
-                    <span
-                      className="d-inline-block px-1"
-                      style={{
-                        width: "90px",
-                        height: "90px"
-                      }}
-                    >
-                      <Avatar fileName={u.avatarFileName} />
-                    </span>
-                  </Link>
-                  <Card.Body className="px-1">
-                    <Card.Text>
-                      <Link to={`/users/${u.id}/profile`}>
-                        {u.displayName}
-                      </Link>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-            {!users && Array.from({length: 12}, (_, i) => i + 1).map((i) =>
-              <Col key={i}>
-                <Card className="text-center">
+              <Card key={u.id} className="text-center d-inline-block mx-1" style={{ width: 92 }}>
+                <Link to={`/users/${u.id}/profile`}>
                   <span
                     className="d-inline-block px-1"
                     style={{
@@ -91,16 +67,36 @@ function Home() {
                       height: "90px"
                     }}
                   >
+                    <Avatar fileName={u.avatarFileName} />
                   </span>
-                  <Card.Body className="px-1">
-                    <Placeholder as={Card.Text} animation="glow">
-                      <Placeholder xs={12} />
-                    </Placeholder>
-                  </Card.Body>
-                </Card>
-              </Col>
+                </Link>
+                <Card.Body className="px-1">
+                  <Card.Text>
+                    <Link to={`/users/${u.id}/profile`}>
+                      {u.displayName}
+                    </Link>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            ))}
+            {!users && Array.from({length: 12}, (_, i) => i + 1).map((i) =>
+              <Card key={i} className="text-center d-inline-block mx-1" style={{ width: 92 }}>
+                <span
+                  className="d-inline-block px-1"
+                  style={{
+                    width: "90px",
+                    height: "90px"
+                  }}
+                >
+                </span>
+                <Card.Body className="px-1">
+                  <Placeholder as={Card.Text} animation="glow">
+                    <Placeholder xs={12} />
+                  </Placeholder>
+                </Card.Body>
+              </Card>
             )}
-          </Row>
+          </div>
         </Container>
       </div>
 
