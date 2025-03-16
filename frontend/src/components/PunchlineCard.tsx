@@ -1,7 +1,8 @@
 import {FC} from "react";
-import {Card, Placeholder} from "react-bootstrap";
+import {Badge, Card, Placeholder} from "react-bootstrap";
 import {Link} from "react-router";
 import {Punchline} from "../libs/interfaces";
+import {checkDateStatus} from "./utils.ts";
 
 interface Props {
   punchline: Punchline
@@ -73,6 +74,19 @@ export const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showConte
                 <span> / </span>
                 <span>{punchline.contest.punchlineCount}</span>
               </>
+            }
+          </div>
+        }
+        {punchline.contest &&
+          <div className="text-center">
+            {checkDateStatus(punchline.contest.pollStartDate, punchline.contest.pollEndDate) === "before" &&
+              <Badge bg="info">投票前</Badge>
+            }
+            {checkDateStatus(punchline.contest.pollStartDate, punchline.contest.pollEndDate) === "now" &&
+              <Badge>投票中！</Badge>
+            }
+            {checkDateStatus(punchline.contest.pollStartDate, punchline.contest.pollEndDate) === "after" &&
+              <Badge bg="secondary">投票終了</Badge>
             }
           </div>
         }
