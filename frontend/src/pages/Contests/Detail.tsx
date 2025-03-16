@@ -66,6 +66,13 @@ function ContestsDetail() {
                   <div>
                     終了: {new Date(contest.postEndDate).toLocaleString()}
                   </div>
+                  <div>
+                    {canPost &&
+                      <Link to={`/punchline/post/${id}`}>
+                        <Button variant="outline-primary" size="sm">投稿する</Button>
+                      </Link>
+                    }
+                  </div>
                 </div>
                 <div className="mb-4">
                   <h3 className="">
@@ -124,7 +131,7 @@ function ContestsDetail() {
 
           {canPost &&
             <Link to={`/punchline/post/${id}`}>
-              <Button variant="primary">私も回答する</Button>
+              <Button variant="primary">私も投稿する</Button>
             </Link>
           }
         </Container>
