@@ -13,7 +13,9 @@ interface Result {
   recipient: string;
 }
 
-export const transfer = async (recipientAddress: string): Promise<Result> => {
+export const mintPollToken = async (
+  recipientAddress: string
+): Promise<Result> => {
   const provider = new ethers.JsonRpcProvider(rpcUrl.value());
   const wallet = new ethers.Wallet(privateKey.value(), provider);
   const contract = new ethers.Contract(
@@ -21,9 +23,8 @@ export const transfer = async (recipientAddress: string): Promise<Result> => {
     erc20Abi,
     wallet
   );
-  const transactionResponse = await contract.transfer(
+  const transactionResponse = await contract.poll(
     recipientAddress,
-    BigInt(10) ** BigInt(18),
   );
 
   await transactionResponse.wait();

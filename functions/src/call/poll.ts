@@ -4,7 +4,7 @@ import {Poll} from "./interfaces";
 import {generateRandomString} from "../utils";
 import {defineSecret} from "firebase-functions/params";
 import {logger} from "firebase-functions";
-import {calcAddress, transfer} from "../ethUtils";
+import {calcAddress, mintPollToken} from "../ethUtils";
 
 const db = getFirestore();
 const privateKey = defineSecret("ETH_PRIVATE_KEY");
@@ -51,14 +51,16 @@ export const createPoll = onCall<Poll>({
   // ETHに書き込む
   logger.info("New poll created; updating ETH transfer for recipient.");
   const id = generateRandomString();
-  const result = await transfer(calcAddress(punchlineId));
+  const result = await mintPollToken(calcAddress(punchlineId));
   await db.collection("transactions").doc(id).set({
     id,
+    userId: uid,
     pollId,
     punchlineId,
     hash: result.hash,
     from: result.from,
     to: result.to,
+    recipient: result.recipient,
     createdAt: new Date().toISOString(),
   });
 
