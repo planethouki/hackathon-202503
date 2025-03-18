@@ -8,8 +8,12 @@ const app = express();
 
 app.get("/", async (req, res) => {
   try {
+    const now = new Date();
+    const twoHoursFuture = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+
     const contestsQuery = db
       .collection("contests")
+      .where("postStartDate", "<", twoHoursFuture.toISOString())
       .orderBy("createdAt", "desc")
       .limit(8)
       .get();
