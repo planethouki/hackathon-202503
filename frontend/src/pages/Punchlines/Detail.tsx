@@ -203,6 +203,7 @@ function PunchlinesDetail() {
       <OtherInfo punchline={punchline} showWithdrawPoll={showWithdrawPoll} />
 
       <Development>
+        <div>ID: {punchline?.id}</div>
         <div>投稿: {punchline?.contest?.pollStartDate} - {punchline?.contest?.pollEndDate}</div>
         <div>投票: {punchline?.contest?.postStartDate} - {punchline?.contest?.postEndDate}</div>
         <div>投票先アドレス: {punchline?.pollAddress}</div>
