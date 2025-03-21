@@ -64,6 +64,11 @@ function OtherInfo({ punchline, showWithdrawPoll, showWithdrawPunchline }: Other
     return start < current && current < end;
   }, [punchline]);
 
+  const pollAddressHref = useMemo(() => {
+    const t = import.meta.env.VITE_BLOCK_EXPLORER_TOKEN;
+    return t.replace("{token}", import.meta.env.VITE_POLL_TOKEN);
+  }, []);
+
   const pollTokenHref = useMemo(() => {
     const t = import.meta.env.VITE_BLOCK_EXPLORER_ADDRESS;
     return t.replace("{address}", punchline.pollAddress);
@@ -86,7 +91,7 @@ function OtherInfo({ punchline, showWithdrawPoll, showWithdrawPunchline }: Other
           <div>
             <span>このアカウントに</span>
             <a
-              href={pollTokenHref}
+              href={pollAddressHref}
               target="_blank"
               rel="noopener noreferrer"
             >
