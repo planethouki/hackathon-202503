@@ -23,5 +23,6 @@ export * from "./api";
 export * from "./auth";
 export * from "./call";
 export * from "./firestore";
+export * from "./token";
 
 // export * from "./trial";
