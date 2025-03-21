@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 import "./index.scss";
 import App from "./App.tsx";
 
