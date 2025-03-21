@@ -102,3 +102,67 @@ export const useWithdrawPollTokens = (): UseWithdrawPollTokensReturn => {
 
   return { withdraw: withdrawTokens, isLoading, error, success };
 };
+
+interface UseWithdrawPunchlineTokenReturn {
+  withdraw: (punchlineId: string, walletAddress: string) => Promise<void>;
+  isLoading: boolean;
+  error: string | null;
+  success: boolean;
+  hash: string | null;
+}
+
+interface WithdrawPunchlineTokenRequest {
+  punchlineId: string;
+  walletAddress: string;
+}
+
+interface WithdrawPunchlineTokenResponse {
+  success: boolean;
+  hash: string;
+}
+
+export const useWithdrawPunchlineToken = (): UseWithdrawPunchlineTokenReturn => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
+  const [hash, setHash] = useState<string | null>(null);
+
+  const withdrawTokens = async (punchlineId: string, walletAddress: string) => {
+    setIsLoading(true);
+    setError(null);
+    setSuccess(false);
+    setHash(null);
+
+    try {
+      // Firebase Functionsを呼び出して署名を取得
+      const functions = getFunctions(app, "asia-northeast1");
+      const withdrawPunchlineToken = httpsCallable<WithdrawPunchlineTokenRequest, WithdrawPunchlineTokenResponse>(
+        functions,
+        'withdrawPunchlineToken'
+      );
+
+      const response = await withdrawPunchlineToken({
+        punchlineId,
+        walletAddress
+      });
+
+      if (!response.data.success) {
+        throw new Error("引き出しに失敗しました");
+      }
+
+      setSuccess(true);
+      setHash(response.data.hash);
+    } catch (err: unknown) {
+      console.error(err);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("予期しないエラーが発生しました");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  return { withdraw: withdrawTokens, isLoading, error, success, hash };
+}
