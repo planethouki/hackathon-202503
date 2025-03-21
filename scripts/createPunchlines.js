@@ -71,7 +71,7 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-const writeInitialContests = async () => {
+const exec = async () => {
   for (const punchline of initialPunchlines) {
     try {
       const userDoc = db
@@ -86,5 +86,5 @@ const writeInitialContests = async () => {
 };
 
 // 関数を実行
-writeInitialContests();
+exec();
 
