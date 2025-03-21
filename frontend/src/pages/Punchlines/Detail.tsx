@@ -70,9 +70,9 @@ function OtherInfo({ punchline, showWithdrawPoll, showWithdrawPunchline }: Other
   }, [punchline]);
 
   const punchlineTokenHref = useMemo(() => {
-    const t = import.meta.env.VITE_BLOCK_EXPLORER_TOKEN;
+    const t = import.meta.env.VITE_BLOCK_EXPLORER_TOKEN_ID;
     const punchlineTokenAddress = import.meta.env.VITE_PUNCHLINE_TOKEN;
-    return t.replace("{token}", punchlineTokenAddress).concat(`/instance/${punchline.tokenIdDec}`);
+    return t.replace("{token}", punchlineTokenAddress).replace("{tokenId}", punchline.tokenIdDec);
   }, [punchline]);
 
   return (
