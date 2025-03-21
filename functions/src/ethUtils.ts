@@ -42,7 +42,7 @@ interface MintPunchlineTokenResult {
   hash: string;
   to: string;
   tokenId: string;
-  tokenIdDec: number;
+  tokenIdDec: string;
 }
 
 export const mintPunchlineToken = async (
