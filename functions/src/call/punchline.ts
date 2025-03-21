@@ -4,7 +4,7 @@ import {Punchline} from "./interfaces";
 import {generateRandomString} from "../utils";
 import {logger} from "firebase-functions";
 import {mintPunchlineToken} from "../ethUtils";
-import {defineSecret} from "firebase-functions/lib/params";
+import {defineSecret} from "firebase-functions/params";
 
 const db = getFirestore();
 const privateKey = defineSecret("ETH_PRIVATE_KEY");
