@@ -77,6 +77,8 @@ interface SendPunchlineTokenResult {
   to: string;
   tokenFrom: string;
   tokenTo: string;
+  tokenId: string;
+  tokenIdDec: string;
 }
 
 export const sendPunchlineToken = async (
@@ -91,6 +93,7 @@ export const sendPunchlineToken = async (
     wallet
   );
   const tokenId = id(punchlineId).slice(0, 10);
+  const tokenIdDec = BigInt(tokenId).toString();
   const transactionResponse = await contract.safeTransferFrom(
     wallet.address,
     to,
@@ -103,6 +106,8 @@ export const sendPunchlineToken = async (
     ...transactionResponse,
     tokenFrom: wallet.address,
     tokenTo: to,
+    tokenId,
+    tokenIdDec,
   } as SendPunchlineTokenResult;
 };
 
