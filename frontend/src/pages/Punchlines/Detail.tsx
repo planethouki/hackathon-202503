@@ -91,7 +91,7 @@ function OtherInfo({ punchline, showWithdraw }: { punchline: Punchline, showWith
 
           <div className="mt-3">
             {showWithdraw ? (
-              <Link to={`/punchlines/${punchline.id}/withdraw`}>
+              <Link to={`/punchlines/${punchline.id}/withdraw/poll`}>
                 <Button>投票トークンを引き出す</Button>
               </Link>
             ) : (
