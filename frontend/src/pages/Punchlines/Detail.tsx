@@ -89,13 +89,15 @@ function OtherInfo({ punchline, showWithdraw }: { punchline: Punchline, showWith
             {punchline.pollAddress}
           </a>
 
-          {showWithdraw && (
-            <div className="mt-3">
+          <div className="mt-3">
+            {showWithdraw ? (
               <Link to={`/punchlines/${punchline.id}/withdraw`}>
                 <Button>投票トークンを引き出す</Button>
               </Link>
-            </div>
-          )}
+            ) : (
+              <Button disabled>投票が終了後、自分の投稿への投票トークンを引き出せます</Button>
+            )}
+          </div>
         </div>
         <div className="mb-5">
           <h5 className="mb-3">投稿</h5>
