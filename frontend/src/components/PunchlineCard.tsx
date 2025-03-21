@@ -1,8 +1,10 @@
 import {FC} from "react";
 import {Badge, Card, Placeholder} from "react-bootstrap";
 import {Link} from "react-router";
+import LiteYouTubeEmbed from "react-lite-youtube-embed";
 import {Punchline} from "../libs/interfaces";
 import {checkDateStatus} from "./utils.ts";
+import {extractYouTubeId} from "../libs/youTubeUtils.ts";
 
 interface Props {
   punchline: Punchline
@@ -24,12 +26,12 @@ export const PunchlineCard: FC<Props> = ({ punchline, showUser = true, showConte
           </h3>
         </Card.Title>
       </Card.Body>
-      <iframe src={punchline.url}
-              style={{ aspectRatio: 9/16, width: "100%" }}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen></iframe>
+      <LiteYouTubeEmbed
+        id={extractYouTubeId(punchline.url) || ""}
+        title={punchline.title}
+        aspectHeight={9}
+        aspectWidth={16}
+      />
       <Card.Footer>
         <div className="mb-2 small text-center">
           {showContest && punchline.contest &&
