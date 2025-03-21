@@ -78,7 +78,7 @@ const exec = async () => {
         .collection("punchlines")
         .doc(punchline.id);
       await userDoc.set(punchline);
-      console.log(`Contest ${punchline.title} added successfully!`);
+      console.log(`Punchline ${punchline.title} added successfully!`);
     } catch (error) {
       console.error(`Error adding contest ${punchline.title}: `, error);
     }
