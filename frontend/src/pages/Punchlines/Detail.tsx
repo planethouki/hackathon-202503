@@ -106,7 +106,7 @@ function OtherInfo({ punchline, showWithdraw }: { punchline: Punchline, showWith
               <Button variant="primary">自分もこのお題に投稿する</Button>
             </Link>
           ) : (
-            <Button variant="primary" disabled>投稿受付は終了しました</Button>
+            <Button variant="primary" disabled>このお題への投稿受付は終了しました</Button>
           )}
         </div>
       </Container>
