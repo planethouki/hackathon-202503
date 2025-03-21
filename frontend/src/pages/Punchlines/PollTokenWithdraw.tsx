@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 import { Container, Spinner, Button, Alert } from "react-bootstrap";
 import { useParams, useNavigate, Link } from "react-router";
 import { usePunchlinesDetailApi } from "../../hooks/punchlinesApi.ts";
@@ -22,6 +22,12 @@ function PunchlinesWithdraw() {
 
   const isPollEnded = punchline?.contest ? new Date() > new Date(punchline.contest.pollEndDate) : false;
   const isOwnPunchline = punchline?.userId === user?.uid;
+
+  const pollTokenHref = useMemo(() => {
+    if (!punchline) return "";
+    const t = import.meta.env.VITE_BLOCK_EXPLORER_ADDRESS;
+    return t.replace("{address}", punchline.pollAddress);
+  }, [punchline]);
 
   const handleWithdraw = async () => {
     if (!id || !punchline) return;
@@ -96,6 +102,13 @@ function PunchlinesWithdraw() {
           <div className="mb-4">
             <h2 className="mb-3">{punchline.title}</h2>
             <p>得票数: {punchline.pollCount}</p>
+            <p>
+              <a
+                href={pollTokenHref}
+                target="_blank"
+                rel="noopener noreferrer"
+              >引き出し元アドレス</a>
+            </p>
           </div>
 
           {punchlineError && (
