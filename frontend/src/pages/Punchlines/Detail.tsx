@@ -6,6 +6,7 @@ import {LoadingBlock} from "../../components/Loading.tsx";
 import {Development} from "../../components/Development.tsx";
 import {PollComponent} from "../../components/PollComponent.tsx";
 import { Punchline } from "../../libs/interfaces.ts";
+import {useAuth} from "../../AuthProvider.tsx";
 
 function DetailInfo({ punchline }: { punchline: Punchline }) {
   return (
@@ -44,7 +45,7 @@ function DetailInfo({ punchline }: { punchline: Punchline }) {
   );
 }
 
-function OtherInfo({ punchline, isPollEnded }: { punchline: Punchline, isPollEnded: boolean }) {
+function OtherInfo({ punchline, showWithdraw }: { punchline: Punchline, showWithdraw: boolean }) {
 
   const inInPostPeriod = useMemo(() => {
     if (!(punchline && punchline.contest)) {
@@ -88,7 +89,7 @@ function OtherInfo({ punchline, isPollEnded }: { punchline: Punchline, isPollEnd
             {punchline.pollAddress}
           </a>
 
-          {isPollEnded && (
+          {showWithdraw && (
             <div className="mt-3">
               <Link to={`/punchlines/${punchline.id}/withdraw`}>
                 <Button>投票トークンを引き出す</Button>
@@ -114,6 +115,7 @@ function OtherInfo({ punchline, isPollEnded }: { punchline: Punchline, isPollEnd
 function PunchlinesDetail() {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
+  const { user } = useAuth();
 
   const { isLoading, punchline, refresh: refreshPunchline } = usePunchlinesDetailApi(id);
 
@@ -122,6 +124,17 @@ function PunchlinesDetail() {
       navigate("/punchlines/latest");
     }
   }, [id]);
+
+  const showWithdraw = useMemo(() => {
+    if (!user) return false;
+    if (!(punchline && punchline.contest)) return false;
+
+    const end = new Date(punchline.contest.pollEndDate);
+    const current = new Date();
+    const isPollEnded = current > end;
+    const isOwnPunchline = punchline.userId === user.uid;
+    return isPollEnded && isOwnPunchline;
+  }, [punchline, user]);
 
   const isInPollPeriod = useMemo(() => {
     if (!(punchline && punchline.contest)) {
@@ -132,16 +145,6 @@ function PunchlinesDetail() {
     const end = new Date(punchline.contest.pollEndDate);
     const current = new Date();
     return start < current && current < end;
-  }, [punchline]);
-
-  const isPollEnded = useMemo(() => {
-    if (!(punchline && punchline.contest)) {
-      return false;
-    }
-
-    const end = new Date(punchline.contest.pollEndDate);
-    const current = new Date();
-    return current > end;
   }, [punchline]);
 
   if (!id) {
@@ -194,7 +197,7 @@ function PunchlinesDetail() {
         </Container>
       </div>
 
-      <OtherInfo punchline={punchline} isPollEnded={isPollEnded} />
+      <OtherInfo punchline={punchline} showWithdraw={showWithdraw} />
 
       <Development>
         <div>投稿: {punchline?.contest?.pollStartDate} - {punchline?.contest?.pollEndDate}</div>
