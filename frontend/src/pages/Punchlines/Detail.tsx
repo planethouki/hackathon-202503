@@ -45,7 +45,7 @@ function DetailInfo({ punchline }: { punchline: Punchline }) {
   );
 }
 
-function OtherInfo({ punchline, showWithdraw }: { punchline: Punchline, showWithdraw: boolean }) {
+function OtherInfo({ punchline, showWithdrawPoll }: { punchline: Punchline, showWithdrawPoll: boolean }) {
 
   const inInPostPeriod = useMemo(() => {
     if (!(punchline && punchline.contest)) {
@@ -90,7 +90,7 @@ function OtherInfo({ punchline, showWithdraw }: { punchline: Punchline, showWith
           </a>
 
           <div className="mt-3">
-            {showWithdraw ? (
+            {showWithdrawPoll ? (
               <Link to={`/punchlines/${punchline.id}/withdraw/poll`}>
                 <Button>投票トークンを引き出す</Button>
               </Link>
@@ -127,7 +127,7 @@ function PunchlinesDetail() {
     }
   }, [id]);
 
-  const showWithdraw = useMemo(() => {
+  const showWithdrawPoll = useMemo(() => {
     if (!user) return false;
     if (!(punchline && punchline.contest)) return false;
 
@@ -199,7 +199,7 @@ function PunchlinesDetail() {
         </Container>
       </div>
 
-      <OtherInfo punchline={punchline} showWithdraw={showWithdraw} />
+      <OtherInfo punchline={punchline} showWithdrawPoll={showWithdrawPoll} />
 
       <Development>
         <div>投稿: {punchline?.contest?.pollStartDate} - {punchline?.contest?.pollEndDate}</div>
