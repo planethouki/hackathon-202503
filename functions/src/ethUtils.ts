@@ -56,7 +56,7 @@ export const mintPunchlineToken = async (
     wallet
   );
   const tokenId = id(punchlineId).slice(0, 10);
-  const tokenIdDec = parseInt(tokenId, 16);
+  const tokenIdDec = BigInt(tokenId).toString();
   const transactionResponse = await contract.mint(
     wallet.address,
     tokenId,
