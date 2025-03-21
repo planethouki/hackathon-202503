@@ -42,6 +42,7 @@ interface MintPunchlineTokenResult {
   hash: string;
   to: string;
   tokenId: string;
+  tokenIdDec: number;
 }
 
 export const mintPunchlineToken = async (
@@ -55,6 +56,7 @@ export const mintPunchlineToken = async (
     wallet
   );
   const tokenId = id(punchlineId).slice(0, 10);
+  const tokenIdDec = parseInt(tokenId, 16);
   const transactionResponse = await contract.mint(
     wallet.address,
     tokenId,
@@ -65,6 +67,7 @@ export const mintPunchlineToken = async (
   return {
     ...transactionResponse,
     tokenId,
+    tokenIdDec,
   } as MintPunchlineTokenResult;
 };
 
