@@ -4,7 +4,8 @@ import {defineSecret, defineString} from "firebase-functions/params";
 import {logger} from "firebase-functions";
 import {ethers} from "ethers";
 import {erc20Abi} from "../abi";
-import {calcWallet} from "../ethUtils";
+import {calcWallet, sendPunchlineToken} from "../ethUtils";
+import {generateRandomString} from "../utils";
 
 const db = getFirestore();
 const privateKey = defineSecret("ETH_PRIVATE_KEY");
@@ -115,5 +116,57 @@ export const getPollTokenWithdrawSignature = onCall<PollTokenWithdrawRequest>({
       deadline: deadline,
       value: balance.toString(),
     },
+  };
+});
+
+interface PunchlineTokenWithdrawRequest {
+  punchlineId: string;
+  walletAddress: string;
+}
+
+export const withdrawPunchlineToken = onCall<PunchlineTokenWithdrawRequest>({
+  cors: true,
+  secrets: [privateKey],
+}, async (request) => {
+  const {punchlineId, walletAddress: recipient} = request.data;
+  const uid = request.auth?.uid;
+
+  if (uid === undefined) {
+    throw new HttpsError("permission-denied", "ログインが必要です");
+  }
+
+  const pRef = db.doc(`punchlines/${punchlineId}`);
+  const pSnap = await pRef.get();
+
+  if (!pSnap.exists) {
+    throw new HttpsError("not-found", "対象の投稿が見つかりません");
+  }
+
+  const punchlineData = pSnap.data();
+
+  if (punchlineData?.userId !== uid) {
+    throw new HttpsError("permission-denied", "自分の投稿のトークンのみ引き出せます");
+  }
+
+  const result = await sendPunchlineToken(punchlineId, recipient);
+
+  const txId = generateRandomString();
+  await db.collection("transactions").doc(txId).set({
+    id: txId,
+    userId: uid,
+    punchlineId,
+    hash: result.hash,
+    from: result.from,
+    to: result.to,
+    tokenId: result.tokenId,
+    tokenIdDec: result.tokenIdDec,
+    type: "sendPunchlineToken",
+    recipient,
+    createdAt: new Date().toISOString(),
+  });
+
+  return {
+    success: true,
+    hash: result.hash,
   };
 });
