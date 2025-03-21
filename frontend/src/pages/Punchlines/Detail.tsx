@@ -44,18 +44,22 @@ function DetailInfo({ punchline }: { punchline: Punchline }) {
   );
 }
 
-function OtherInfo({ punchline, inInPostPeriod }: { punchline: Punchline, inInPostPeriod: boolean }) {
-  const BlockchainAddress = useMemo(() => {
-    if (!punchline) {
-      return <Spinner />;
+function OtherInfo({ punchline, isPollEnded }: { punchline: Punchline, isPollEnded: boolean }) {
+
+  const inInPostPeriod = useMemo(() => {
+    if (!(punchline && punchline.contest)) {
+      return false;
     }
+
+    const start = new Date(punchline.contest.postStartDate);
+    const end = new Date(punchline.contest.postEndDate);
+    const current = new Date();
+    return start < current && current < end;
+  }, [punchline]);
+
+  const blockchainHref = useMemo(() => {
     const t = import.meta.env.VITE_BLOCK_EXPLORER_ADDRESS as string;
-    const href = t.replace("{address}", punchline.pollAddress);
-    return (
-      <a href={href} target="_blank" rel="noopener noreferrer">
-        {punchline.pollAddress}
-      </a>
-    );
+    return t.replace("{address}", punchline.pollAddress);
   }, [punchline]);
 
   const pollTokenHref = import.meta.env.VITE_BLOCK_EXPLORER_TOKEN.replace("{token}", import.meta.env.VITE_POLL_TOKEN)
@@ -79,7 +83,18 @@ function OtherInfo({ punchline, inInPostPeriod }: { punchline: Punchline, inInPo
             </a>
             <span>が集まります</span>
           </div>
-          {BlockchainAddress}
+
+          <a href={blockchainHref} target="_blank" rel="noopener noreferrer">
+            {punchline.pollAddress}
+          </a>
+
+          {isPollEnded && (
+            <div className="mt-3">
+              <Link to={`/punchlines/${punchline.id}/withdraw`}>
+                <Button>投票トークンを引き出す</Button>
+              </Link>
+            </div>
+          )}
         </div>
         <div className="mb-5">
           <h5 className="mb-3">投稿</h5>
@@ -108,17 +123,6 @@ function PunchlinesDetail() {
     }
   }, [id]);
 
-  const inInPostPeriod = useMemo(() => {
-    if (!(punchline && punchline.contest)) {
-      return false;
-    }
-
-    const start = new Date(punchline.contest.postStartDate);
-    const end = new Date(punchline.contest.postEndDate);
-    const current = new Date();
-    return start < current && current < end;
-  }, [punchline]);
-
   const isInPollPeriod = useMemo(() => {
     if (!(punchline && punchline.contest)) {
       return false;
@@ -128,6 +132,16 @@ function PunchlinesDetail() {
     const end = new Date(punchline.contest.pollEndDate);
     const current = new Date();
     return start < current && current < end;
+  }, [punchline]);
+
+  const isPollEnded = useMemo(() => {
+    if (!(punchline && punchline.contest)) {
+      return false;
+    }
+
+    const end = new Date(punchline.contest.pollEndDate);
+    const current = new Date();
+    return current > end;
   }, [punchline]);
 
   if (!id) {
@@ -169,10 +183,10 @@ function PunchlinesDetail() {
             <Col>
               <DetailInfo punchline={punchline} />
               <div className="mb-5">
-                <PollComponent 
-                  punchlineId={id || ""} 
-                  isInPollPeriod={isInPollPeriod} 
-                  onPollSuccess={refreshPunchline} 
+                <PollComponent
+                  punchlineId={id || ""}
+                  isInPollPeriod={isInPollPeriod}
+                  onPollSuccess={refreshPunchline}
                 />
               </div>
             </Col>
@@ -180,7 +194,7 @@ function PunchlinesDetail() {
         </Container>
       </div>
 
-      <OtherInfo punchline={punchline} inInPostPeriod={inInPostPeriod} />
+      <OtherInfo punchline={punchline} isPollEnded={isPollEnded} />
 
       <Development>
         <div>投稿: {punchline?.contest?.pollStartDate} - {punchline?.contest?.pollEndDate}</div>
@@ -192,4 +206,3 @@ function PunchlinesDetail() {
 }
 
 export default PunchlinesDetail;
-
