@@ -96,7 +96,7 @@ function OtherInfo({ punchline, showWithdrawPoll }: { punchline: Punchline, show
                 <Button>投票トークンを引き出す</Button>
               </Link>
             ) : (
-              <Button disabled>投票が終了後、自分の投稿への投票トークンを引き出せます</Button>
+              <Button disabled>投票期間終了後、自分の投稿への投票トークンを引き出せます</Button>
             )}
           </div>
         </div>
