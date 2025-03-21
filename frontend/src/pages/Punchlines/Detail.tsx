@@ -45,7 +45,13 @@ function DetailInfo({ punchline }: { punchline: Punchline }) {
   );
 }
 
-function OtherInfo({ punchline, showWithdrawPoll }: { punchline: Punchline, showWithdrawPoll: boolean }) {
+interface OtherInfoProps {
+  punchline: Punchline;
+  showWithdrawPoll: boolean;
+  showWithdrawPunchline: boolean;
+}
+
+function OtherInfo({ punchline, showWithdrawPoll, showWithdrawPunchline }: OtherInfoProps) {
 
   const inInPostPeriod = useMemo(() => {
     if (!(punchline && punchline.contest)) {
@@ -58,12 +64,16 @@ function OtherInfo({ punchline, showWithdrawPoll }: { punchline: Punchline, show
     return start < current && current < end;
   }, [punchline]);
 
-  const blockchainHref = useMemo(() => {
-    const t = import.meta.env.VITE_BLOCK_EXPLORER_ADDRESS as string;
+  const pollTokenHref = useMemo(() => {
+    const t = import.meta.env.VITE_BLOCK_EXPLORER_ADDRESS;
     return t.replace("{address}", punchline.pollAddress);
   }, [punchline]);
 
-  const pollTokenHref = import.meta.env.VITE_BLOCK_EXPLORER_TOKEN.replace("{token}", import.meta.env.VITE_POLL_TOKEN)
+  const punchlineTokenHref = useMemo(() => {
+    const t = import.meta.env.VITE_BLOCK_EXPLORER_TOKEN;
+    const punchlineTokenAddress = import.meta.env.VITE_PUNCHLINE_TOKEN;
+    return t.replace("{token}", punchlineTokenAddress).concat(`/instance/${punchline.tokenIdDec}`);
+  }, [punchline]);
 
   return (
     <div className="mb-5 py-5" style={{ backgroundColor: "#fffacd" }}>
@@ -72,7 +82,7 @@ function OtherInfo({ punchline, showWithdrawPoll }: { punchline: Punchline, show
           <h3>その他情報</h3>
         </div>
         <div className="mb-5">
-          <h5 className="mb-3">ブロックチェーン</h5>
+          <h5 className="mb-3">投票トークン</h5>
           <div>
             <span>このアカウントに</span>
             <a
@@ -85,12 +95,13 @@ function OtherInfo({ punchline, showWithdrawPoll }: { punchline: Punchline, show
             </a>
             <span>が集まります</span>
           </div>
+          <div className="mb-3">
+            <a href={pollTokenHref} target="_blank" rel="noopener noreferrer">
+              {punchline.pollAddress}
+            </a>
+          </div>
 
-          <a href={blockchainHref} target="_blank" rel="noopener noreferrer">
-            {punchline.pollAddress}
-          </a>
-
-          <div className="mt-3">
+          <div>
             {showWithdrawPoll ? (
               <Link to={`/punchlines/${punchline.id}/withdraw/poll`}>
                 <Button>投票トークンを引き出す</Button>
@@ -99,6 +110,28 @@ function OtherInfo({ punchline, showWithdrawPoll }: { punchline: Punchline, show
               <Button disabled>投票期間終了後、自分の投稿への投票トークンを引き出せます</Button>
             )}
           </div>
+        </div>
+        <div className="mb-5">
+          <h5 className="mb-3">投稿NFT</h5>
+          <div>
+            投稿はNFTとしても表現されます。
+          </div>
+          <div className="mb-3">
+            <a
+              href={punchlineTokenHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NFTアドレスはこちら
+            </a>
+          </div>
+          {showWithdrawPunchline ? (
+            <Link to={`/punchlines/${punchline.id}/withdraw/punchline`}>
+              <Button variant="primary">NFTを引き出す</Button>
+            </Link>
+          ) : (
+            <Button variant="primary" disabled>投稿者は自分の投稿NFTを引き出せます</Button>
+          )}
         </div>
         <div className="mb-5">
           <h5 className="mb-3">投稿</h5>
@@ -137,6 +170,13 @@ function PunchlinesDetail() {
     const isPollEnded = current > end;
     const isOwnPunchline = punchline.userId === user.uid;
     return isPollEnded && isOwnPunchline;
+  }, [punchline, user]);
+
+  const showWithdrawPunchline = useMemo(() => {
+    if (!user) return false;
+    if (!punchline) return false;
+
+    return punchline.userId === user.uid;
   }, [punchline, user]);
 
   const isInPollPeriod = useMemo(() => {
@@ -200,7 +240,11 @@ function PunchlinesDetail() {
         </Container>
       </div>
 
-      <OtherInfo punchline={punchline} showWithdrawPoll={showWithdrawPoll} />
+      <OtherInfo
+        punchline={punchline}
+        showWithdrawPoll={showWithdrawPoll}
+        showWithdrawPunchline={showWithdrawPunchline}
+      />
 
       <Development>
         <div>ID: {punchline?.id}</div>
