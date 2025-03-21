@@ -11,6 +11,8 @@ export interface Punchline {
   pollCount: number;
   pollAddress: string;
   rankingInContest: number;
+  tokenId: string;
+  tokenIdDec: string;
 }
 
 export interface Poll {
