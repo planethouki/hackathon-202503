@@ -18,6 +18,7 @@ import ContestsDetail from "./pages/Contests/Detail.tsx";
 import PunchlinesDetail from "./pages/Punchlines/Detail.tsx";
 import PunchlinesLatest from "./pages/Punchlines/Latest.tsx";
 import PollTokenWithdraw from "./pages/Punchlines/PollTokenWithdraw.tsx";
+import PunchlineTokenWithdraw from "./pages/Punchlines/PunchlineTokenWithdraw.tsx";
 import UsersDetail from "./pages/Users/Detail.tsx";
 import Layout from "./layouts/Layout.tsx";
 import { TitleYouTubeProvider } from "./contexts/TitleYouTubeContext";
@@ -65,6 +66,7 @@ function App() {
               <Route path=":id" element={<PunchlinesDetail />} />
               <Route path=":id/withdraw" element={<ProtectedRoute />}>
                 <Route path="poll" element={<PollTokenWithdraw />} />
+                <Route path="punchline" element={<PunchlineTokenWithdraw />} />
               </Route>
               <Route path="latest" element={<PunchlinesLatest />} />
             </Route>
