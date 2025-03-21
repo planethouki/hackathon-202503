@@ -1,12 +1,14 @@
 import {defineSecret, defineString} from "firebase-functions/params";
-import {ethers, keccak256} from "ethers";
-import {erc20Abi} from "./abi";
+import {ethers, keccak256, id} from "ethers";
+import {erc20Abi, punchlineTokenAbi, contestTokenAbi} from "./abi";
 
 const privateKey = defineSecret("ETH_PRIVATE_KEY");
 const rpcUrl = defineString("ETH_RPC_URL");
 const erc20Address = defineString("ETH_ERC20_ADDRESS");
+const punchlineTokenAddress = defineString("ETH_PUNCHLINE_TOKEN_ADDRESS");
+const contestTokenAddress = defineString("ETH_CONTEST_TOKEN_ADDRESS");
 
-interface Result {
+interface MintPollTokenResult {
   from: string;
   hash: string;
   to: string;
@@ -15,7 +17,7 @@ interface Result {
 
 export const mintPollToken = async (
   recipientAddress: string
-): Promise<Result> => {
+): Promise<MintPollTokenResult> => {
   const provider = new ethers.JsonRpcProvider(rpcUrl.value());
   const wallet = new ethers.Wallet(privateKey.value(), provider);
   const contract = new ethers.Contract(
@@ -32,7 +34,104 @@ export const mintPollToken = async (
   return {
     ...transactionResponse,
     recipient: recipientAddress,
-  } as Result;
+  } as MintPollTokenResult;
+};
+
+interface MintPunchlineTokenResult {
+  from: string;
+  hash: string;
+  to: string;
+}
+
+export const mintPunchlineToken = async (
+  punchlineId: string
+): Promise<MintPunchlineTokenResult> => {
+  const provider = new ethers.JsonRpcProvider(rpcUrl.value());
+  const wallet = new ethers.Wallet(privateKey.value(), provider);
+  const contract = new ethers.Contract(
+    punchlineTokenAddress.value(),
+    punchlineTokenAbi,
+    wallet
+  );
+  const tokenId = id(punchlineId);
+  const transactionResponse = await contract.mint(
+    wallet.address,
+    tokenId,
+  );
+
+  await transactionResponse.wait();
+
+  return {
+    ...transactionResponse,
+  } as MintPunchlineTokenResult;
+};
+
+interface SendPunchlineTokenResult {
+  from: string;
+  hash: string;
+  to: string;
+  tokenFrom: string;
+  tokenTo: string;
+}
+
+export const sendPunchlineToken = async (
+  punchlineId: string,
+  to: string,
+): Promise<SendPunchlineTokenResult> => {
+  const provider = new ethers.JsonRpcProvider(rpcUrl.value());
+  const wallet = new ethers.Wallet(privateKey.value(), provider);
+  const contract = new ethers.Contract(
+    punchlineTokenAddress.value(),
+    punchlineTokenAbi,
+    wallet
+  );
+  const tokenId = id(punchlineId);
+  const transactionResponse = await contract.safeTransferFrom(
+    wallet.address,
+    to,
+    tokenId,
+  );
+
+  await transactionResponse.wait();
+
+  return {
+    ...transactionResponse,
+    tokenFrom: wallet.address,
+    tokenTo: to,
+  } as SendPunchlineTokenResult;
+};
+
+interface MintContestTokenResult {
+  from: string;
+  hash: string;
+  to: string;
+  recipient: string;
+}
+
+export const mintContestToken = async (
+  contestId: string,
+  punchlineId: string,
+  recipient: string,
+): Promise<MintContestTokenResult> => {
+  const provider = new ethers.JsonRpcProvider(rpcUrl.value());
+  const wallet = new ethers.Wallet(privateKey.value(), provider);
+  const contract = new ethers.Contract(
+    contestTokenAddress.value(),
+    contestTokenAbi,
+    wallet
+  );
+  const tokenId = id(contestId + punchlineId);
+  const transactionResponse = await contract.mint(
+    recipient,
+    tokenId,
+  );
+
+  await transactionResponse.wait();
+
+  return {
+    ...transactionResponse,
+    recipient,
+  } as MintContestTokenResult;
 };
 
 export const calcWallet = (id: string): ethers.Wallet => {
