@@ -61,6 +61,7 @@ export const createPoll = onCall<Poll>({
     from: result.from,
     to: result.to,
     recipient: result.recipient,
+    type: "mintPollToken",
     createdAt: new Date().toISOString(),
   });
 
