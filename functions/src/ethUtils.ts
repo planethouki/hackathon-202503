@@ -53,7 +53,7 @@ export const mintPunchlineToken = async (
     punchlineTokenAbi,
     wallet
   );
-  const tokenId = id(punchlineId);
+  const tokenId = id(punchlineId).slice(0, 10);
   const transactionResponse = await contract.mint(
     wallet.address,
     tokenId,
@@ -85,7 +85,7 @@ export const sendPunchlineToken = async (
     punchlineTokenAbi,
     wallet
   );
-  const tokenId = id(punchlineId);
+  const tokenId = id(punchlineId).slice(0, 10);
   const transactionResponse = await contract.safeTransferFrom(
     wallet.address,
     to,
@@ -120,7 +120,7 @@ export const mintContestToken = async (
     contestTokenAbi,
     wallet
   );
-  const tokenId = id(contestId + punchlineId);
+  const tokenId = id(contestId + punchlineId).toString();
   const transactionResponse = await contract.mint(
     recipient,
     tokenId,
