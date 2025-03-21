@@ -22,6 +22,7 @@ interface ImportMetaEnv {
   readonly VITE_API_URL: string;
   readonly VITE_BLOCK_EXPLORER_ADDRESS: string;
   readonly VITE_BLOCK_EXPLORER_TOKEN: string;
+  readonly VITE_BLOCK_EXPLORER_TOKEN_ID: string;
   readonly VITE_BLOCK_EXPLORER_TX: string;
   readonly VITE_POLL_TOKEN: string;
   readonly VITE_PUNCHLINE_TOKEN: string;
