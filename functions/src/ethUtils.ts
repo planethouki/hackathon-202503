@@ -41,6 +41,7 @@ interface MintPunchlineTokenResult {
   from: string;
   hash: string;
   to: string;
+  tokenId: string;
 }
 
 export const mintPunchlineToken = async (
@@ -63,6 +64,7 @@ export const mintPunchlineToken = async (
 
   return {
     ...transactionResponse,
+    tokenId,
   } as MintPunchlineTokenResult;
 };
 
@@ -106,6 +108,7 @@ interface MintContestTokenResult {
   hash: string;
   to: string;
   recipient: string;
+  tokenId: string;
 }
 
 export const mintContestToken = async (
@@ -131,6 +134,7 @@ export const mintContestToken = async (
   return {
     ...transactionResponse,
     recipient,
+    tokenId,
   } as MintContestTokenResult;
 };
 

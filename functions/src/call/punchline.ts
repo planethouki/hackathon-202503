@@ -39,6 +39,7 @@ export const createPunchline = onCall<Punchline>({
     hash: result.hash,
     from: result.from,
     to: result.to,
+    tokenId: result.tokenId,
     type: "mintPunchlineToken",
     createdAt: new Date().toISOString(),
   });
