@@ -81,6 +81,7 @@ function OtherInfo({ punchline, showWithdrawPoll }: { punchline: Punchline, show
               rel="noopener noreferrer"
             >
               投票トークン
+              <i className="bi bi-box-arrow-up-right p-1" style={{ fontSize: "0.6rem" }}></i>
             </a>
             <span>が集まります</span>
           </div>
