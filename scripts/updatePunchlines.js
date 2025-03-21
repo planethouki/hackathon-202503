@@ -18,7 +18,7 @@ const exec = async () => {
   for (let doc of punchlineSnapshots.docs) {
     const punchline = doc.data();
     const tokenId = ethers.id(punchline.id).slice(0, 10);
-    const tokenIdDec = parseInt(tokenId, 16);
+    const tokenIdDec = BigInt(tokenId).toString();
 
     await db
       .collection("punchlines")
