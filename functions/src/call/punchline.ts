@@ -48,6 +48,11 @@ export const createPunchline = onCall<Punchline>({
     createdAt: new Date().toISOString(),
   });
 
+  await db.collection("punchlines").doc(punchlineId).update({
+    tokenId: result.tokenId,
+    tokenIdDec: result.tokenIdDec,
+  });
+
   return {
     success: true,
     message: "Punchline added successfully",
