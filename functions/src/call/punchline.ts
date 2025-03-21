@@ -4,11 +4,14 @@ import {Punchline} from "./interfaces";
 import {generateRandomString} from "../utils";
 import {logger} from "firebase-functions";
 import {mintPunchlineToken} from "../ethUtils";
+import {defineSecret} from "firebase-functions/lib/params";
 
 const db = getFirestore();
+const privateKey = defineSecret("ETH_PRIVATE_KEY");
 
 export const createPunchline = onCall<Punchline>({
   cors: true,
+  secrets: [privateKey],
 }, async (request) => {
   const punchline = request.data;
   const uid = request.auth?.uid;
