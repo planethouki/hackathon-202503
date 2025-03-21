@@ -112,6 +112,7 @@ interface MintContestTokenResult {
   to: string;
   recipient: string;
   tokenId: string;
+  tokenIdDec: string;
 }
 
 export const mintContestToken = async (
@@ -127,6 +128,7 @@ export const mintContestToken = async (
     wallet
   );
   const tokenId = id(contestId + punchlineId).toString();
+  const tokenIdDec = BigInt(tokenId).toString();
   const transactionResponse = await contract.mint(
     recipient,
     tokenId,
@@ -138,6 +140,7 @@ export const mintContestToken = async (
     ...transactionResponse,
     recipient,
     tokenId,
+    tokenIdDec,
   } as MintContestTokenResult;
 };
 
