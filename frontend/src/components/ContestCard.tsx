@@ -18,8 +18,8 @@ export const ContestCard: FC<Props> = ({ contest }) => {
           <ContestImage fileName={contest.imageName} alt={contest.title} />
         </Link>
         <div className="position-absolute d-flex flex-column gap-2" style={{ bottom: 10, right: 10 }}>
-          {checkDateStatus(contest.postStartDate, contest.postEndDate) === "before" && <Badge bg="info">投稿受付前</Badge>}
-          {checkDateStatus(contest.postStartDate, contest.postEndDate) === "now" && <Badge>投稿受付中！</Badge>}
+          {checkDateStatus(contest.postStartDate, contest.postEndDate) === "before" && <Badge bg="info">動画受付前</Badge>}
+          {checkDateStatus(contest.postStartDate, contest.postEndDate) === "now" && <Badge>動画受付中！</Badge>}
           {checkDateStatus(contest.pollStartDate, contest.pollEndDate) === "before" && <Badge bg="info">投票前</Badge>}
           {checkDateStatus(contest.pollStartDate, contest.pollEndDate) === "now" && <Badge>投票中！</Badge>}
           {checkDateStatus(contest.pollStartDate, contest.pollEndDate) === "after" && <Badge bg="success">結果発表中！</Badge>}
