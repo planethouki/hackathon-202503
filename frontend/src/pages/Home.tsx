@@ -90,7 +90,14 @@ function Home() {
 
       <div className="mb-5 py-5" style={{ backgroundColor: "#f5fff5" }}>
         <Container>
-          <h2 className="mb-5">新着お題</h2>
+          <div className="mb-5 d-flex justify-content-between">
+            <h2>新着お題</h2>
+            <div>
+              <Link to="/contests/latest">
+                <Button as="span" variant="primary" href="/contests/latest">もっと見る</Button>
+              </Link>
+            </div>
+          </div>
           <Row xs={2} sm={3} md={4} className="g-4">
             {contests && contests.map((c) => (
               <Col key={c.id}>
