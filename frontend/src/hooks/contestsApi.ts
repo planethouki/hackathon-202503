@@ -56,3 +56,48 @@ export const useContestsDetailApi = (id: string | null | undefined): UseContests
 
   return { contest, punchlinesLatest, punchlinesPopular, isLoading, error, refresh };
 };
+
+interface UseContestsLatestApiReturn {
+  contests: Contest[] | null;
+  totalContests: number | null;
+  isLoading: boolean;
+  error: string | null;
+  refresh: () => Promise<void>;
+}
+
+export const useContestsLatestApi = (pageNumber = 1): UseContestsLatestApiReturn => {
+  const [totalContests, setTotalContests] = useState<number | null>(null);
+  const [contests, setContests] = useState<Contest[] | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchContestsLatest = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(new URL(`/contests/latest?page=${pageNumber}`, apiUrl)).then(res => res.json());
+      const totalContests = res.totalContests || null;
+      const contests: Contest[] = res.contests || null;
+      setTotalContests(totalContests);
+      setContests(contests);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("予期しないエラーが発生しました");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }, [pageNumber]);
+
+  useEffect(() => {
+    fetchContestsLatest();
+  }, [fetchContestsLatest]);
+
+  const refresh = async () => {
+    await fetchContestsLatest();
+  };
+
+  return { totalContests, contests, isLoading, error, refresh };
+};
