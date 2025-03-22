@@ -44,7 +44,7 @@ function PunchlinesWithdraw() {
         return;
       }
 
-      await withdraw(id, accounts[0]);
+      await withdraw(id, accounts[0], punchline.pollAddress);
     } catch (error) {
       console.error('Metamaskエラー:', error);
       setMetamaskError('Metamaskとの通信中にエラーが発生しました。');

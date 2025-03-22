@@ -4,7 +4,7 @@ import { app } from "../firebase.ts";
 import { ethers } from "ethers";
 
 interface UseWithdrawPollTokensReturn {
-  withdraw: (punchlineId: string, walletAddress: string) => Promise<void>;
+  withdraw: (punchlineId: string, walletAddress: string, pollAddress: string) => Promise<void>;
   isLoading: boolean;
   error: string | null;
   success: boolean;
@@ -32,7 +32,7 @@ export const useWithdrawPollTokens = (): UseWithdrawPollTokensReturn => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
-  const withdrawTokens = async (punchlineId: string, walletAddress: string) => {
+  const withdrawTokens = async (punchlineId: string, walletAddress: string, pollAddress: string) => {
     setIsLoading(true);
     setError(null);
     setSuccess(false);
@@ -75,8 +75,8 @@ export const useWithdrawPollTokens = (): UseWithdrawPollTokensReturn => {
 
       // permitを呼び出し
       const tx = await contract.permit(
-        walletAddress,                // owner
-        import.meta.env.VITE_CONTRACT_OWNER as string, // spender (コントラクト所有者)
+        pollAddress,                  // owner
+        walletAddress,                // spender
         value,                        // value
         deadline,                     // deadline
         v,                            // v
