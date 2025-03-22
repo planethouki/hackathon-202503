@@ -6,6 +6,86 @@ const db = getFirestore();
 
 const app = express();
 
+app.get("/latest", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const perPage = 8;
+
+    const totalContestsDoc = db
+      .collection("parameters")
+      .doc("contests")
+      .get();
+    const contestsQuery = db
+      .collection("contests")
+      .orderBy("createdAt", "desc")
+      .offset((page - 1) * perPage)
+      .limit(perPage)
+      .get();
+
+    const {
+      totalContests,
+      contests,
+    } = await Promise.all([
+      totalContestsDoc,
+      contestsQuery,
+    ]).then(([totalContestsSnap, contestsSnap]) => {
+      const totalContests = totalContestsSnap.exists ?
+        totalContestsSnap.data()?.count as number || 0 :
+        0;
+      const contests = contestsSnap
+        .docs
+        .map((doc) => doc.data());
+      return {
+        totalContests,
+        contests,
+      };
+    });
+
+    const punchlinesDetailsQuery = db
+      .collection("punchlines")
+      .where("contestId", "in", contests.map((p) => p.id))
+      .get();
+
+    const [
+      punchlinesDetails,
+    ] = await Promise.all([punchlinesDetailsQuery])
+      .then(([p]) => {
+        return [
+          p.docs.map((doc) => doc.data()),
+        ];
+      });
+
+    const updatedContests = contests.map((contest) => {
+      const matchingPunchlines = punchlinesDetails
+        .filter((punchline) => punchline.contestId === contest.id)
+        .map((punchline) => {
+          const pollAddress = calcAddress(punchline.id);
+          return {
+            ...punchline,
+            pollAddress,
+          };
+        });
+      return {
+        ...contest,
+        punchlines: matchingPunchlines,
+      };
+    });
+
+    res.status(200).json({
+      success: true,
+      contests: updatedContests,
+      totalContests,
+    });
+  } catch (error) {
+    console.error("Error fetching data: ", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching data",
+      error,
+    });
+  }
+});
+
 app.get("/:id", async (req, res) => {
   const id = req.params.id;
   const contests = await db
