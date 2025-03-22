@@ -47,22 +47,22 @@ export const ContestCard: FC<Props> = ({ contest }) => {
 export const ContestCardPlaceholder: FC = () => {
   return (
     <Card>
-      <Placeholder
-        as="div"
-        animation="glow"
-        style={{ aspectRatio: 1, width: "100%" }}
+      <span
+        className="d-flex justify-content-center align-items-center"
+        style={{
+          width: "100%",
+          aspectRatio: 1,
+        }}
       >
-        <Placeholder xs={12} />
-      </Placeholder>
-      <Card.Footer>
-        <Placeholder as="h4" animation="glow">
-          <Placeholder xs={6} />
+      </span>
+      <Card.Body>
+        <Placeholder as={Card.Title} animation="glow">
+          <Placeholder xs={12} />
         </Placeholder>
-        <Placeholder as="div" animation="glow">
-          <Placeholder xs={4} className="me-2" />
-          <Placeholder xs={3} />
+        <Placeholder as={Card.Text} animation="glow">
+          <Placeholder xs={12} />
         </Placeholder>
-      </Card.Footer>
+      </Card.Body>
     </Card>
   );
 }
