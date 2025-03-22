@@ -1,10 +1,9 @@
-import {Card, Container, Row, Col, Button, Placeholder, Badge} from "react-bootstrap";
+import {Card, Container, Row, Col, Button, Placeholder} from "react-bootstrap";
 import { Link } from "react-router";
 import { useHomeApi } from "../hooks/homeApi.ts";
 import {PunchlineCard, PunchlineCardPlaceholder} from "../components/PunchlineCard.tsx";
 import {Avatar} from "../components/Avatar.tsx";
-import {ContestImage} from "../components/ContestImage.tsx";
-import {checkDateStatus} from "../components/utils.ts";
+import {ContestCard, ContestCardPlaceholder} from "../components/ContestCard.tsx";
 
 function Home() {
   const {
@@ -95,57 +94,12 @@ function Home() {
           <Row xs={2} sm={3} md={4} className="g-4">
             {contests && contests.map((c) => (
               <Col key={c.id}>
-                <Card>
-                  <div className="position-relative">
-                    <Link to={`/contests/${c.id}`} >
-                      <ContestImage fileName={c.imageName} alt={c.title} />
-                    </Link>
-                    <div className="position-absolute d-flex flex-column gap-2" style={{ bottom: 10, right: 10 }}>
-                      {checkDateStatus(c.postStartDate, c.postEndDate) === "before" && <Badge bg="info">投稿受付前</Badge>}
-                      {checkDateStatus(c.postStartDate, c.postEndDate) === "now" && <Badge>投稿受付中！</Badge>}
-                      {checkDateStatus(c.pollStartDate, c.pollEndDate) === "before" && <Badge bg="info">投票前</Badge>}
-                      {checkDateStatus(c.pollStartDate, c.pollEndDate) === "now" && <Badge>投票中！</Badge>}
-                      {checkDateStatus(c.pollStartDate, c.pollEndDate) === "after" && <Badge bg="success">結果発表中！</Badge>}
-                    </div>
-                  </div>
-                  <Card.Body>
-                    <Card.Title>
-                      <Link to={`/contests/${c.id}`} >
-                        {c.title}
-                      </Link>
-                    </Card.Title>
-                    <Card.Text>
-                      {c.punchlineCount !== undefined &&
-                        <span className="small me-3" title={`動画数: ${c.punchlineCount}`}>
-                          <i className="bi bi-camera-video me-1"></i>
-                          <span>{c.punchlineCount}</span>
-                        </span>
-                      }
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
+                <ContestCard contest={c} />
               </Col>
             ))}
             {!contests && Array.from({length: 8}, (_, i) => i + 1).map((i) =>
               <Col key={i}>
-                <Card>
-                  <span
-                    className="d-flex justify-content-center align-items-center"
-                    style={{
-                      width: "100%",
-                      aspectRatio: 1,
-                    }}
-                  >
-                  </span>
-                  <Card.Body>
-                    <Placeholder as={Card.Title} animation="glow">
-                      <Placeholder xs={12} />
-                    </Placeholder>
-                    <Placeholder as={Card.Text} animation="glow">
-                      <Placeholder xs={12} />
-                    </Placeholder>
-                  </Card.Body>
-                </Card>
+                <ContestCardPlaceholder />
               </Col>
             )}
           </Row>
