@@ -1,7 +1,7 @@
 require('dotenv').config();
 const admin = require("firebase-admin");
 const ethers = require("ethers");
-const generateRandomString = require("./utils");
+const {generateRandomString} = require("./utils");
 
 const serviceAccount = require("./serviceAccountKey.json");
 

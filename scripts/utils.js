@@ -10,4 +10,4 @@ function generateRandomString() {
   return result;
 }
 
-module.exports = generateRandomString
+module.exports = {generateRandomString}
