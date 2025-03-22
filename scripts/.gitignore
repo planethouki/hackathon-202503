@@ -136,3 +136,5 @@ dist
 .pnp.*
 
 serviceAccountKey.json
+
+out.txt
