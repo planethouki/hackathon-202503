@@ -64,3 +64,14 @@ export const generateRandomAvatarFileName = () => {
 
   return list[Math.floor(Math.random() * list.length)];
 };
+
+
+export const getWeekNumberFromJan1 = (date: Date): number => {
+  const jan1 = new Date(date.getFullYear(), 0, 1);
+  const jan1DayOfWeek = jan1.getDay();
+  const offset = (jan1DayOfWeek === 0 ? 6 : jan1DayOfWeek - 1);
+  const dayOfYear = Math.floor(
+    (date.getTime() - jan1.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  return Math.floor((dayOfYear + offset) / 7) + 1;
+}
