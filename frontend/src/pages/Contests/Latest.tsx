@@ -1,11 +1,16 @@
-import {useState, useMemo} from "react";
+import {useState, useMemo, useEffect} from "react";
+import {useSearchParams} from "react-router";
 import {Container, Row, Col} from "react-bootstrap";
 import {useContestsLatestApi} from "../../hooks/contestsApi.ts";
 import PaginationComponent from "../../components/PaginationComponent";
 import {ContestCard, ContestCardPlaceholder} from "../../components/ContestCard";
 
 function ContestsLatest() {
-  const [pageNumber, setPageNumber] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const initialPage = Number(searchParams.get("page")) || 1;
+  const [pageNumber, setPageNumber] = useState(initialPage);
+
   const { totalContests, contests } = useContestsLatestApi(pageNumber);
   const perPage = 8;
 
@@ -15,7 +20,13 @@ function ContestsLatest() {
 
   const handlePageChange = (number: number) => {
     setPageNumber(number);
+    setSearchParams({ page: number.toString() });
   };
+
+  useEffect(() => {
+    const page = Number(searchParams.get("page")) || 1;
+    setPageNumber(page);
+  }, [searchParams]);
 
   return (
     <>

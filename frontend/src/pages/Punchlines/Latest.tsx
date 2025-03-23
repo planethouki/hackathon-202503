@@ -1,11 +1,16 @@
-import {useState, useMemo} from "react";
-import {Container, Row, Col, Spinner} from "react-bootstrap";
-import {usePunchlinesLatestApi} from "../../hooks/punchlinesApi.ts";
-import {PunchlineCard} from "../../components/PunchlineCard.tsx";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router";
+import { Container, Row, Col, Spinner } from "react-bootstrap";
+import { usePunchlinesLatestApi } from "../../hooks/punchlinesApi.ts";
+import { PunchlineCard } from "../../components/PunchlineCard.tsx";
 import PaginationComponent from "../../components/PaginationComponent";
 
 function PunchlinesLatest() {
-  const [pageNumber, setPageNumber] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const initialPage = Number(searchParams.get("page")) || 1;
+  const [pageNumber, setPageNumber] = useState(initialPage);
+
   const { totalPunchlines, punchlines, isLoading } = usePunchlinesLatestApi(pageNumber);
 
   const maxPage = useMemo(() => {
@@ -14,7 +19,13 @@ function PunchlinesLatest() {
 
   const handlePageChange = (number: number) => {
     setPageNumber(number);
+    setSearchParams({ page: number.toString() });
   };
+
+  useEffect(() => {
+    const page = Number(searchParams.get("page")) || 1;
+    setPageNumber(page);
+  }, [searchParams]);
 
   return (
     <>
@@ -32,7 +43,7 @@ function PunchlinesLatest() {
             handlePageChange={handlePageChange}
           />
           {isLoading && <Spinner />}
-          <Row xs={1} sm={2} md={4} className="g-4 mb-5">
+          <Row xs={2} sm={2} md={4} className="g-4 mb-5">
             {punchlines?.map((p) => (
               <Col key={p.id}>
                 <PunchlineCard punchline={p} />
