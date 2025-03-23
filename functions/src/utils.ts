@@ -74,4 +74,4 @@ export const getWeekNumberFromJan1 = (date: Date): number => {
     (date.getTime() - jan1.getTime()) / (1000 * 60 * 60 * 24)
   );
   return Math.floor((dayOfYear + offset) / 7) + 1;
-}
+};
