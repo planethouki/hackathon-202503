@@ -21,6 +21,8 @@ import PunchlinesLatest from "./pages/Punchlines/Latest.tsx";
 import PollTokenWithdraw from "./pages/Punchlines/PollTokenWithdraw.tsx";
 import PunchlineTokenWithdraw from "./pages/Punchlines/PunchlineTokenWithdraw.tsx";
 import UsersDetail from "./pages/Users/Detail.tsx";
+import Terms from "./pages/Terms.tsx";
+import Privacy from "./pages/Privacy.tsx";
 import Layout from "./layouts/Layout.tsx";
 import { TitleYouTubeProvider } from "./contexts/TitleYouTubeContext";
 import {AuthProvider, ProtectedRoute} from "./AuthProvider";
@@ -78,6 +80,8 @@ function App() {
             <Route path="users">
               <Route path=":id/profile" element={<UsersDetail />} />
             </Route>
+            <Route path="terms" element={<Terms />} />
+            <Route path="privacy" element={<Privacy />} />
           </Route>
         </Routes>
       </BrowserRouter>
