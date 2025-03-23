@@ -4,6 +4,7 @@ import { useHomeApi } from "../hooks/homeApi.ts";
 import {PunchlineCard, PunchlineCardPlaceholder} from "../components/PunchlineCard.tsx";
 import {Avatar} from "../components/Avatar.tsx";
 import {ContestCard, ContestCardPlaceholder} from "../components/ContestCard.tsx";
+import {TutorialModal} from "../components/TutorialModal.tsx";
 
 function Home() {
   const {
@@ -112,6 +113,8 @@ function Home() {
           </Row>
         </Container>
       </div>
+
+      <TutorialModal />
     </>
   );
 }
