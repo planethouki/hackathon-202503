@@ -188,6 +188,15 @@ function PunchlinesWithdraw() {
               MetamaskにてMinatoのネットワークに設定した上でお使いください。
             </p>
             <p>
+              ブロックエクスプローラーの下の方にある、「Add Soneium Minato」をクリックすると、
+              簡単にMetamaskにMinatoネットワークが追加できます。
+              <a
+                href="https://soneium-minato.blockscout.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >https://soneium-minato.blockscout.com</a>
+            </p>
+            <p>
               <a
                 href="https://docs.soneium.org/docs/users/wallets#metamask"
                 target="_blank"
