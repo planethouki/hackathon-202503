@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 import { Container, Row, Col } from "react-bootstrap";
 
 const Footer: React.FC = () => {
@@ -49,20 +50,24 @@ const Footer: React.FC = () => {
             </ul>
           </Col>
           <Col md={4} className="text-center">
-            <h5>未定</h5>
+            <h5>その他</h5>
             <ul className="list-unstyled">
               <li>
-                利用規約（未実装）
+                <Link to="/terms">
+                  利用規約
+                </Link>
               </li>
               <li>
-                プライバシーポリシー（未実装）
+                <Link to="/privacy">
+                  プライバシーポリシー
+                </Link>
               </li>
             </ul>
           </Col>
         </Row>
         <Row>
           <Col className="text-center py-3">
-            <small>© 2025 ROFLoL. All rights reserved.</small>
+            <small>© 2025 Team ROFLoL. All rights reserved.</small>
           </Col>
         </Row>
       </Container>
