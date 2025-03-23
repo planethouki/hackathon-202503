@@ -12,9 +12,10 @@ function PunchlinesLatest() {
   const [pageNumber, setPageNumber] = useState(initialPage);
 
   const { totalPunchlines, punchlines, isLoading } = usePunchlinesLatestApi(pageNumber);
+  const perPage = 4;
 
   const maxPage = useMemo(() => {
-    return totalPunchlines ? Math.ceil(totalPunchlines / 4) : 1;
+    return totalPunchlines ? Math.ceil(totalPunchlines / perPage) : 1;
   }, [totalPunchlines]);
 
   const handlePageChange = (number: number) => {
