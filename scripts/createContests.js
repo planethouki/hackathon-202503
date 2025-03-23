@@ -1,13 +1,5 @@
 const admin = require("firebase-admin");
 
-const generateRandomDate = (startStr, endStr) => {
-  const start = new Date(startStr);
-  const end = new Date(endStr);
-  return new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime())
-  ).toISOString();
-};
-
 const contests = [
   {"id":"GEwZwNbb3w3uWEIMhBq5", "title":"一発ギャグ #1", "imageName":"7.ippatsugyag_400_400.png", "postStartDate":"2025-03-18T00:05:31.000Z", "postEndDate":"2025-03-20T00:05:31.000Z", "pollStartDate":"2025-03-18T01:05:31.000Z", "pollEndDate":"2025-03-20T01:05:31.000Z", "createdAt":"2025-01-01T00:05:31.000Z", "punchlineCount": 0},
   {"id":"4Tj0SAVoD70GgTzNo6FY", "title":"ゲーム #1", "imageName":"1.game_400_400.png", "postStartDate":"2025-03-18T01:29:16.000Z", "postEndDate":"2025-03-20T01:29:16.000Z", "pollStartDate":"2025-03-18T02:29:16.000Z", "pollEndDate":"2025-03-20T02:29:16.000Z", "createdAt":"2025-01-01T01:07:34.000Z", "punchlineCount": 0},
@@ -67,5 +59,5 @@ const writeContests = async () => {
   }
 };
 
-// 関数を実行
+
 writeContests();
