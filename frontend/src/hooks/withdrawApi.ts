@@ -60,9 +60,9 @@ export const useWithdrawPollTokens = (): UseWithdrawPollTokensReturn => {
       // コントラクトアドレスを環境変数から取得
       const tokenAddress = import.meta.env.VITE_POLL_TOKEN as string;
 
-      // ERC20のABIを定義（permitメソッドのみ）
-      const permitAbi = [
-        "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)"
+      const abi = [
+        "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+        "function transferFrom(address from, address to, uint256 value)"
       ];
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -71,10 +71,9 @@ export const useWithdrawPollTokens = (): UseWithdrawPollTokensReturn => {
       const signer = await provider.getSigner();
 
       // コントラクトインスタンスを作成
-      const contract = new ethers.Contract(tokenAddress, permitAbi, signer);
+      const contract = new ethers.Contract(tokenAddress, abi, signer);
 
-      // permitを呼び出し
-      const tx = await contract.permit(
+      const permitTx = await contract.permit(
         pollAddress,                  // owner
         walletAddress,                // spender
         value,                        // value
@@ -84,8 +83,13 @@ export const useWithdrawPollTokens = (): UseWithdrawPollTokensReturn => {
         s                             // s
       );
 
-      // トランザクションの完了を待つ
-      await tx.wait();
+      await permitTx.wait();
+
+      await new Promise(resolve => setTimeout(resolve, 5000));
+
+      const transferTx = await contract.transferFrom(pollAddress, walletAddress, value);
+
+      await transferTx.wait();
 
       setSuccess(true);
     } catch (err: unknown) {
