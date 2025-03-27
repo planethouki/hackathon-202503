@@ -4,7 +4,6 @@ import { auth } from "../firebase";
 import {
   GoogleAuthProvider,
   signInWithPopup,
-  signInAnonymously,
   browserPopupRedirectResolver,
 } from "firebase/auth";
 import { useAuth } from "../AuthProvider";
@@ -21,7 +20,6 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
-  const [showAnonymousLoginModal, setShowAnonymousLoginModal] = useState(false);
   const [showGoogleLoginModal, setShowGoogleLoginModal] = useState(false); // Google Modalの状態
 
   useEffect(() => {
@@ -44,23 +42,6 @@ const Login: React.FC = () => {
       setIsLoggingIn(false);
     }
   };
-
-  const handleAnonymousLogin = async () => {
-    setShowAnonymousLoginModal(false);
-    setIsLoggingIn(true);
-    try {
-      await signInAnonymously(auth);
-      setError(null);
-    } catch (e: unknown) {
-      console.error("ログインエラー:", e);
-      setError(e instanceof Error ? e.message : "ログインに失敗しました。");
-    } finally {
-      setIsLoggingIn(false);
-    }
-  };
-
-  const handleCloseAnonymousLoginModal = () =>
-    setShowAnonymousLoginModal(false);
 
   const handleCloseGoogleLoginModal = () =>
     setShowGoogleLoginModal(false); // Google Modalを閉じる
@@ -88,15 +69,6 @@ const Login: React.FC = () => {
                   <span>Googleでログイン</span>
                 </Button>
               </div>
-              <div>
-                <Button
-                  variant="link"
-                  onClick={() => setShowAnonymousLoginModal(true)}
-                  disabled={isLoggingIn}
-                >
-                  <span>匿名でログイン</span>
-                </Button>
-              </div>
               {error && (
                 <Alert variant="danger" className="mt-3">
                   {error}
@@ -106,37 +78,6 @@ const Login: React.FC = () => {
           )}
         </Container>
       </div>
-
-      <Modal
-        show={showAnonymousLoginModal}
-        onHide={handleCloseAnonymousLoginModal}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>匿名ログインしますか？</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>
-            匿名ログインは、一度ログアウトすると、同じアカウントとしてログインすることが
-            できませんのでご注意ください。
-          </p>
-          <p>
-            <a
-              href="/terms"
-              target="_blank"
-            >
-              利用規約
-            </a>
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseAnonymousLoginModal}>
-            キャンセル
-          </Button>
-          <Button variant="primary" onClick={handleAnonymousLogin}>
-            利用規約に同意して匿名ログイン
-          </Button>
-        </Modal.Footer>
-      </Modal>
 
       <Modal show={showGoogleLoginModal} onHide={handleCloseGoogleLoginModal}>
         <Modal.Header closeButton>
